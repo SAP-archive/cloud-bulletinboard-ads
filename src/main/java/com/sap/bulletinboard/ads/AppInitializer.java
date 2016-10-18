@@ -25,6 +25,8 @@ public class AppInitializer implements WebApplicationInitializer {
         ServletRegistration.Dynamic dispatcher = servletContext.addServlet("DispatcherServlet",
                 new DispatcherServlet(applicationContext));
         dispatcher.setLoadOnStartup(LOAD_ON_STARTUP);
+        
+        // map requests that you want the DispatcherServlet to handle, by using a URL mapping
         dispatcher.addMapping(MAPPING_URL);
 
         servletContext.addListener(new ContextLoaderListener(applicationContext));

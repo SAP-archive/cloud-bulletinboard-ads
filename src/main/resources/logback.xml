@@ -19,4 +19,7 @@
 
     <!-- log request details provided by RequestLoggingFilter -->
     <logger name="com.sap.hcp.cf" level="${LOG_CF_LEVEL:-INFO}"/>
+    
+    <!-- suppress warning while stopping Tomcat (https://github.com/spring-projects/spring-boot/issues/4659) -->
+    <logger name="org.apache.commons.dbcp2.BasicDataSource" level="${LOG_CF_LEVEL:-ERROR}"/>
 </configuration>
