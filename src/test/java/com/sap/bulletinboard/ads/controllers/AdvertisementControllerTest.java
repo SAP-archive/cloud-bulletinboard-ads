@@ -2,7 +2,7 @@ package com.sap.bulletinboard.ads.controllers;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
-import static org.springframework.http.MediaType.*;
+import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -56,21 +56,42 @@ public class AdvertisementControllerTest {
     }
 
     @Test
+    public void createAndGetByLocation() throws Exception {
+        MockHttpServletResponse response = mockMvc.perform(buildPostRequest(SOME_TITLE))
+                .andExpect(status().isCreated())
+                .andReturn().getResponse();
+
+        // check that the returned location is correct
+        mockMvc.perform(get(response.getHeader(LOCATION)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.title", is(SOME_TITLE)));
+    }
+
+    @Test
     public void readAll() throws Exception {
-        fail("not implemented");
-        // TODO create new advertisement using POST, then retrieve all advertisements using GET 
+        mockMvc.perform(buildPostRequest(SOME_TITLE))
+            .andExpect(status().isCreated());
+
+        mockMvc.perform(buildGetRequest(""))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(APPLICATION_JSON_UTF8))
+            .andExpect(jsonPath("$.length()", is(both(greaterThan(0)).and(lessThan(10)))));
     }
 
     @Test
     public void readByIdNotFound() throws Exception {
-        fail("not implemented");
-        // TODO try to retrieve object with nonexisting ID using GET request to /4711
+        mockMvc.perform(buildGetRequest("4711"))
+            .andExpect(status().isNotFound());
     }
 
     @Test
     public void readById() throws Exception {
-        fail("not implemented");
-        // TODO create new advertisement using POST, then retrieve it using GET {/id}
+        String id = performPostAndGetId();
+
+        mockMvc.perform(buildGetRequest(id))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$.title", is(SOME_TITLE)));
     }
     
     private MockHttpServletRequestBuilder buildPostRequest(String adsTitle) throws Exception {
@@ -79,6 +100,19 @@ public class AdvertisementControllerTest {
 
         // post the advertisement as a JSON entity in the request body
         return post(AdvertisementController.PATH).content(toJson(advertisement)).contentType(APPLICATION_JSON_UTF8);
+    }
+
+    private String performPostAndGetId() throws Exception {
+        MockHttpServletResponse response = mockMvc.perform(buildPostRequest(SOME_TITLE))
+                .andExpect(status().isCreated())
+                .andReturn().getResponse();
+
+        return getIdFromLocation(response.getHeader(LOCATION));
+    }
+
+
+    private MockHttpServletRequestBuilder buildGetRequest(String id) throws Exception {
+        return get(AdvertisementController.PATH + "/" + id);
     }
     
     private String toJson(Object object) throws JsonProcessingException {
