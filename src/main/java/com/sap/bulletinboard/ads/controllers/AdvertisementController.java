@@ -5,10 +5,10 @@ import static org.springframework.http.HttpStatus.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.Collection;
 
+import javax.inject.Inject;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
 
@@ -29,6 +29,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sap.bulletinboard.ads.models.Advertisement;
+import com.sap.bulletinboard.ads.models.AdvertisementRepository;
 
 /*
  * Use a path which does not end with a slash! Otherwise the controller is not reachable when not using the trailing
@@ -40,22 +41,24 @@ import com.sap.bulletinboard.ads.models.Advertisement;
 @Validated
 public class AdvertisementController {
     public static final String PATH = "/api/v1/ads";
-    private static int ID = 0;
 
-    private static final Map<Long, Advertisement> ads = new HashMap<>();
+    private AdvertisementRepository adRepository;
+
+    @Inject
+    public AdvertisementController(AdvertisementRepository repository) {
+        this.adRepository = repository;
+    }
 
     @GetMapping
     public AdvertisementList advertisements() {
-        return new AdvertisementList(ads.values());
+        return new AdvertisementList((Collection<Advertisement>) adRepository.findAll());
     }
 
     @GetMapping("/{id}")
     // We do not use primitive "long" type here to avoid unnecessary autoboxing
     public Advertisement advertisementById(@PathVariable("id") @Min(0) Long id) {
-        if (!ads.containsKey(id)) {
-            throw new NotFoundException(id + " not found");
-        }
-        return ads.get(id);
+        throwIfNonexisting(id);
+        return adRepository.findOne(id);
     }
 
     /**
@@ -65,37 +68,55 @@ public class AdvertisementController {
     @PostMapping
     public ResponseEntity<Advertisement> add(@Valid @RequestBody Advertisement advertisement,
             UriComponentsBuilder uriComponentsBuilder) throws URISyntaxException {
+        throwIfIdNotNull(advertisement.getId());
 
-        long id = ID++;
-        ads.put(id, advertisement);
+        Advertisement savedAdvertisement = adRepository.save(advertisement);
 
-        UriComponents uriComponents = uriComponentsBuilder.path(PATH + "/{id}").buildAndExpand(id);
-        return ResponseEntity.created(new URI(uriComponents.getPath())).body(advertisement);
+        UriComponents uriComponents = uriComponentsBuilder.path(PATH + "/{id}")
+                .buildAndExpand(savedAdvertisement.getId());
+        return ResponseEntity.created(new URI(uriComponents.getPath())).body(savedAdvertisement);
     }
 
     @DeleteMapping
     @ResponseStatus(NO_CONTENT)
     public void deleteAll() {
-        ads.clear();
+        adRepository.deleteAll();
     }
 
     @DeleteMapping("{id}")
     @ResponseStatus(NO_CONTENT)
     public void deleteById(@PathVariable("id") Long id) {
         throwIfNonexisting(id);
-        ads.remove(id);
+        adRepository.delete(id);
     }
 
     @PutMapping("/{id}")
     public Advertisement update(@PathVariable("id") long id, @RequestBody Advertisement updatedAd) {
+        throwIfInconsistent(id, updatedAd.getId());
         throwIfNonexisting(id);
-        ads.put(id, updatedAd);
-        return updatedAd;
+        return adRepository.save(updatedAd);
+    }
+
+    private static void throwIfIdNotNull(final Long id) {
+        if (id != null && id.intValue() != 0) {
+            String message = String
+                    .format("Remove 'id' property from request or use PUT method to update resource with id = %d", id);
+            throw new BadRequestException(message);
+        }
     }
 
     private void throwIfNonexisting(long id) {
-        if (!ads.containsKey(id)) {
+        if (!adRepository.exists(id)) {
             throw new NotFoundException(id + " not found");
+        }
+    }
+
+    private void throwIfInconsistent(Long expected, Long actual) {
+        if (!expected.equals(actual)) {
+            String message = String.format(
+                    "bad request, inconsistent IDs between request and object: request id = %d, object id = %d",
+                    expected, actual);
+            throw new BadRequestException(message);
         }
     }
 

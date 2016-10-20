@@ -173,6 +173,13 @@
 			<version>2.2.0</version>
 			<scope>test</scope>
 		</dependency>
+		<!-- H2 (in-memory) database implementation -->
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<version>1.4.184</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>bulletinboard-ads</finalName>

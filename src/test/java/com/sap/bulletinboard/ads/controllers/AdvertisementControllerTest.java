@@ -11,7 +11,6 @@ import java.io.IOException;
 import javax.inject.Inject;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -31,7 +30,6 @@ import com.sap.bulletinboard.ads.models.Advertisement;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { WebAppContextConfig.class })
 @WebAppConfiguration
-@Ignore("re-activate after solving exercise 8 part 2")
 //@formatter:off
 public class AdvertisementControllerTest {
     
@@ -112,6 +110,16 @@ public class AdvertisementControllerTest {
     }
     
     @Test
+    public void createWithId() throws Exception {
+        Advertisement advertisement = new Advertisement(SOME_TITLE);
+        advertisement.setId(4L);
+        
+        mockMvc.perform(post(AdvertisementController.PATH).content(toJson(advertisement))
+                .contentType(APPLICATION_JSON_UTF8))
+            .andExpect(status().isBadRequest());
+    }
+    
+    @Test
     public void readById() throws Exception {
         String id = performPostAndGetId();
 
@@ -124,7 +132,7 @@ public class AdvertisementControllerTest {
     @Test
     public void updateNotFound() throws Exception {
         Advertisement advertisement = new Advertisement(SOME_TITLE);
-
+        advertisement.setId(4711L);
         mockMvc.perform(buildPutRequest("4711", advertisement)).andExpect(status().isNotFound());
     }
 
@@ -143,6 +151,19 @@ public class AdvertisementControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.title", is(SOME_OTHER_TITLE)));
+    }
+    
+    @Test
+    public void updateByNotMatchingId() throws Exception {
+        
+        MockHttpServletResponse response = mockMvc.perform(buildPostRequest(SOME_TITLE))
+            .andExpect(status().isCreated())
+            .andReturn().getResponse();
+        
+        Advertisement advertisement = convertJsonContent(response, Advertisement.class);
+
+        mockMvc.perform(buildPutRequest("1188", advertisement))
+                .andExpect(status().isBadRequest());
     }
 
     @Test
