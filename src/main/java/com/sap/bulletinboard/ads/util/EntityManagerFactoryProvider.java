@@ -47,7 +47,7 @@ public class EntityManagerFactoryProvider {
         properties.put(DDL_GENERATION, CREATE_OR_EXTEND);
         properties.put(DDL_GENERATION_MODE, DDL_DATABASE_GENERATION);
         properties.put(CLASSLOADER, classLoader);
-        properties.put(LOGGING_LEVEL, "INFO"); // "FINE" provides more details
+        properties.put(LOGGING_LEVEL, "FINE"); // "FINE" provides more details
 
         // do not cache entities locally, as this causes problems if multiple application instances are used
         properties.put(CACHE_SHARED_DEFAULT, "false");
