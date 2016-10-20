@@ -11,6 +11,7 @@ import java.io.IOException;
 import javax.inject.Inject;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -30,6 +31,7 @@ import com.sap.bulletinboard.ads.models.Advertisement;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { WebAppContextConfig.class })
 @WebAppConfiguration
+@Ignore("re-activate after solving exercise 8 part 2")
 //@formatter:off
 public class AdvertisementControllerTest {
     
