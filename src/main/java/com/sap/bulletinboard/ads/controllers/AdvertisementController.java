@@ -1,6 +1,6 @@
 package com.sap.bulletinboard.ads.controllers;
 
-import static org.springframework.http.HttpStatus.NO_CONTENT;
+import static org.springframework.http.HttpStatus.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -9,7 +9,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
+
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,6 +37,7 @@ import com.sap.bulletinboard.ads.models.Advertisement;
 @RestController
 @RequestMapping(path = AdvertisementController.PATH)
 @RequestScope // @Scope(WebApplicationContext.SCOPE_REQUEST)
+@Validated
 public class AdvertisementController {
     public static final String PATH = "/api/v1/ads";
     private static int ID = 0;
@@ -46,7 +51,7 @@ public class AdvertisementController {
 
     @GetMapping("/{id}")
     // We do not use primitive "long" type here to avoid unnecessary autoboxing
-    public Advertisement advertisementById(@PathVariable("id") Long id) {
+    public Advertisement advertisementById(@PathVariable("id") @Min(0) Long id) {
         if (!ads.containsKey(id)) {
             throw new NotFoundException(id + " not found");
         }
@@ -58,7 +63,7 @@ public class AdvertisementController {
      *              content type.
      */
     @PostMapping
-    public ResponseEntity<Advertisement> add(@RequestBody Advertisement advertisement,
+    public ResponseEntity<Advertisement> add(@Valid @RequestBody Advertisement advertisement,
             UriComponentsBuilder uriComponentsBuilder) throws URISyntaxException {
 
         long id = ID++;
@@ -93,7 +98,7 @@ public class AdvertisementController {
             throw new NotFoundException(id + " not found");
         }
     }
-    
+
     public static class AdvertisementList {
         @JsonProperty("value")
         public List<Advertisement> advertisements = new ArrayList<>();

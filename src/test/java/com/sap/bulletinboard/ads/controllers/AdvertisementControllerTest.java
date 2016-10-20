@@ -67,7 +67,7 @@ public class AdvertisementControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.title", is(SOME_TITLE)));
     }
-
+    
     @Test
     public void readAll() throws Exception {
         mockMvc.perform(buildPostRequest(SOME_TITLE))
@@ -84,7 +84,31 @@ public class AdvertisementControllerTest {
         mockMvc.perform(buildGetRequest("4711"))
             .andExpect(status().isNotFound());
     }
-
+    
+    @Test
+    public void readByIdNegative() throws Exception {
+        mockMvc.perform(buildGetRequest("-1"))
+            .andExpect(status().isBadRequest());
+    }
+    
+    @Test
+    public void createEmptyTitle() throws Exception {
+        mockMvc.perform(buildPostRequest(null))
+            .andExpect(status().isBadRequest());
+    }
+    
+    @Test
+    public void createBlancTitle() throws Exception {
+        mockMvc.perform(buildPostRequest(""))
+            .andExpect(status().isBadRequest());
+    }
+    
+    @Test
+    public void createWithNoContent() throws Exception {
+        mockMvc.perform(post(AdvertisementController.PATH).contentType(APPLICATION_JSON_UTF8))
+            .andExpect(status().isBadRequest());
+    }
+    
     @Test
     public void readById() throws Exception {
         String id = performPostAndGetId();

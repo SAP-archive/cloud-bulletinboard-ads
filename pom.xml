@@ -81,6 +81,19 @@
 			<version>1.2.5.RELEASE</version>
 		</dependency>
 
+		<!-- Bean validation (@NotNull etc.) -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>5.2.1.Final</version>
+		</dependency>
+		<!-- MethodValidationPostProcessor relies on Expression Language -->
+		<dependency>
+			<groupId>javax.el</groupId>
+			<artifactId>javax.el-api</artifactId>
+			<version>3.0.1-b04</version>
+		</dependency>
+
 		<!-- Testing -->
 		<dependency>
 			<groupId>org.hamcrest</groupId>
