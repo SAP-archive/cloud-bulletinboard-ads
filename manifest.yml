@@ -13,3 +13,5 @@ applications:
       # Use the non-blocking /dev/urandom instead of the default to generate random numbers.
       # When using Java community buildpack, increase startup times, especially when using Spring Boot.
       JAVA_OPTS: -Djava.security.egd=file:///dev/./urandom
+  services:
+  - postgres-bulletinboard-ads
