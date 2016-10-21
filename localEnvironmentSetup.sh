@@ -10,6 +10,6 @@ export USER_ROUTE=https://opensapcp5userservice.cfapps.eu10.hana.ondemand.com
 
 # Overwrite logging library defaults
 export APPENDER=STDOUT
-export LOG_APP_LEVEL=INFO
+export LOG_APP_LEVEL=TRACE
 
 echo \$VCAP_SERVICES=$VCAP_SERVICES

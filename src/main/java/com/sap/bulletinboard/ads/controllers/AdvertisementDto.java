@@ -74,4 +74,9 @@ public class AdvertisementDto {
         public long version = 0L;
     }
 
+    @Override
+    public String toString() {
+        return "Advertisement [id=" + id + ", title=" + title + " (modified at: " + metadata.modifiedAt + ")]";
+    }
+
 }

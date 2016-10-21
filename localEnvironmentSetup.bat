@@ -9,4 +9,4 @@ SET USER_ROUTE=https://opensapcp5userservice.cfapps.eu10.hana.ondemand.com
 
 REM Overwrite logging library defaults
 SET APPENDER=STDOUT
-SET LOG_APP_LEVEL=INFO
+SET LOG_APP_LEVEL=TRACE

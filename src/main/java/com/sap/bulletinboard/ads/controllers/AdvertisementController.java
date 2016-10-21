@@ -14,6 +14,8 @@ import javax.validation.constraints.Min;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,6 +52,8 @@ public class AdvertisementController {
     // allows server side optimization e.g. via caching
     public static final int DEFAULT_PAGE_SIZE = 20;
 
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
     private AdvertisementRepository adRepository;
 
     @Inject
@@ -74,8 +78,11 @@ public class AdvertisementController {
     @GetMapping("/{id}")
     // We do not use primitive "long" type here to avoid unnecessary autoboxing
     public AdvertisementDto advertisementById(@PathVariable("id") @Min(0) Long id) {
+        logger.info("method entry, GET: {}/{}", PATH, id);
         throwIfNonexisting(id);
-        return new AdvertisementDto(adRepository.findOne(id));
+        AdvertisementDto ad = new AdvertisementDto(adRepository.findOne(id));
+        logger.info("returning: {}", ad);
+        return ad;
     }
 
     /**
@@ -143,7 +150,9 @@ public class AdvertisementController {
 
     private void throwIfNonexisting(long id) {
         if (!adRepository.exists(id)) {
-            throw new NotFoundException(id + " not found");
+            NotFoundException notFoundException = new NotFoundException(id + " not found");
+            logger.warn("request failed", notFoundException);
+            throw notFoundException;
         }
     }
 

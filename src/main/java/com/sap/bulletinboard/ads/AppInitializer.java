@@ -11,6 +11,7 @@ import org.springframework.web.context.support.AnnotationConfigWebApplicationCon
 import org.springframework.web.servlet.DispatcherServlet;
 
 import com.sap.bulletinboard.ads.config.WebAppContextConfig;
+import com.sap.hcp.cf.logging.servlet.filter.RequestLoggingFilter;
 
 public class AppInitializer implements WebApplicationInitializer {
 
@@ -30,6 +31,10 @@ public class AppInitializer implements WebApplicationInitializer {
         dispatcher.addMapping(MAPPING_URL);
 
         servletContext.addListener(new ContextLoaderListener(applicationContext));
+
+        // register logging servlet filter which logs HTTP request processing details
+        servletContext.addFilter("RequestLoggingFilter", RequestLoggingFilter.class).addMappingForUrlPatterns(null,
+                false, "/*");
     }
 
     /**
