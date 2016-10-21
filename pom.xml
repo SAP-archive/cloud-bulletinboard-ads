@@ -161,7 +161,6 @@
 			<artifactId>hystrix-core</artifactId>
 			<version>1.5.10</version>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.amqp</groupId>
 			<artifactId>spring-rabbit</artifactId>
@@ -174,6 +173,12 @@
 					<artifactId>spring-context</artifactId>
 				</exclusion>
 			</exclusions>
+		</dependency>		
+		<!-- Security -->
+		<dependency>
+			<groupId>com.sap.xs2.security</groupId>
+			<artifactId>java-container-security</artifactId>
+			<version>0.27.2</version>
 		</dependency>
 
 		<!-- Testing -->
