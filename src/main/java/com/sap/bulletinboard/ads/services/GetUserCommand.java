@@ -29,7 +29,7 @@ public class GetUserCommand extends HystrixCommand<User> {
         logger.info("sending request {}", url);
 
         try {
-            ResponseEntity<User> responseEntity = restTemplate.getForEntity(url, User.class);
+            ResponseEntity<User> responseEntity = sendRequest();
             logger.info("received response, status code: {}", responseEntity.getStatusCode());
             return responseEntity.getBody();
         } catch (HttpStatusCodeException error) {
@@ -38,8 +38,12 @@ public class GetUserCommand extends HystrixCommand<User> {
         }
     }
 
+    protected ResponseEntity<User> sendRequest() {
+        return restTemplate.getForEntity(url, User.class);
+    }
+
     // this will be used in exercise 18
-    int getTimeoutInMs() {
+    protected int getTimeoutInMs() {
         return this.properties.executionTimeoutInMilliseconds().get();
     }
 }
