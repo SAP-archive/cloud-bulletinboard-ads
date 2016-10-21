@@ -18,6 +18,7 @@ applications:
   services:
   - postgres-bulletinboard-ads
   - applogs-bulletinboard
+  - uaa-bulletinboard
 
 - name: approuter
   host: approuter-<<your user id>>

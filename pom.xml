@@ -160,6 +160,12 @@
 			<artifactId>hystrix-core</artifactId>
 			<version>1.5.10</version>
 		</dependency>
+		<!-- Security -->
+		<dependency>
+			<groupId>com.sap.xs2.security</groupId>
+			<artifactId>java-container-security</artifactId>
+			<version>0.27.2</version>
+		</dependency>
 
 		<!-- Testing -->
 		<dependency>
