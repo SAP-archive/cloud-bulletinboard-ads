@@ -62,6 +62,11 @@ public class CustomExceptionMapper extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleNotFoundException(NotFoundException exception, WebRequest request) {
         return convertToResponseEntity(exception, HttpStatus.NOT_FOUND, request);
     }
+    
+    @ExceptionHandler
+    public ResponseEntity<Object> handleNotAuthorizedException(NotAuthorizedException exception, WebRequest request) {
+        return convertToResponseEntity(exception, HttpStatus.FORBIDDEN, request);
+    }
 
     @ExceptionHandler
     public ResponseEntity<Object> handleAll(Exception exception, WebRequest request) {

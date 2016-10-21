@@ -21,6 +21,7 @@
 		<logback.version>1.1.7</logback.version>
 		<sap.logging.version>2.1.1</sap.logging.version>
 		<spring.version>4.3.3.RELEASE</spring.version>
+		<httpclient.version>4.5.2</httpclient.version>
 	</properties>
 
 	<dependencies>
@@ -138,6 +139,19 @@
 			<artifactId>commons-dbcp2</artifactId>
 			<version>2.1.1</version>
 			<scope>runtime</scope>
+		</dependency>
+
+		<!-- Apache HTTP Client (closeable, configurable) -->
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>${httpclient.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>commons-logging</artifactId>
+					<groupId>commons-logging</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<!-- Testing -->
