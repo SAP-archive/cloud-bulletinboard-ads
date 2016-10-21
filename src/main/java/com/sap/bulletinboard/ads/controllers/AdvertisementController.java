@@ -16,6 +16,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
+import org.slf4j.Marker;
+import org.slf4j.MarkerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,6 +39,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sap.bulletinboard.ads.models.Advertisement;
 import com.sap.bulletinboard.ads.models.AdvertisementRepository;
+import com.sap.hcp.cf.logging.common.customfields.CustomField;
 
 /*
  * Use a path which does not end with a slash! Otherwise the controller is not reachable when not using the trailing
@@ -52,6 +56,7 @@ public class AdvertisementController {
     // allows server side optimization e.g. via caching
     public static final int DEFAULT_PAGE_SIZE = 20;
 
+    private static final Marker TECHNICAL = MarkerFactory.getMarker("TECHNICAL");
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private AdvertisementRepository adRepository;
@@ -78,7 +83,12 @@ public class AdvertisementController {
     @GetMapping("/{id}")
     // We do not use primitive "long" type here to avoid unnecessary autoboxing
     public AdvertisementDto advertisementById(@PathVariable("id") @Min(0) Long id) {
-        logger.info("method entry, GET: {}/{}", PATH, id);
+        MDC.put("endpoint", "GET: " + PATH + "/" + id);
+
+        logger.info("demonstration of custom fields, not part of message",
+                CustomField.customField("example-key", "example-value"));
+        logger.info("demonstration of custom fields, part of message: {}",
+                CustomField.customField("example-key", "example-value"));
         throwIfNonexisting(id);
         AdvertisementDto ad = new AdvertisementDto(adRepository.findOne(id));
         logger.info("returning: {}", ad);
@@ -95,7 +105,8 @@ public class AdvertisementController {
         throwIfIdNotNull(advertisement.getId());
 
         AdvertisementDto savedAdvertisement = new AdvertisementDto(adRepository.save(advertisement.toEntity()));
-
+        logger.info(TECHNICAL, "created ad with version {}", savedAdvertisement.metadata.version);
+        
         UriComponents uriComponents = uriComponentsBuilder.path(PATH + "/{id}")
                 .buildAndExpand(savedAdvertisement.getId());
         return ResponseEntity.created(new URI(uriComponents.getPath())).body(savedAdvertisement);
@@ -119,6 +130,7 @@ public class AdvertisementController {
         throwIfInconsistent(id, updatedAd.getId());
         throwIfNonexisting(id);
         adRepository.save(updatedAd.toEntity());
+        logger.trace(TECHNICAL, "updated ad with version {}", updatedAd.metadata.version);
         return new AdvertisementDto(adRepository.findOne(id)); // Note that EntityManager.merge might not update all
                                                                // fields such as createdAt
     }
