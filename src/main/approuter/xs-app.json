@@ -1,8 +1,13 @@
 {
-  "welcomeFile": "index.html",
-  "routes": [{
-    "source": "^/ads",
-    "target": "/",
-    "destination": "ads-destination"
-  }]
+    "welcomeFile": "index.html",
+    "routes": [{
+        "source": "^/ads/api/",
+        "target": "/api/",
+        "destination": "ads-destination",
+        "scope": "$XSAPPNAME.Display"
+        }, {
+        "source": "^/ads",
+        "target": "/",
+        "destination": "ads-destination"
+    }]
 }

@@ -1,0 +1,32 @@
+{
+    "xsappname"     : "bulletinboard-<<your user id>>",
+    "description"   : "Enabled bulletinboard for multi tenants",
+    "tenant-mode"   : "shared",
+    "scopes"        : [
+                        {
+                          "name"                 : "$XSAPPNAME.Display",
+                          "description"          : "Display Advertisements"
+                        },
+                        {
+                          "name"                 : "$XSAPPNAME.Update",
+                          "description"          : "Update Advertisements"
+                        }
+                      ],
+    "role-templates": [
+                        {
+                          "name"                 : "Viewer",
+                          "description"          : "View Advertisements",
+                          "scope-references"     : [
+                                                     "$XSAPPNAME.Display"             
+                                                   ]                                            
+                        },
+                        {
+                          "name"                 : "Advertiser",
+                          "description"          : "Maintain Advertisements",
+                          "scope-references"     : [
+                                                     "$XSAPPNAME.Display",             
+                                                     "$XSAPPNAME.Update"             
+                                                   ]                                            
+                        }
+    ]
+}
