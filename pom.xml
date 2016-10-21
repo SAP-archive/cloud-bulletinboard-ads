@@ -22,6 +22,7 @@
 		<sap.logging.version>2.1.1</sap.logging.version>
 		<spring.version>4.3.3.RELEASE</spring.version>
 		<httpclient.version>4.5.2</httpclient.version>
+		<spring.amqp.version>2.0.1.RELEASE</spring.amqp.version>
 	</properties>
 
 	<dependencies>
@@ -159,6 +160,20 @@
 			<groupId>com.netflix.hystrix</groupId>
 			<artifactId>hystrix-core</artifactId>
 			<version>1.5.10</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.amqp</groupId>
+			<artifactId>spring-rabbit</artifactId>
+			<version>${spring.amqp.version}</version>
+			<exclusions>
+				<exclusion>
+					<!-- We need a more recent version of spring-context than the one included 
+						in spring-rabbit -->
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-context</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<!-- Testing -->

@@ -39,6 +39,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sap.bulletinboard.ads.models.Advertisement;
 import com.sap.bulletinboard.ads.models.AdvertisementRepository;
+import com.sap.bulletinboard.ads.services.StatisticsServiceClient;
 import com.sap.bulletinboard.ads.services.UserServiceClient;
 import com.sap.hcp.cf.logging.common.customfields.CustomField;
 
@@ -62,11 +63,14 @@ public class AdvertisementController {
 
     private AdvertisementRepository adRepository;
     private UserServiceClient userServiceClient;
+    private StatisticsServiceClient statisticsServiceClient;
 
     @Inject
-    public AdvertisementController(AdvertisementRepository repository, UserServiceClient userServiceClient) {
+    public AdvertisementController(AdvertisementRepository repository, UserServiceClient userServiceClient,
+            StatisticsServiceClient statisticsServiceClient) {
         this.adRepository = repository;
         this.userServiceClient = userServiceClient;
+        this.statisticsServiceClient = statisticsServiceClient;
     }
 
     @GetMapping
@@ -93,6 +97,7 @@ public class AdvertisementController {
         logger.info("demonstration of custom fields, part of message: {}",
                 CustomField.customField("example-key", "example-value"));
         throwIfNonexisting(id);
+        statisticsServiceClient.advertisementIsShown(id);
         AdvertisementDto ad = new AdvertisementDto(adRepository.findOne(id));
         logger.info("returning: {}", ad);
         return ad;
