@@ -1,6 +1,7 @@
 ---
 applications:
 - name: bulletinboard-ads
+  host: bulletinboard-ads-<<your user id>>
   memory: 800M
   path: target/bulletinboard-ads.war
   buildpack: https://github.com/cloudfoundry/java-buildpack.git#v4.6
@@ -18,3 +19,21 @@ applications:
   - postgres-bulletinboard-ads
   - applogs-bulletinboard
   - mq-bulletinboard
+
+- name: approuter
+  host: approuter-<<your user id>>
+  path: src/main/approuter
+  buildpack: https://github.com/cloudfoundry/nodejs-buildpack.git#v1.6.10
+  memory: 128M
+  env:
+    XSAPPNAME: bulletinboard-<<your user id>>
+    TENANT_HOST_PATTERN: "^(.*)-approuter-<<your user id>>.cfapps.<<region>>.hana.ondemand.com"
+    destinations: >
+      [{
+         "name":"ads-destination",
+         "url" :"https://bulletinboard-ads-<<your user id>>.cfapps.<<region>>.hana.ondemand.com",
+         "forwardAuthToken": true}
+      ]
+  services:
+    - applogs-bulletinboard
+    - uaa-bulletinboard

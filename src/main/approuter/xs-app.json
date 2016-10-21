@@ -1,0 +1,8 @@
+{
+  "welcomeFile": "index.html",
+  "routes": [{
+    "source": "^/ads",
+    "target": "/",
+    "destination": "ads-destination"
+  }]
+}
