@@ -16,7 +16,8 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<failOnMissingWebXml>false</failOnMissingWebXml>
 		<maven.tomcat.port>8080</maven.tomcat.port>
-
+		<http.proxyHost>proxy.wdf.sap.corp</http.proxyHost>
+		<http.proxyPort>8080</http.proxyPort>
 		<spring.version>4.3.3.RELEASE</spring.version>
 		<logging.version>2.0.8</logging.version>
 	</properties>
@@ -127,8 +128,8 @@
 					<port>${maven.tomcat.port}</port>
 					<path>/</path>
 					<systemProperties>
-						<http.proxyHost>proxy.wdf.sap.corp</http.proxyHost>
-						<http.proxyPort>8080</http.proxyPort>
+						<http.proxyHost>${http.proxyHost}</http.proxyHost>
+						<http.proxyPort>${http.proxyPort}</http.proxyPort>
 					</systemProperties>
 				</configuration>
 			</plugin>
