@@ -79,7 +79,6 @@ public class AdvertisementRepositoryTest {
 
     @Test(expected = JpaOptimisticLockingFailureException.class)
     public void shouldUseVersionForConflicts() {
-        Advertisement entity = new Advertisement();
         entity.setTitle("some title");
         entity = repo.save(entity); // persists entity and sets initial version
 
@@ -108,5 +107,16 @@ public class AdvertisementRepositoryTest {
         assertThat(dtoEntity.getId(), is(dto.getId()));
         assertThat(dtoEntity.getTitle(), is(dto.title));
         assertThat(dtoEntity.getVersion(), is(dto.metadata.version));
+    }
+    
+    @Test
+    public void shouldFindByTitle() {
+        String title = "Find me";
+
+        entity.setTitle(title);
+        repo.save(entity);
+
+        Advertisement foundEntity = repo.findByTitle(title).get(0);
+        assertThat(foundEntity.getTitle(), is(title));
     }
 }
