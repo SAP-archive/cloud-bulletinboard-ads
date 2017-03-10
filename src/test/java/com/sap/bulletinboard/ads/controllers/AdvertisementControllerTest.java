@@ -2,17 +2,22 @@ package com.sap.bulletinboard.ads.controllers;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
-import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8;
+import static org.springframework.http.MediaType.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.http.HttpHeaders;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -70,6 +75,11 @@ public class AdvertisementControllerTest {
     
     @Test
     public void readAll() throws Exception {
+        mockMvc.perform(buildDeleteRequest(""))
+            .andExpect(status().isNoContent());
+        
+        mockMvc.perform(buildPostRequest(SOME_TITLE))
+            .andExpect(status().isCreated());
         mockMvc.perform(buildPostRequest(SOME_TITLE))
             .andExpect(status().isCreated());
 
@@ -206,6 +216,77 @@ public class AdvertisementControllerTest {
         assertThat(idNewAd, is(not(id)));
     }
     
+    @Test
+    public void readAdsFromSeveralPages() throws Exception {
+        int adsCount = AdvertisementController.DEFAULT_PAGE_SIZE + 1;;
+        
+        mockMvc.perform(buildDeleteRequest(""))
+            .andExpect(status().isNoContent());
+        
+        for (int i = 0; i < adsCount; i++) {
+            mockMvc.perform(buildPostRequest(SOME_TITLE))
+                .andExpect(status().isCreated());
+        }
+        
+        mockMvc.perform(buildGetByPageRequest(0))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(APPLICATION_JSON_UTF8))
+            .andExpect(jsonPath("$.value.length()", is(AdvertisementController.DEFAULT_PAGE_SIZE)));
+        
+        mockMvc.perform(buildGetByPageRequest(1))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(APPLICATION_JSON_UTF8))
+            .andExpect(jsonPath("$.value.length()", is(1)));
+    }
+    
+    @Test
+    public void navigatePages() throws Exception {
+        int adsCount = (AdvertisementController.DEFAULT_PAGE_SIZE * 2) + 1;
+        
+        mockMvc.perform(buildDeleteRequest(""))
+            .andExpect(status().isNoContent());
+        
+        for (int i = 0; i < adsCount; i++) {
+            mockMvc.perform(buildPostRequest(SOME_TITLE))
+                .andExpect(status().isCreated());
+        }
+        
+        // get query
+        String linkHeader = performGetRequest(AdvertisementController.PATH).getHeader(HttpHeaders.LINK);
+        assertThat(linkHeader, is("</api/v1/ads/pages/1>; rel=\"next\""));
+        
+        // navigate to next
+        String nextLink = extractLinks(linkHeader).get(0);
+        String linkHeader2ndPage = performGetRequest(nextLink).getHeader(HttpHeaders.LINK);
+        assertThat(linkHeader2ndPage, is("</api/v1/ads/pages/0>; rel=\"previous\", </api/v1/ads/pages/2>; rel=\"next\""));
+        
+        // navigate to next
+        nextLink = extractLinks(linkHeader2ndPage).get(1);
+        String linkHeader3rdPage = performGetRequest(nextLink).getHeader(HttpHeaders.LINK);
+        assertThat(linkHeader3rdPage, is("</api/v1/ads/pages/1>; rel=\"previous\""));
+        
+        // navigate to previous
+        String previousLink = extractLinks(linkHeader3rdPage).get(0);
+        assertThat(performGetRequest(previousLink).getHeader(HttpHeaders.LINK), is(linkHeader2ndPage));
+    }
+    
+    private static List<String> extractLinks(final String linkHeader) {
+        final List<String> links = new ArrayList<String>();
+        Pattern pattern = Pattern.compile("<(?<link>\\S+)>");
+        final Matcher matcher = pattern.matcher(linkHeader);
+        while (matcher.find()) {
+            links.add(matcher.group("link"));
+        }
+        return links;
+    }
+    
+    private MockHttpServletResponse performGetRequest(String path) throws Exception {
+            return mockMvc.perform(get(path))
+                    .andExpect(status().isOk())
+                    .andExpect(content().contentType(APPLICATION_JSON_UTF8))
+                    .andReturn().getResponse();        
+    }
+
     private MockHttpServletRequestBuilder buildPostRequest(String adsTitle) throws Exception {
         Advertisement advertisement = new Advertisement();
         advertisement.setTitle(adsTitle);
@@ -225,6 +306,10 @@ public class AdvertisementControllerTest {
 
     private MockHttpServletRequestBuilder buildGetRequest(String id) throws Exception {
         return get(AdvertisementController.PATH + "/" + id);
+    }
+    
+    private MockHttpServletRequestBuilder buildGetByPageRequest(int pageId) throws Exception {
+        return get(AdvertisementController.PATH_PAGES + pageId);
     }
     
     private MockHttpServletRequestBuilder buildPutRequest(String id, Advertisement advertisement) throws Exception {

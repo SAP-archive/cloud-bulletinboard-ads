@@ -6,12 +6,15 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Collection;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -41,6 +44,10 @@ import com.sap.bulletinboard.ads.models.AdvertisementRepository;
 @Validated
 public class AdvertisementController {
     public static final String PATH = "/api/v1/ads";
+    public static final String PATH_PAGES = PATH + "/pages/";
+    public static final int FIRST_PAGE_ID = 0;
+    // allows server side optimization e.g. via caching
+    public static final int DEFAULT_PAGE_SIZE = 20;
 
     private AdvertisementRepository adRepository;
 
@@ -50,8 +57,17 @@ public class AdvertisementController {
     }
 
     @GetMapping
-    public AdvertisementList advertisements() {
-        return new AdvertisementList((Collection<Advertisement>) adRepository.findAll());
+    public ResponseEntity<AdvertisementList> advertisements() {
+        return advertisementsForPage(FIRST_PAGE_ID);
+    }
+
+    @GetMapping("/pages/{pageId}") // not "public"
+    public ResponseEntity<AdvertisementList> advertisementsForPage(@PathVariable("pageId") int pageId) {
+
+        Page<Advertisement> page = adRepository.findAll(new PageRequest(pageId, DEFAULT_PAGE_SIZE));
+
+        return new ResponseEntity<AdvertisementList>(new AdvertisementList(page.getContent()),
+                buildLinkHeader(page, PATH_PAGES), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
@@ -95,6 +111,23 @@ public class AdvertisementController {
         throwIfInconsistent(id, updatedAd.getId());
         throwIfNonexisting(id);
         return adRepository.save(updatedAd);
+    }
+
+    public static HttpHeaders buildLinkHeader(Page<?> page, String path) {
+        StringBuilder linkHeader = new StringBuilder();
+        if (page.hasPrevious()) {
+            int prevNumber = page.getNumber() - 1;
+            linkHeader.append("<").append(path).append(prevNumber).append(">; rel=\"previous\"");
+            if (!page.isLast())
+                linkHeader.append(", ");
+        }
+        if (page.hasNext()) {
+            int nextNumber = page.getNumber() + 1;
+            linkHeader.append("<").append(path).append(nextNumber).append(">; rel=\"next\"");
+        }
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.LINK, linkHeader.toString());
+        return headers;
     }
 
     private static void throwIfIdNotNull(final Long id) {
