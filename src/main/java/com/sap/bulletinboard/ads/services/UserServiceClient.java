@@ -5,10 +5,10 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
+
+import com.netflix.hystrix.exception.HystrixRuntimeException;
 
 @Component // defines a Spring Bean with name "userServiceClient"
 public class UserServiceClient {
@@ -28,16 +28,14 @@ public class UserServiceClient {
 
     public boolean isPremiumUser(String id) throws RuntimeException {
         String url = userServiceRoute + "/" + PATH + "/" + id;
-        logger.info("sending request {}", url);
-        
+        boolean isPremiumUser = false;
         try {
-            ResponseEntity<User> responseEntity = restTemplate.getForEntity(url, User.class);
-            logger.info("received response, status code: {}", responseEntity.getStatusCode());
-            return responseEntity.getBody().premiumUser;
-        } catch(HttpStatusCodeException error) {
-            logger.error("received HTTP status code: {}", error.getStatusCode());
-            throw error;
+            User user = new GetUserCommand(url, restTemplate).execute();
+            isPremiumUser = user.premiumUser;
+        } catch (HystrixRuntimeException ex) {
+            logger.warn("[HystrixFailure:" + ex.getFailureType().toString() + "] " + ex.getMessage());
         }
+        return isPremiumUser;
     }
 
     public static class User {
