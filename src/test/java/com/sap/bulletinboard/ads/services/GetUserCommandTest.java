@@ -12,6 +12,7 @@ import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestClientException;
 
 import com.netflix.hystrix.Hystrix;
+import com.netflix.hystrix.exception.HystrixBadRequestException;
 import com.sap.bulletinboard.ads.services.UserServiceClient.User;
 
 /**
@@ -35,30 +36,30 @@ public class GetUserCommandTest {
         assertThat(user, is(USER));
     }
 
-//    @Test
-//    public void responseTimedOutFallback() {
-//        TestableUserCommand command = new TestableUserCommand().provokeTimeout();
-//        User user = command.execute();
-//        assertThat(user, is(not(USER)));
-//    }
-//
-//    @Test
-//    public void responseErrorFallback() {
-//        TestableUserCommand command = new TestableUserCommand().respondWithError();
-//        User user = command.execute();
-//        assertThat(user, is(not(USER)));
-//    }
-//    
-//    @Test(expected = HystrixBadRequestException.class)
-//    public void responseHystrixBadRequest() {
-//        TestableUserCommand command = new TestableUserCommand().respondWithBadRequest();
-//        User user = null;
-//        try {
-//            user = command.execute();
-//        } finally {
-//            assertThat(user, is(nullValue())); // fallback is not be called in case of HystrixBadRequestException
-//        }
-//    }
+    @Test
+    public void responseTimedOutFallback() {
+        TestableUserCommand command = new TestableUserCommand().provokeTimeout();
+        User user = command.execute();
+        assertThat(user, is(not(USER)));
+    }
+
+    @Test
+    public void responseErrorFallback() {
+        TestableUserCommand command = new TestableUserCommand().respondWithError();
+        User user = command.execute();
+        assertThat(user, is(not(USER)));
+    }
+
+    @Test(expected = HystrixBadRequestException.class)
+    public void responseHystrixBadRequest() {
+        TestableUserCommand command = new TestableUserCommand().respondWithBadRequest();
+        User user = null;
+        try {
+            user = command.execute();
+        } finally {
+            assertThat(user, is(nullValue())); // fallback is not be called in case of HystrixBadRequestException
+        }
+    }
 
     // useful for optional exercise step
     private User dummyUser() {
