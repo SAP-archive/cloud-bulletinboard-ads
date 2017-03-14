@@ -1,5 +1,7 @@
 package com.sap.bulletinboard.ads.services;
 
+import java.util.function.Supplier;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -18,12 +20,14 @@ public class GetUserCommand extends HystrixCommand<User> {
 
     private String url;
     private RestTemplate restTemplate;
+    private Supplier<User> fallbackFunction;
 
-    public GetUserCommand(String url, RestTemplate restTemplate) {
+    public GetUserCommand(String url, RestTemplate restTemplate, Supplier<User> fallbackFunction) {
         super(Setter.withGroupKey(HystrixCommandGroupKey.Factory.asKey("User"))
                 .andCommandKey(HystrixCommandKey.Factory.asKey("User.getById")));
         this.url = url;
         this.restTemplate = restTemplate;
+        this.fallbackFunction = fallbackFunction;
     }
 
     @Override
@@ -56,7 +60,7 @@ public class GetUserCommand extends HystrixCommand<User> {
         if (isResponseRejected()) {
             logger.warn("request was rejected");
         }
-        return new User();
+        return fallbackFunction.get();
     }
 
     protected ResponseEntity<User> sendRequest() {
