@@ -81,7 +81,8 @@ public class GetUserCommandTest {
         private RestClientException exception;
 
         TestableUserCommand(Supplier<User> fallbackFunction) {
-            super("", null, fallbackFunction);
+            super(null);
+            setFallbackFunction(fallbackFunction);
         }
 
         TestableUserCommand respondWithOkUser() {
