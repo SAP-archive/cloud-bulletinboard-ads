@@ -35,6 +35,7 @@ public class AdvertisementControllerTest {
     
     private static final String LOCATION = "Location";
     private static final String SOME_TITLE = "MyNewAdvertisement";
+    private static final String SOME_OTHER_TITLE = "MyOldAdvertisement";
 
     @Inject
     WebApplicationContext context;
@@ -94,6 +95,70 @@ public class AdvertisementControllerTest {
                 .andExpect(jsonPath("$.title", is(SOME_TITLE)));
     }
     
+    @Test
+    public void updateNotFound() throws Exception {
+        Advertisement advertisement = new Advertisement(SOME_TITLE);
+
+        mockMvc.perform(buildPutRequest("4711", advertisement)).andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void updateById() throws Exception {
+        
+        MockHttpServletResponse response = mockMvc.perform(buildPostRequest(SOME_TITLE))
+            .andExpect(status().isCreated())
+            .andReturn().getResponse();
+        
+        Advertisement advertisement = convertJsonContent(response, Advertisement.class);
+        advertisement.setTitle(SOME_OTHER_TITLE);
+        String id = getIdFromLocation(response.getHeader(LOCATION));
+
+        mockMvc.perform(buildPutRequest(id, advertisement))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$.title", is(SOME_OTHER_TITLE)));
+    }
+
+    @Test
+    public void deleteNotFound() throws Exception {
+        mockMvc.perform(buildDeleteRequest("4711"))
+            .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void deleteById() throws Exception {
+        String id = performPostAndGetId();
+        
+        mockMvc.perform(buildDeleteRequest(id))
+            .andExpect(status().isNoContent());
+
+        mockMvc.perform(buildGetRequest(id))
+            .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void deleteAll() throws Exception {
+        String id = performPostAndGetId();
+        
+        mockMvc.perform(buildDeleteRequest(""))
+            .andExpect(status().isNoContent());
+
+        mockMvc.perform(buildGetRequest(id))
+                .andExpect(status().isNotFound());
+    }
+    
+    @Test
+    public void doNotReuseIdsOfDeletedItems() throws Exception {
+        String id = performPostAndGetId();
+        
+        mockMvc.perform(buildDeleteRequest(id))
+            .andExpect(status().isNoContent());
+        
+        String idNewAd = performPostAndGetId();
+
+        assertThat(idNewAd, is(not(id)));
+    }
+    
     private MockHttpServletRequestBuilder buildPostRequest(String adsTitle) throws Exception {
         Advertisement advertisement = new Advertisement();
         advertisement.setTitle(adsTitle);
@@ -113,6 +178,15 @@ public class AdvertisementControllerTest {
 
     private MockHttpServletRequestBuilder buildGetRequest(String id) throws Exception {
         return get(AdvertisementController.PATH + "/" + id);
+    }
+    
+    private MockHttpServletRequestBuilder buildPutRequest(String id, Advertisement advertisement) throws Exception {
+        return put(AdvertisementController.PATH + "/" + id).content(toJson(advertisement))
+                .contentType(APPLICATION_JSON_UTF8);
+    }
+
+    private MockHttpServletRequestBuilder buildDeleteRequest(String id) throws Exception {
+        return delete(AdvertisementController.PATH + "/" + id);
     }
     
     private String toJson(Object object) throws JsonProcessingException {
