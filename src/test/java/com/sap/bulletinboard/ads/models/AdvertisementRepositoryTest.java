@@ -16,6 +16,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.sap.bulletinboard.ads.config.EmbeddedDatabaseConfig;
+import com.sap.bulletinboard.ads.controllers.AdvertisementDto;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = EmbeddedDatabaseConfig.class)
@@ -86,5 +87,26 @@ public class AdvertisementRepositoryTest {
         Advertisement updatedEntity = repo.save(entity); // returns instance with updated version
 
         repo.save(entity); // tries to persist entity with outdated version
+    }
+
+    @Test
+    public void fromEntityToDto() {
+        Advertisement entity = repo.save(new Advertisement("some title"));
+        AdvertisementDto dto = new AdvertisementDto(entity);
+
+        assertThat("" + dto.getId(), not(isEmptyOrNullString()));
+        assertThat(dto.metadata.version, is(1L));
+        assertThat(dto.title, is("some title"));
+    }
+
+    @Test
+    public void fromDtoToEntity() {
+        Advertisement entity = repo.save(new Advertisement("some title"));
+        AdvertisementDto dto = new AdvertisementDto(entity);
+
+        Advertisement dtoEntity = dto.toEntity();
+        assertThat(dtoEntity.getId(), is(dto.getId()));
+        assertThat(dtoEntity.getTitle(), is(dto.title));
+        assertThat(dtoEntity.getVersion(), is(dto.metadata.version));
     }
 }

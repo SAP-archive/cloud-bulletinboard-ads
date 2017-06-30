@@ -95,6 +95,14 @@ public class Advertisement {
         return new Timestamp(new Date().getTime());
     }
 
+    protected void setUpdatedAt(Timestamp timestamp) {
+        modifiedAt = timestamp;
+    }
+
+    public void setVersion(long version) {
+        this.version = version;
+    }
+
     public void setId(long id) {
         this.id = id;
     }

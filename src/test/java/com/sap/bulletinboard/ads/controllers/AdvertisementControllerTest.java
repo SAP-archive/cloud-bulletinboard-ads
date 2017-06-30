@@ -30,7 +30,6 @@ import org.springframework.web.context.WebApplicationContext;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sap.bulletinboard.ads.config.WebAppContextConfig;
-import com.sap.bulletinboard.ads.models.Advertisement;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { WebAppContextConfig.class })
@@ -121,7 +120,7 @@ public class AdvertisementControllerTest {
     
     @Test
     public void createWithId() throws Exception {
-        Advertisement advertisement = new Advertisement(SOME_TITLE);
+        AdvertisementDto advertisement = new AdvertisementDto(SOME_TITLE);
         advertisement.setId(4L);
         
         mockMvc.perform(post(AdvertisementController.PATH).content(toJson(advertisement))
@@ -141,7 +140,7 @@ public class AdvertisementControllerTest {
     
     @Test
     public void updateNotFound() throws Exception {
-        Advertisement advertisement = new Advertisement(SOME_TITLE);
+        AdvertisementDto advertisement = new AdvertisementDto(SOME_TITLE);
         advertisement.setId(4711L);
         mockMvc.perform(buildPutRequest("4711", advertisement)).andExpect(status().isNotFound());
     }
@@ -153,7 +152,7 @@ public class AdvertisementControllerTest {
             .andExpect(status().isCreated())
             .andReturn().getResponse();
         
-        Advertisement advertisement = convertJsonContent(response, Advertisement.class);
+        AdvertisementDto advertisement = convertJsonContent(response, AdvertisementDto.class);
         advertisement.setTitle(SOME_OTHER_TITLE);
         String id = getIdFromLocation(response.getHeader(LOCATION));
 
@@ -170,7 +169,7 @@ public class AdvertisementControllerTest {
             .andExpect(status().isCreated())
             .andReturn().getResponse();
         
-        Advertisement advertisement = convertJsonContent(response, Advertisement.class);
+        AdvertisementDto advertisement = convertJsonContent(response, AdvertisementDto.class);
 
         mockMvc.perform(buildPutRequest("1188", advertisement))
                 .andExpect(status().isBadRequest());
@@ -288,7 +287,7 @@ public class AdvertisementControllerTest {
     }
 
     private MockHttpServletRequestBuilder buildPostRequest(String adsTitle) throws Exception {
-        Advertisement advertisement = new Advertisement();
+        AdvertisementDto advertisement = new AdvertisementDto();
         advertisement.setTitle(adsTitle);
 
         // post the advertisement as a JSON entity in the request body
@@ -312,7 +311,7 @@ public class AdvertisementControllerTest {
         return get(AdvertisementController.PATH_PAGES + pageId);
     }
     
-    private MockHttpServletRequestBuilder buildPutRequest(String id, Advertisement advertisement) throws Exception {
+    private MockHttpServletRequestBuilder buildPutRequest(String id, AdvertisementDto advertisement) throws Exception {
         return put(AdvertisementController.PATH + "/" + id).content(toJson(advertisement))
                 .contentType(APPLICATION_JSON_UTF8);
     }
