@@ -7,4 +7,4 @@ export USER_ROUTE=https://bulletinboard-users-production.cfapps.us10.hana.ondema
 
 # Overwrite logging library defaults
 export APPENDER=STDOUT
-export LOG_APP_LEVEL=ALL
+export LOG_APP_LEVEL=INFO

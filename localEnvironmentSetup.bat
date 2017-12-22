@@ -7,4 +7,4 @@ SET USER_ROUTE=https://bulletinboard-users-production.cfapps.us10.hana.ondemand.
 
 REM Overwrite logging library defaults
 SET APPENDER=STDOUT
-SET LOG_APP_LEVEL=ALL
+SET LOG_APP_LEVEL=INFO
