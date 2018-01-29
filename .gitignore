@@ -1,0 +1,42 @@
+.DS_Store
+thumbs.db
+target
+
+# Ignore temp folders
+grunt/bin
+
+# Ignore npm files/folders
+node_modules
+npm-debug.log
+
+# Ignore bower folder
+bower_components
+
+# Ignore junit reports
+/reports/
+/bin/
+
+# Ignore auto-generated files from tex
+*.vrb
+*.nav
+*.snm
+*.aux
+*.log
+*.blg
+*.out
+*.toc
+*.fls
+*.fdb_latexmk
+presentations_*.bbl
+presentations_*.pdf
+presentations_JAVA-*.tex
+cc-appdev-java.pdf
+*.synctex.gz
+ 
+# ignore eclipse stuff
+/.project
+*.iml
+
+# ignore local / personal work files
+presentations_JAVA_d021619.tex
+presentations_JAVA_d048418.tex

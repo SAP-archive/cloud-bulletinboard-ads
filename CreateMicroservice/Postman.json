@@ -1,0 +1,73 @@
+{
+	"id": "a7290aa0-7ebd-2622-d17a-68e903bff2ef",
+	"name": "Exercise_3_CreateAdsEndpoints",
+	"description": "",
+	"order": [
+		"6bed727f-0a43-da4a-0a9e-fff228e703ac",
+		"be58eca2-2df9-1818-f6f6-685410097692",
+		"0e39c4a6-e73d-404f-7b90-8991e44c0680"
+	],
+	"folders": [],
+	"timestamp": 1439541339360,
+	"owner": "",
+	"remoteLink": "",
+	"public": false,
+	"requests": [
+		{
+			"id": "0e39c4a6-e73d-404f-7b90-8991e44c0680",
+			"headers": "Content-Type: application/json\n",
+			"url": "localhost:8080/api/v1/ads/1",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "GET",
+			"data": [],
+			"dataMode": "params",
+			"version": 2,
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1439541961786,
+			"name": "Get First Advertisement",
+			"description": "",
+			"collectionId": "a7290aa0-7ebd-2622-d17a-68e903bff2ef"
+		},
+		{
+			"id": "6bed727f-0a43-da4a-0a9e-fff228e703ac",
+			"url": "localhost:8080/api/v1/ads",
+			"method": "POST",
+			"headers": "Content-Type: application/json\n",
+			"data": [],
+			"dataMode": "raw",
+			"tests": "",
+			"preRequestScript": "",
+			"currentHelper": "normal",
+			"pathVariables": {},
+			"version": 2,
+			"name": "Create Advertisement",
+			"description": "",
+			"descriptionFormat": "html",
+			"collectionId": "a7290aa0-7ebd-2622-d17a-68e903bff2ef",
+			"rawModeData": "{\"title\":\"Ads 1\"}"
+		},
+		{
+			"id": "be58eca2-2df9-1818-f6f6-685410097692",
+			"headers": "Content-Type: application/json\n",
+			"url": "localhost:8080/api/v1/ads",
+			"pathVariables": {},
+			"preRequestScript": "",
+			"method": "GET",
+			"collectionId": "a7290aa0-7ebd-2622-d17a-68e903bff2ef",
+			"data": [],
+			"dataMode": "params",
+			"name": "Get All Advertisements",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1439541846868,
+			"version": 2,
+			"responses": [],
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {}
+		}
+	]
+}
