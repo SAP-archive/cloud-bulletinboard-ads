@@ -4,7 +4,7 @@ Exercise 8 (Part 2): Use Repository to Access Database
 ## Learning Goal
 After this exercise you know how to access our database using the convenience CRUD repository interface. 
 
-The task of this exercise is to persist the advertisements via the corresponding repository instead of storing the data temporarily into a `Map` <sub><b>[to-do]</b>[Why not use HashMap here, as in the previous excercise and later in this excercise?]</sub> and ensure that the JUnit tests are still running successfully. That's why you also need to configure the in-memory database (H2) in context of the JUnit tests. 
+The task of this exercise is to persist the advertisements via the corresponding repository instead of storing the data temporarily into a `Map` and ensure that the JUnit tests are still running successfully. That's why you also need to configure the in-memory database (H2) in context of the JUnit tests. 
 
 ## Prerequisite
 Continue with your solution of the last exercise. If this does not work, you can checkout the branch [`origin/solution-8-1-Configure-Persistence`](https://github.com/SAP/cloud-bulletinboard-ads/tree/solution-8-1-Configure-Persistence).
