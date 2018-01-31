@@ -63,11 +63,11 @@ Before you (re-)start your Tomcat webserver within Eclipse, you need to adapt th
 - Double-click the server instance and select the `Open launch configuration` link.
 - Open the `Edit configuration` dialog. 
 - switch to the `Environment` tab and add the following environment variables:
-  - `USER_ROUTE=https://bulletinboard-users-course.cfapps.sap.hana.ondemand.com`
+  - `USER_ROUTE=https://opensapcp5userservice.cfapps.eu10.hana.ondemand.com`
 - switch to the `Arguments` tab and add the proxy settings to the VM arguments:
   - ` -Dhttp.proxyHost=proxy.wdf.sap.corp -Dhttp.proxyPort=8080`<sub><b>[to-do]</b></sub>
 
-**Why are proxy settings required?** <sub><b>[to-do]</b></sub> If you run your service locally within the SAP corporate network, the host `bulletinboard-users-course.cfapps.sap.hana.ondemand.com` cannot be resolved. If you apply the proxy settings to the Java process (via VM arguments) then the SAP proxy is used which is able to resolve the host name. Settings in Eclipse are separate from the settings in the shell (bash), which in our IDE are defined in `~/.environment` and loaded at the start of each shell via `~/.bashrc`.
+**Why are proxy settings required?** <sub><b>[to-do]</b></sub> If you run your service locally within the SAP corporate network, the host `opensapcp5userservice.cfapps.eu10.hana.ondemand.com` cannot be resolved. If you apply the proxy settings to the Java process (via VM arguments) then the SAP proxy is used which is able to resolve the host name. Settings in Eclipse are separate from the settings in the shell (bash), which in our IDE are defined in `~/.environment` and loaded at the start of each shell via `~/.bashrc`.
 
 <sup>Note: In case you are getting a **null-pointer-exception** because `USER_ROUTE==null`, you probably created the `UserServiceClient` with `new` instead of `@Inject`. The latter is necessary since annotations in a class are not interpreted when you create the instance yourself with `new`.</sup>
 
@@ -116,9 +116,8 @@ public class TestAppContextConfig {
 When pushing the application to Cloud Foundry, the `USER_ROUTE` needs to be configured as a system environment variable. This can easily be done in the `manifest.yml` file by adding another entry under `env`:
 ```
 env:
-    USER_ROUTE: 'https://bulletinboard-users-course.cfapps.sap.hana.ondemand.com'
+    USER_ROUTE: 'https://opensapcp5userservice.cfapps.eu10.hana.ondemand.com'
 ``` 
-<sub><b>[to-do]</b></sub>
 
 ## Used Frameworks and Tools
 - [Postman REST Client (Chrome Plugin)](https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop)
