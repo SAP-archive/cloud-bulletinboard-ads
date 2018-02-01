@@ -11,6 +11,10 @@ Follow these steps to setup your Virtual Box [Click Here](VMImage_GettingStarted
 - After the setup of VirtualBox and importing the provided VM Image, start the Virtual Machine and customize the VM according the following guidance/steps.
 - Note: In case you run into trouble, you might need to change some BIOS settings as described in the **[troubleshooting section](#troubleshooting)** below
 
+#### Download and install API Development and Testing Tool
+
+- Download and install an API Development and Testing Tool such as [Postman](https://www.getpostman.com/)
+
 #### General
 - The user for the image is `vagrant` with password `vagrant`.
 - Always do a proper `shut down` of the Virtual Machine after work (click on the top right icon). Do not force `Power off`, as otherwise Eclipse might hang on startup and/or data can get inconsistent. If you face this, check the "Troubleshooting" section below.
