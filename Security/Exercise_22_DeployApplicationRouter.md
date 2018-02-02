@@ -62,24 +62,24 @@ With this the node modules are downloaded by the NPM package manager from the `h
 As the approuter is a Node.JS application, it needs to be added into the `manifest.yml` as another sub element of the `applications` element, just like `bulletinboard-ads`:
 ```
 - name: approuter
-  host: approuter-d012345
+  host: approuter-<<your user id>>
   path: src/main/approuter
   buildpack: https://github.com/cloudfoundry/nodejs-buildpack.git#v1.6.10
   memory: 128M
   env:
-    XSAPPNAME: bulletinboard-d012345
-    TENANT_HOST_PATTERN: "^(.*)-approuter-d012345.cfapps.sap.hana.ondemand.com"
+    XSAPPNAME: bulletinboard-<<your user id>>
+    TENANT_HOST_PATTERN: "^(.*)-approuter-<<your user id>>.cfapps.<<region>>.hana.ondemand.com"
     destinations: >
       [
         {"name":"ads-destination", 
-         "url":"https://bulletinboard-ads-d012345.cfapps.sap.hana.ondemand.com",
+         "url":"https://bulletinboard-ads-<<your user id>>.cfapps.<<region>>.hana.ondemand.com",
          "forwardAuthToken": true}
       ]
   services:
     - applogs-bulletinboard
     - uaa-bulletinboard
 ```
-**Furthermore you need to specify the `host` of your `bulletinboard-ads` application as well**. For example: `host: bulletinboard-ads-d012345`. Reason: As the `manifest.yml` contains now multiple applications you are not longer able to specify the host using the command line flag `-n`. 
+**Furthermore you need to specify the `host` of your `bulletinboard-ads` application as well**. For example: `host: bulletinboard-ads-d012345`. Reason: As the `manifest.yml` contains now multiple applications you are not longer able to specify the host using the command line flag `-n`. The references to `<<region>>` needs to be replaced with eu10 or us10 depending on the trial environment where you have registered. For more details, please refer the [documentation](https://help.sap.com/viewer/65de2977205c403bbc107264b8eccf4b/Cloud/en-US/350356d1dc314d3199dca15bd2ab9b0e.html)
 
 > **Note**: Even though the `approuter` is not "stateless" (as it maps the `SessionID` to the `JWT token`) the amount of `approuter` instances depends on the load on the business application. This is possible as Session stickiness is implemented by Cloud Foundry with the `VCAPID` header. Using the same header value in the following requests causes the Cloud Foundry router to route those requests to the same (`approuter`) application instance. BUT: applications MUST NOT rely on being called by the same `approuter` instance during a session. The `approuter` instance could change if the old instance dies and a new instance is created during the recovery procedure.
 
@@ -106,7 +106,7 @@ In this step we create an XSUAA service instance that is able to serve requests 
 - Create an XSUAA service instance with name `uaa-bulletinboard` and replace `xsappname` placeholder accordingly.  
 **Note**: The following statement works on **Linux/Mac only** (get other examples with `cf cs -h`).
 ```
-$   cf create-service xsuaa application uaa-bulletinboard -c '{"xsappname":"bulletinboard-<Your d/c/i-User>"}'
+$   cf create-service xsuaa application uaa-bulletinboard -c '{"xsappname":"bulletinboard-<Your user id>"}'
 ```
 
 - Deploy the applications with:
@@ -118,11 +118,11 @@ $   cf push     # host names are already specified in the manifest
 ```
 $   cf env approuter
 ```
-> **Important Note:** The value of `identityzone` (e.g. d012345trial) matches the value of `subdomain` of the subaccount and represents the name of the **tenant** for the next steps.
+> **Important Note:** The value of `identityzone` (e.g. `<<your user id>>trial`) matches the value of `subdomain` of the subaccount and represents the name of the **tenant** for the next steps.
 
-- Enter `cf routes` to see which routes are already mapped to your applications. Every tenant consuming your application needs his own route, prefixed with the tenant name (e.g. `d012345trial-approuter-d012345.cfapps.sap.hana.ondemand.com`) and needs to be created with the following command:
+- Enter `cf routes` to see which routes are already mapped to your applications. Every tenant consuming your application needs his own route, prefixed with the tenant name (e.g. `d012345<<your user id>>-approuter-<<your user id>>.cfapps.<<region>>.hana.ondemand.com`) and needs to be created with the following command:
 ```
-$   cf map-route approuter cfapps.sap.hana.ondemand.com -n d012345trial-approuter-d012345
+$   cf map-route approuter cfapps.<<region>>.hana.ondemand.com -n <<your user id>>trial-approuter-<<your user id>>
 ```
 
 ### `VCAP_SERVICES` (XSUAA) Explained
@@ -132,12 +132,12 @@ $   cf map-route approuter cfapps.sap.hana.ondemand.com -n d012345trial-approute
 The name should be unique per space, because the UAA service instance with `application` plan is visible on Cloud Foundry org level.
 - The value of `"clientid":` is the value of `xsappname` with the additional prefix `sb-`. The client is in this context the business application, including the approuter. 
 - The client credentials string also contains the URL of the UAA service. The approuter uses this information to redirect unauthenticated calls to the UAA service.
-- The value of `"identityzone"` (e.g. d012345trial) matches the value of `subdomain` of the subaccount and represents the name of the **tenant**.
+- The value of `"identityzone"` (e.g. `<<your user id>>trial`) matches the value of `subdomain` of the subaccount and represents the name of the **tenant**.
 
 ## Step 6: Access Your Application Via the Approuter
 Observe how the authentication works:
 - Get the url of the approuter via `cf apps`. 
-- Then enter the approuter URL e.g. `https://d012345trial-approuter-d012345.cfapps.sap.hana.ondemand.com` in the browser. This should redirect you to the XS-UAA Logon Screen. Please note that **d012345trial** is a placeholder for the **tenant id** which has a 1-1 relationship to the **Identity Zone `d012345trial`** which is configured for CF Org `D012345trial_trial` and is under our control. Note furthermore that you've configured your approuter on how to derive the tenant from the URL according to the `TENANT_HOST_PATTERN` that you've provided as part of the `manifest.yml`.
+- Then enter the approuter URL e.g. `https://<<your user id>>trial-approuter-<<your user id>>.cfapps.<<region>>.hana.ondemand.com` in the browser. This should redirect you to the XS-UAA Logon Screen. Please note that **`<<your user id>>trial`** is a placeholder for the **tenant id** which has a 1-1 relationship to the **Identity Zone `<<your user id>>trial`** which is configured for CF Org `<<your user id>>trial_trial` and is under our control. Note furthermore that you've configured your approuter on how to derive the tenant from the URL according to the `TENANT_HOST_PATTERN` that you've provided as part of the `manifest.yml`.
 - You will be redirected to SAP User ID Service (https://accounts.sap.com), login with your SAP email address and domain password. <sub><b>[to-do]</b></sub>
 - After successful login to you will get redirected to the welcome page if you've defined one. 
 
