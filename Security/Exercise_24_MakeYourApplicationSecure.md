@@ -37,7 +37,7 @@ It suffices to add the direct dependency on the SAP Java Container Security libr
 
 ### Add and modify `WebSecurityConfig` class
 - Create a `WebSecurityConfig` class in the package `com.sap.bulletinboard.ads.config` and copy the code from [here](https://github.com/SAP/cloud-bulletinboard-ads/blob/solution-24-Make-App-Secure/src/main/java/com/sap/bulletinboard/ads/config/WebSecurityConfig.java).
-- Change the value of field `XSAPPNAME` from `"bulletinboard-d012345"` to `"bulletinboard-<Your d/c/i-User>"`.  
+- Change the value of field `XSAPPNAME` from `"bulletinboard-d012345"` to `"bulletinboard-<Your user id>"`.  
 **Note:** The value of `private static final String XSAPPNAME` must be equal to the value of `xsappname`, that is defined in your `xs-security.json` file. 
 
 
@@ -97,7 +97,7 @@ public void setUp() throws Exception {
     ...
     // compute valid token with Display and Update scopes
     // tenant specific XSAPPNAME (appid) looks like <xsappname>!t<tenant specific index> 
-    jwt = new JwtGenerator().getTokenForAuthorizationHeader("bulletinboard-d012345!t27.Display", "bulletinboard-d012345!t27.Update"); 
+    jwt = new JwtGenerator().getTokenForAuthorizationHeader("bulletinboard-<<your user id>>!t27.Display", "bulletinboard-<<your user id>>!t27.Update"); 
 }
 ```
 Note: The class `JwtGenerator` has the responsibility to generate a JWT Token for those scopes which are passed to the `getTokenForAuthorizationHeader()` method as a String array. It returns the token in a format that is suitable for the HTTP `Authorization` header. The generator signs the JWT Token with its private key (taken from file `privateKey.txt`).
@@ -123,10 +123,10 @@ Based on the `VCAP_SERVICES` environment variable the `spring-security` module i
 
 - In Eclipse, open the Tomcat server settings (by double-clicking on the server) and then open the launch configuration. In the Environment tab edit the `VCAP_SERVICES` variable and replace the value with the following:
 ```javascript
-{"rabbitmq-lite":[{"credentials":{"hostname":"127.0.0.1","password":"guest","uri":"amqp://guest:guest@127.0.0.1:5672","username":"guest"},"name":"rabbitmq-lite","label":"rabbitmq-lite","tags":["rabbitmq33","rabbitmq","amqp"]}],"postgresql-9.3":[{"name":"postgresql-lite","label":"postgresql-9.3","credentials":{"dbname":"test","hostname":"127.0.0.1","password":"test123!","port":"5432","uri":"postgres://testuser:test123!@localhost:5432/test","username":"testuser"},"tags":["relational","postgresql"],"plan":"free"}],"xsuaa":[{"credentials":{"clientid":"testClient!t27","clientsecret":"dummy-clientsecret","identityzone":"uaa","url":"dummy-url","verificationkey":"-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAn5dYHyD/nn/Pl+/W8jNGWHDaNItXqPuEk/hiozcPF+9l3qEgpRZrMx5ya7UjGdvihidGFQ9+efgaaqCLbk+bBsbU5L4WoJK+/t1mgWCiKI0koaAGDsztZsd3Anz4LEi2+NVNdupRq0ScHzweEKzqaa/LgtBi5WwyA5DaD33gbytG9hdFJvggzIN9+DSverHSAtqGUHhwHSU4/mL36xSReyqiKDiVyhf/y6V6eiE0USubTEGaWVUANIteiC+8Ags5UF22QoqMo3ttKnEyFTHpGCXSn+AEO0WMLK1pPavAjPaOyf4cVX8b/PzHsfBPDMK/kNKNEaU5lAXo8dLUbRYquQIDAQAB-----END PUBLIC KEY-----","xsappname":"bulletinboard-d012345"},"tags":["xsuaa"]}]}
+{"rabbitmq-lite":[{"credentials":{"hostname":"127.0.0.1","password":"guest","uri":"amqp://guest:guest@127.0.0.1:5672","username":"guest"},"name":"rabbitmq-lite","label":"rabbitmq-lite","tags":["rabbitmq33","rabbitmq","amqp"]}],"postgresql-9.3":[{"name":"postgresql-lite","label":"postgresql-9.3","credentials":{"dbname":"test","hostname":"127.0.0.1","password":"test123!","port":"5432","uri":"postgres://testuser:test123!@localhost:5432/test","username":"testuser"},"tags":["relational","postgresql"],"plan":"free"}],"xsuaa":[{"credentials":{"clientid":"testClient!t27","clientsecret":"dummy-clientsecret","identityzone":"uaa","url":"dummy-url","verificationkey":"-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAn5dYHyD/nn/Pl+/W8jNGWHDaNItXqPuEk/hiozcPF+9l3qEgpRZrMx5ya7UjGdvihidGFQ9+efgaaqCLbk+bBsbU5L4WoJK+/t1mgWCiKI0koaAGDsztZsd3Anz4LEi2+NVNdupRq0ScHzweEKzqaa/LgtBi5WwyA5DaD33gbytG9hdFJvggzIN9+DSverHSAtqGUHhwHSU4/mL36xSReyqiKDiVyhf/y6V6eiE0USubTEGaWVUANIteiC+8Ags5UF22QoqMo3ttKnEyFTHpGCXSn+AEO0WMLK1pPavAjPaOyf4cVX8b/PzHsfBPDMK/kNKNEaU5lAXo8dLUbRYquQIDAQAB-----END PUBLIC KEY-----","xsappname":"bulletinboard-<<your user id>>"},"tags":["xsuaa"]}]}
 ```
 - If you run the application from the command line, update your `localEnvironmentSetup` script accordingly to  [`localEnvironmentSetup.sh`](https://github.com/SAP/cloud-bulletinboard-ads/blob/solution-24-Make-App-Secure/localEnvironmentSetup.sh) ([`localEnvironmentSetup.bat`](https://github.com/SAP/cloud-bulletinboard-ads/blob/solution-24-Make-App-Secure/localEnvironmentSetup.bat))
-- In both cases make sure that you've changed the value of field `xsappname` from "bulletinboard-d012345" to "bulletinboard-<Your d/c/i-User>".
+- In both cases make sure that you've changed the value of field `xsappname` from "bulletinboard-d012345" to "bulletinboard-`<<Your user id>>`".
 
 Note: With this configuration we can mock the XSUAA backing service as we make use of so-called "offlineToken verification". Having that we can simulate a valid JWT Token to test our service as described below.
 
@@ -136,7 +136,7 @@ Before calling the service you need to provide a digitally signed JWT token to s
 
 #### Explanation
 The generated JWT Token is an "individual one" as it
- - contains specific scope(s) e.g. `bulletinboard-d012345.Display` (as defined in your `WebSecurityConfig` class). Furthermore note that the scope is composed of **xsappname** e.g. `bulletinboard-d012345` which also needs to be the same as provided as part of the `VCAP_SERVICES`--`xsuaa`--`xsappname`
+ - contains specific scope(s) e.g. `bulletinboard-<<your user id>>.Display` (as defined in your `WebSecurityConfig` class). Furthermore note that the scope is composed of **xsappname** e.g. `bulletinboard-<<your user id>>` which also needs to be the same as provided as part of the `VCAP_SERVICES`--`xsuaa`--`xsappname`
  - it is signed with a private key that fits to the public key that is provided as part of the `VCAP_SERVICES`--`xsuaa`--`verificationkey`
 
 ### Call local Service 
@@ -162,11 +162,11 @@ Before deploying your application to Cloud Foundry you need to bind your applica
 - Now re-deploy your application to Cloud Foundry.
 
 ### Call Deployed service
-- Call your service endpoints e.g. `https://bulletinboard-ads-d012345.cfapps.sap.hana.ondemand.com` manually using the `Postman` Chrome plugin. You should get for any endpoint (except for `\health`) an `401` ("unauthorized") status code. 
-- On Cloud Foundry it is not possible to provide a valid JWT token which is accepted by the XSUAA. Therefore if you like to provoke a `403` ("forbidden", "insufficient_scope") status code **you need to call your application via the `approuter`** e.g. `https://d012345trial-approuter-d012345.cfapps.sap.hana.ondemand.com/ads/api/v1/ads` in order to authenticate yourself and to create a JWT Token with no scopes. **BUT** you probably will get as response the login screen in HTML. That's why you need to
+- Call your service endpoints e.g. `https://bulletinboard-ads-<<your user id>>.cfapps.<<region>>.hana.ondemand.com` manually using the `Postman` Chrome plugin. You should get for any endpoint (except for `\health`) an `401` ("unauthorized") status code. 
+- On Cloud Foundry it is not possible to provide a valid JWT token which is accepted by the XSUAA. Therefore if you like to provoke a `403` ("forbidden", "insufficient_scope") status code **you need to call your application via the `approuter`** e.g. `https://<<your user id>>trial-approuter-<<your user id>>.cfapps.<<region>>.hana.ondemand.com/ads/api/v1/ads` in order to authenticate yourself and to create a JWT Token with no scopes. **BUT** you probably will get as response the login screen in HTML. That's why you need to
   - enable the `Interceptor` within `Postman`. You might need to install another [`Postman Interceptor` Chrome Plugin](https://chrome.google.com/webstore/detail/postman-interceptor/aicmkgpgakddgnaphhhpliifpcfhicfo), which will help you to send requests using browser cookies through the `Postman` app. 
   - logon via `Chrome` Browser first and then
-  - back in `Postman` resend the request e.g. `https://d012345trial-approuter-d012345.cfapps.sap.hana.ondemand.com/ads/api/v1/ads` and
+  - back in `Postman` resend the request e.g. `https://<<your user id>>trial-approuter-<<your user id>>.cfapps.<<region>>.hana.ondemand.com/ads/api/v1/ads` and
   - make sure that you now get a `403` status code.
 
 > **Note:**  
