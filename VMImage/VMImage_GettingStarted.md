@@ -13,7 +13,7 @@ Follow these steps to setup your Virtual Box [Click Here](VMImage_GettingStarted
 
 #### Download and install API Development and Testing Tool
 
-- Download and install an API Development and Testing Tool such as [Postman](https://www.getpostman.com/)
+- Download and install an API Development and Testing Tool such as [Postman](https://www.getpostman.com/) inside of the VM
 
 #### General
 - The user for the image is `vagrant` with password `vagrant`.
