@@ -13,28 +13,42 @@ Ensure that the `bulletinboard-statistics` application is deployed in your CF sp
 ## Step 1: Define a Message Listener
 
 The Statistics service periodically sends out messages containing its statistics for the advertisement with ID="1".
-In this step you want to implement and register a listener for the corresponding queue to receive messages from the Statistics service.
 
-Create a `StatisticsListener` class that implements the `MessageListener` interface and annotate the class with `@Component` and `@Profile("cloud")`.
-- In the constructor, declare a queue with name "statistics.periodicalStatistics" similar like in the [`StatisticsServiceClient` constructor](https://github.com/SAP/cloud-bulletinboard-ads/blob/solution-20-Use-Message-Queues/src/main/java/com/sap/bulletinboard/ads/services/StatisticsServiceClient.java). In addition to an instance of `AmqpAdmin` also inject an instance of `org.springframework.amqp.rabbit.connection.ConnectionFactory`. Then create an instance of `SimpleMessageListenerContainer` and register the `StatisticsListener`:
-```
-  SimpleMessageListenerContainer listenerContainer = new SimpleMessageListenerContainer();
-  listenerContainer.setConnectionFactory(connectionFactory);
-  listenerContainer.setQueueNames("statistics.periodicalStatistics");
-  listenerContainer.setMessageListener(this);
-  listenerContainer.start();
-```
-**Note:** This ensures that the `onMessage` method is invoked whenever a message is delivered to the specified queue.
+In this step you want to implement a listener that handles the messages from the Statistics service.
 
-## Step 2: Log Received Messages
+Create a `StatisticsListener` class as part of the `com.sap.bulletinboard.ads.services` package that implements the `MessageListener` interface and annotate the class with `@Component` and `@Profile("cloud")`.
+
 Implement the `onMessage(message message)` method, that the received message gets logged:
-
 ```
 logger.info("got statistics: {}", new String(message.getBody(), Charset.forName("UTF-8")));
 ```
 
+## Step 2: Register the Message Listener for the Queue
+
+First of all let's make sure that the queue, we would like to listen to, does exist. Therefore in the `CloudRabbitConfig` class as part of the `amqpAdmin` Bean definition we declare another Queue with `statistics.periodicalStatistics` as routing key.
+
+In order to register the `StatisticsListener` as listener for the queue you can enhance the `CloudRabbitConfig` with the following Bean definition:
+
+```java
+@Bean
+public SimpleMessageListenerContainer pushMessageContainer(
+        @Qualifier("statisticsListener") final MessageListener messageListener,
+        ConnectionFactory connectionFactory) {
+
+    SimpleMessageListenerContainer container = new SimpleMessageListenerContainer(connectionFactory);
+
+    container.setQueueNames();
+    container.setPrefetchCount(20);// avoid backpressure: limit number of unacknowledged messages for a particular channel
+    container.setDefaultRequeueRejected(false); // to prevent requeuing in case of exception
+    container.setMessageListener(messageListener); // registers StatisticsListener
+    container.setAutoStartup(true);
+
+    return container;
+}
+```
+
 ## Step 3: Deploy and Test
-Deploy your microservice and check if a messages similar to `got statistics: Statistics [id=1, viewCount=<ViewCount>]` are logged. The Statistics service sends out messages every five seconds.
+Deploy your microservice and check if messages similar to `got statistics: Statistics [id=1, viewCount=<ViewCount>]` are logged. The Statistics service sends out messages every five seconds.
 
 ## Used Frameworks and Tools
 - [RabbitMQ](https://www.rabbitmq.com/)
