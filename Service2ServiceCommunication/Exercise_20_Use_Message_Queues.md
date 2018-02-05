@@ -39,24 +39,16 @@ Create a new class `CloudRabbitConfig` in package `com.sap.bulletinboard.ads.con
 
 - Create a new class `StatisticsServiceClient` in package `com.sap.bulletinboard.ads.services` and annotate it with `@Component`.
 **Note:** the classes we will be using in the following are from `org.springframework.amqp.core`, so when you're fixing the import errors pick classes from this package.
-- In the constructor of `StatisticsServiceClient` you expect that the `AmqpAdmin`, as well as the `RabbitTemplate` gets injected. Here you declare the queue with name "statistics.adIsShown":
-
-```java
-@Inject
-public StatisticsServiceClient(AmqpAdmin amqpAdmin, RabbitTemplate rabbitTemplate) {
-    amqpAdmin.declareQueue(new Queue("statistics.adIsShown")); // creates queue, if not existing
-    this.rabbitTemplate = rabbitTemplate;
-}
-```
+- In the constructor of `StatisticsServiceClient` you expect that the `RabbitTemplate` gets injected. 
 - Create a method `advertisementIsShown(long id)`. The responsibility of this method is to send out messages to the queue named "statistics.adIsShown":
 
 ```java
 public void advertisementIsShown(long id) {
-    rabbitTemplate.convertAndSend("statistics.adIsShown", String.valueOf(id));
+    rabbitTemplate.convertAndSend(null, "statistics.adIsShown", String.valueOf(id));
 }
 ```
-Note: In our setup, this message is sent to the queue named "statistics.adIsShown". Strictly speaking, the first argument of the `convertAndSend` method is a routing key, which is not related to a specific queue and can later be used to route messages differently.
-See [MessageQueue.md](MessageQueue.md) for more details.
+Note: In our setup, as we are not specifying any Exchange, we bind to the **Direct Exchange** so we bind to a Queue 
+via a fixed routing key, which currently relates to the queue named "statistics.adIsShown". 
 
 **Other implementation hints:** 
   - Emit a log message whenever a message is sent.
