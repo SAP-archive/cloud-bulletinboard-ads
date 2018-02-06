@@ -118,26 +118,17 @@ $   cf push     # host names are already specified in the manifest
 ```
 $   cf env approuter
 ```
-> **Important Note:** The value of `identityzone` (e.g. `<<your user id>>trial`) matches the value of `subdomain` of the subaccount and represents the name of the **tenant** for the next steps.
+> **Important Note:** The value of `identityzone` matches the value of **`subdomain`** name of the subaccount and represents the name of the **tenant** for the next steps.
 
-- Enter `cf routes` to see which routes are already mapped to your applications. Every tenant consuming your application needs his own route, prefixed with the tenant name (e.g. `<<your user id>>trial-approuter-<<your user id>>.cfapps.<<region>>.hana.ondemand.com`) and needs to be created with the following command:
+- Enter `cf routes` to see which routes are already mapped to your applications. Every tenant consuming your application needs his own route, prefixed with **tenant** (e.g. `p20001234trial`) and needs to be created with the following command:
 ```
-$   cf map-route approuter cfapps.<<region>>.hana.ondemand.com -n <<your user id>>trial-approuter-<<your user id>>
+$   cf map-route approuter cfapps.<<region>>.hana.ondemand.com -n <<your tenant>>-approuter-<<your user id>>
 ```
-
-### `VCAP_SERVICES` (XSUAA) Explained
-- The UAA service broker generates this information when the approuter is bound to the UAA service. 
-- The JSON array following the string `"XSUAA":` contains the client credentials for the UAA service. This establishes a trusted relationship between the approuter and the UAA service.
-- The value of `"xsappname":` represents the name of the business application. 
-The name should be unique per space, because the UAA service instance with `application` plan is visible on Cloud Foundry org level.
-- The value of `"clientid":` is the value of `xsappname` with the additional prefix `sb-`. The client is in this context the business application, including the approuter. 
-- The client credentials string also contains the URL of the UAA service. The approuter uses this information to redirect unauthenticated calls to the UAA service.
-- The value of `"identityzone"` (e.g. `<<your user id>>trial`) matches the value of `subdomain` of the subaccount and represents the name of the **tenant**.
 
 ## Step 6: Access Your Application Via the Approuter
 Observe how the authentication works:
 - Get the url of the approuter via `cf apps`. 
-- Then enter the approuter URL e.g. `https://<<your user id>>trial-approuter-<<your user id>>.cfapps.<<region>>.hana.ondemand.com` in the browser. This should redirect you to the XS-UAA Logon Screen. Please note that **`<<your user id>>trial`** is a placeholder for the **tenant id** which has a 1-1 relationship to the **Identity Zone `<<your user id>>trial`** which is configured for CF Org `<<your user id>>trial_trial` and is under our control. Note furthermore that you've configured your approuter on how to derive the tenant from the URL according to the `TENANT_HOST_PATTERN` that you've provided as part of the `manifest.yml`.
+- Then enter the approuter URL e.g. `https://<<your tenant>>-approuter-<<your user id>>.cfapps.<<region>>.hana.ondemand.com` in the browser. This should redirect you to the XS-UAA Logon Screen. Note that you've configured your approuter on how to derive the tenant from the URL according to the `TENANT_HOST_PATTERN` that you've provided as part of the `manifest.yml`.
 - You will be redirected to SAP User ID Service (https://accounts.sap.com), login with your SAP email address and domain password. <sub><b>[to-do]</b></sub>
 - After successful login to you will get redirected to the welcome page if you've defined one. 
 
