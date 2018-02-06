@@ -19,7 +19,7 @@ Add the following dependencies to your `pom.xml` using the XML view of Eclipse:
 
 It suffices to add the direct dependency on the SAP Java Container Security library, because the library itself depends on the Spring Security libraries and the indirect dependency on the Spring Security framework will be resolved automatically.
 
-- Add the `java-container-security` dependency, **in case you haven't done already as part of Exercise 22**:
+- Add the `java-container-security` dependency:
 ```
 <!-- Security -->
 <dependency>
@@ -30,7 +30,7 @@ It suffices to add the direct dependency on the SAP Java Container Security libr
 ```
 - Note: After you've changed the Maven settings, don't forget to update your Eclipse project (`Alt+F5`)!
 
-- Note: You can get the current version of the SAP Java Container Security library from [SAP Service Marketplace](https://launchpad.support.sap.com/#/softwarecenter/template/products/%20_APP=00200682500000001943&_EVENT=DISPHIER&HEADER=Y&FUNCTIONBAR=N&EVENT=TREE&NE=NAVIGATE&ENR=73555000100200004333&V=MAINT&TA=ACTUAL&PAGE=SEARCH/XS%20JAVA%201) (the filename currently is XS_JAVA_8-70001362.ZIP. The version/filename may change in the future).
+- Alternatively you can get the current version of the SAP Java Container Security library from [SAP Service Marketplace](https://launchpad.support.sap.com/#/softwarecenter/template/products/%20_APP=00200682500000001943&_EVENT=DISPHIER&HEADER=Y&FUNCTIONBAR=N&EVENT=TREE&NE=NAVIGATE&ENR=73555000100200004333&V=MAINT&TA=ACTUAL&PAGE=SEARCH/XS%20JAVA%201) (the filename currently is XS_JAVA_8-70001362.ZIP. The version/filename may change in the future).
 
 
 ## Step 2: Configure Spring Security
