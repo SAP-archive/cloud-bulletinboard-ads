@@ -54,7 +54,7 @@ To declare the **Role Templates**, create the security descriptor file `xs-secur
 ```
 
 Notes: 
-* The value of `xsappname` must be unique within the whole Cloud Foundry org. Therefore, don't forget to **use your user id in the xsappname** to refer to your unique instance! <sub><b>[to-do]</b></sub>
+* Don't forget to **replace `<<your user id>>` as part of the xsappname** to refer to the same xsappname you have created the UAA service instance with. Furthermore the value of `xsappname` must be unique within the whole Cloud Foundry org. 
 * The `shared tenant-mode` leads the XSUAA service instance to trust other tenants that are different to the one that corresponds to the Cloud Foundry org.
 * We have now defined a generic scope for starting the application. Typically, every authorization model of an application contains application/domain specific scopes ([see next exercise](Exercise_24_MakeYourApplicationSecure.md)).
 
