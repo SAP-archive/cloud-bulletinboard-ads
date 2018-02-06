@@ -55,7 +55,7 @@ To declare the **Role Templates**, create the security descriptor file `xs-secur
 
 Notes: 
 * The value of `xsappname` must be unique within the whole Cloud Foundry org. Therefore, don't forget to **use your user id in the xsappname** to refer to your unique instance! <sub><b>[to-do]</b></sub>
-* The `shared tenant-mode` leads the XSUAA service instance to trust other tenants that are different to the one that corresponds to the Cloud Foundry org such as `<<your user id>>trial`.
+* The `shared tenant-mode` leads the XSUAA service instance to trust other tenants that are different to the one that corresponds to the Cloud Foundry org.
 * We have now defined a generic scope for starting the application. Typically, every authorization model of an application contains application/domain specific scopes ([see next exercise](Exercise_24_MakeYourApplicationSecure.md)).
 
 ## Step 2: Configure Start Conditions for Routes / Endpoints
@@ -94,7 +94,8 @@ Push your application to Cloud Foundry:
 $    cf push
 ```
 
-Then enter the approuter URL e.g. `https://<<your user id>>trial-approuter-<<your user id>>.cfapps.<<region>>.hana.ondemand.com/ads/api/v1/ads` in the browser. Make sure that it responds with message "Forbidden" (HTTP Status code `403`).
+Then enter the approuter URL e.g.  
+`https://<<your tenant>>-approuter-<<your user id>>.cfapps.<<region>>.hana.ondemand.com/ads/api/v1/ads` in the browser. Make sure that it responds with message "Forbidden" (HTTP Status code `403`).
 
  
 ***
