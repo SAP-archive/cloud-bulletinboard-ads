@@ -156,7 +156,7 @@ Before deploying your application to Cloud Foundry you need to bind your applica
 ```
 - Now re-deploy your application to Cloud Foundry.
 
-### Call Deployed service
+### Call deployed service
 - Call your service endpoints e.g. `https://bulletinboard-ads-<<your user id>>.cfapps.<<region>>.hana.ondemand.com` manually using the `Postman` Chrome plugin. You should get for any endpoint (except for `\health`) an `401` ("unauthorized") status code. 
 - On Cloud Foundry it is not possible to provide a valid JWT token which is accepted by the XSUAA. Therefore if you like to provoke a `403` ("forbidden", "insufficient_scope") status code **you need to call your application via the `approuter`** e.g.  
 `https://<<your tenant>>-approuter-<<your user id>>.cfapps.<<region>>.hana.ondemand.com/ads/api/v1/ads` in order to authenticate yourself and to create a JWT Token with no scopes. **BUT** you probably will get as response the login screen in HTML. That's why you need to
