@@ -20,16 +20,16 @@ To administrate authorizations for your business application, perform the follow
 - Select menu item **Trust Configuration** from the **Security** menu on the left side of the screen and select the standard IdP SAP ID Service. Now perform the procedure visualized in the screenshot:    
 <img src="/Security/images/CockpitRoleCollectionAssignToUser.jpg" width="700">  
 
-- Afterwards you need to logon again to your application so that the authorities are assigned to the user. You can provoke a logon screen when clearing your cache. Now you should have full access to all of your application endpoints.
+## Step 2: Call deployed service
+You need to logon again to your application so that the authorities are assigned to the user. You can provoke a logon screen when clearing your cache. 
+
+Call your service endpoints via the approuter e.g. `https://<<your tenant>>-approuter-<<your user id>>.cfapps.<<region>>.hana.ondemand.com/ads/api/v1/ads` manually using the `Postman` Chrome plugin as explained [here](/Security/Exercise_24_MakeYourApplicationSecure.md#call-deployed-service).
+
+Now you should have full access to all of your application endpoints.
+
 
 > **Troubleshoot**
 > You can analyze the authorities that are assigned to the current user via `https://d012345trial.authentication.sap.hana.ondemand.com/config?action=who`
-
-## Step 2: Call deployed service
-Call your service endpoints via the approuter e.g. `https://<<your tenant>>-approuter-<<your user id>>.cfapps.<<region>>.hana.ondemand.com/ads/api/v1/ads` manually using the `Postman` Chrome plugin as explained [here](/Security/Exercise_24_MakeYourApplicationSecure.md#call-deployed-service).
-
-You should now be allowed to access any endpoint.
-
 ***
 <dl>
   <dd>
