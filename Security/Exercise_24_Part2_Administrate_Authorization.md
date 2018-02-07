@@ -8,7 +8,7 @@ In this exercise you will use the SAP CP Cockpit to maintain authorizations for 
 ## Prerequisite
 Continue with your solution of the last exercise. If this does not work, you can checkout the branch [solution-24-Make-App-Secure](https://github.com/SAP/cloud-bulletinboard-ads/tree/solution-24-Make-App-Secure).
 
-## Step: Administrate Authorizations for your Business Application
+## Step 1: Administrate Authorizations for your Business Application
 To administrate authorizations for your business application, perform the following steps:
 
 - Navigate to your Subaccount
@@ -25,6 +25,10 @@ To administrate authorizations for your business application, perform the follow
 > **Troubleshoot**
 > You can analyze the authorities that are assigned to the current user via `https://d012345trial.authentication.sap.hana.ondemand.com/config?action=who`
 
+## Step 2: Call deployed service
+Call your service endpoints via the approuter e.g. `https://<<your tenant>>-approuter-<<your user id>>.cfapps.<<region>>.hana.ondemand.com/ads/api/v1/ads` manually using the `Postman` Chrome plugin as explained [here](https://github.com/SAP/cloud-bulletinboard-ads/blob/Documentation/Security/Exercise_24_MakeYourApplicationSecure.md#call-deployed-service).
+
+You should now be allowed to access any endpoint.
 
 ***
 <dl>
