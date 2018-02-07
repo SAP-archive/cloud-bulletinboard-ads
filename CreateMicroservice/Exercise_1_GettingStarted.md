@@ -16,13 +16,7 @@ Get familiar with the provided code base and understand how to test your microse
 - **Important**: Choose **`master`** as `Initial branch`
     - Use `Next` and `Finish` to go through the following dialogs (the default settings should be OK).
 - Modify the proxy setttings by updating the below mentioned fields in pom.xml with your own proxy details if your are behind any proxy.
-    - Fields to be updated are:
-    
-	`<maven.tomcat.port>`
-	
-	`<http.proxyHost>`
-	
-	`<http.proxyPort>`
+    - Fields to be updated are: `<http.proxyHost>` and `<http.proxyPort>`.
 	
 - **Then update the Maven Settings: `ALT+F5`, `OK`**
 - Make sure that you have checked out the **`master`** branch.
