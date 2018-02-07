@@ -26,7 +26,7 @@ To administrate authorizations for your business application, perform the follow
 > You can analyze the authorities that are assigned to the current user via `https://d012345trial.authentication.sap.hana.ondemand.com/config?action=who`
 
 ## Step 2: Call deployed service
-Call your service endpoints via the approuter e.g. `https://<<your tenant>>-approuter-<<your user id>>.cfapps.<<region>>.hana.ondemand.com/ads/api/v1/ads` manually using the `Postman` Chrome plugin as explained [here](https://github.com/SAP/cloud-bulletinboard-ads/blob/Documentation/Security/Exercise_24_MakeYourApplicationSecure.md#call-deployed-service).
+Call your service endpoints via the approuter e.g. `https://<<your tenant>>-approuter-<<your user id>>.cfapps.<<region>>.hana.ondemand.com/ads/api/v1/ads` manually using the `Postman` Chrome plugin as explained [here](/Security/Exercise_24_MakeYourApplicationSecure.md#call-deployed-service).
 
 You should now be allowed to access any endpoint.
 
