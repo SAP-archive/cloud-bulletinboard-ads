@@ -131,9 +131,9 @@ To enable the Spring Boot Actuator plugin you need to pretend to be a Spring Boo
 
 Create a `SpringBootActuatorConfig` class in the `com.sap.bulletinboard.ads.config` package and provide the following annotations:
 ```Java
-@EnableConfigurationProperties
 @Configuration
-@EnableAutoConfiguration
+@EnableConfigurationProperties
+@EnableAutoConfiguration(exclude = { DataSourceAutoConfiguration.class, RabbitAutoConfiguration.class })
 public class SpringBootActuatorConfig {
 }
 ```
