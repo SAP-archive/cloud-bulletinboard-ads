@@ -101,7 +101,7 @@ For this course a preconfigured virtual machine image is provided and its use is
 
 **No Exercises**
 
-# <img src="./Z_ReuseImages/images/281518_OpenBook_R_blue.png" height="80" alt="Further Resources"/> Further Resources<sub><b>[to-do]</b></sub>
+# <img src="./Z_ReuseImages/images/281518_OpenBook_R_blue.png" height="80" alt="Further Resources"/> Further Resources
 
 * [Troubleshooting VM image installation](/VMImage/VMImage_GettingStarted.md#troubleshooting)
 * [Troubleshooting Eclipse and Cloud Foundry guide](/Knowledge/TroubleShooting.md)
