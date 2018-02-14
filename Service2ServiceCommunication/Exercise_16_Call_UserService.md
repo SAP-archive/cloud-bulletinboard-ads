@@ -79,7 +79,7 @@ As described in [Exercise 1](../CreateMicroservice/Exercise_1_GettingStarted.md)
 ## Step 6: Fix Tests
 As we do not want our JUnit tests (`AdvertisementControllerTest`) to call third-party services, we need to introduce mocks for the `UserServiceClient` and as well for the `PropertySourcesPlaceholderConfigurer` to specify the `USER_ROUTE` variable. Similar to stub objects, mocks are object instances that just mock the original behavior and can be configured to behave in a certain way. 
 
-Create a new @Configuration annotated class `TestAppContextConfig` in **test package** `com.sap.bulletinboard.ads.config` and copy the code from [here](https://github.wdf.sap.corp/raw/cc-java/cc-bulletinboard-ads-spring-webmvc/solution-16-Call-User-Service/src/test/java/com/sap/bulletinboard/ads/config/TestAppContextConfig.java).<sub><b>[to-do]</b></sub>
+Create a new @Configuration annotated class `TestAppContextConfig` in **test package** `com.sap.bulletinboard.ads.config` and copy the code from [here](https://github.com/SAP/cloud-bulletinboard-ads/tree/solution-16-Call-User-Service/src/test/java/com/sap/bulletinboard/ads/config/TestAppContextConfig.java).
 
 ```java
 @Configuration
