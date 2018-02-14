@@ -9,14 +9,16 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
+import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter;
 
+import com.sap.bulletinboard.ads.multitenancy.TenantFilter;
 import com.sap.xs2.security.commons.SAPOfflineTokenServicesCloud;
 
 @Configuration
 @EnableWebSecurity
 @EnableResourceServer
 public class WebSecurityConfig extends ResourceServerConfigurerAdapter {
-    
+
     private static final String DISPLAY_SCOPE_LOCAL = "Display";
     private static final String UPDATE_SCOPE_LOCAL = "Update";
     public static final String REGEX_TENANT_INDEX = "(!t\\d+)?.";
@@ -35,6 +37,7 @@ public class WebSecurityConfig extends ResourceServerConfigurerAdapter {
 
         // @formatter:off
         http
+            .addFilterAfter(new TenantFilter(), SecurityContextHolderAwareRequestFilter.class)
             .sessionManagement()
                 // session is created by approuter
                 .sessionCreationPolicy(SessionCreationPolicy.NEVER)
@@ -50,7 +53,7 @@ public class WebSecurityConfig extends ResourceServerConfigurerAdapter {
                 .anyRequest().denyAll(); // deny anything not configured above
         // @formatter:on
     }
-    
+
     // configure offline verification which checks if any provided JWT was properly signed
     @Bean
     protected SAPOfflineTokenServicesCloud offlineTokenServices() {
