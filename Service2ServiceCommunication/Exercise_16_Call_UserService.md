@@ -8,9 +8,9 @@ The task of this exercise is to call the User service to find out whether the cu
 Technically we are going to use [`RestTemplate`](http://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/client/RestTemplate.html). The `RestTemplate` is the central Spring class for client-side HTTP access. Conceptually, it is very similar to the `JdbcTemplate`, `JmsTemplate`, and the various other templates found in the Spring Framework. This means, for instance, that the `RestTemplate` is thread-safe once constructed, and that you can use callbacks to customize its operations.
 
 ## Prerequisite
-Continue with your solution of the last exercise. If this does not work, you can checkout the branch [`origin/solution-13-Use-SLF4J-Features`](https://github.com/SAP/cloud-bulletinboard-ads/tree/solution-13-Use-SLF4J-Features).<sub><b>[to-do]</b></sub>
+Continue with your solution of the last exercise. If this does not work, you can checkout the branch [`origin/solution-13-Use-SLF4J-Features`](https://github.com/SAP/cloud-bulletinboard-ads/tree/solution-13-Use-SLF4J-Features).
 
-## Step 1: Test User Service Using a REST Client<sub><b>[to-do]</b></sub>
+## Step 1: Test User Service Using a REST Client
 Before we start with the implementation we want to get familiar with the User service. 
 
 You can test the following REST service endpoints manually in the browser using the `Postman` Chrome plugin:
