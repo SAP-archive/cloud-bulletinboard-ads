@@ -129,7 +129,7 @@ $   cf map-route approuter cfapps.<<region>>.hana.ondemand.com -n <<your tenant>
 Observe how the authentication works:
 - Get the url of the approuter via `cf apps`. 
 - Then enter the approuter URL e.g. `https://<<your tenant>>-approuter-<<your user id>>.cfapps.<<region>>.hana.ondemand.com` in the browser. This should redirect you to the XS-UAA Logon Screen. Note that you've configured your approuter on how to derive the tenant from the URL according to the `TENANT_HOST_PATTERN` that you've provided as part of the `manifest.yml`.
-- You will be redirected to SAP User ID Service (https://accounts.sap.com), login with your SAP email address and domain password. <sub><b>[to-do]</b></sub>
+- You will be redirected to SAP User ID Service (https://accounts.sap.com), login with your SAP email address and domain password.
 - After successful login to you will get redirected to the welcome page if you've defined one. 
 
 Observe the route / path mappings:
