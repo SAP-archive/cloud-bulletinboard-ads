@@ -16,7 +16,7 @@ Continue with your solution of the last exercise. If this does not work, you can
 ## Step 1: Implement Tests
 - In order to make outgoing request call substitutable by the test, we first need to prepare the `GetUserCommand` class: Use **Eclipse refactoring tools** to extract the code that does the request (`ResponseEntity<User> responseEntity = restTemplate.getForEntity(url, User.class);`) from the `run` method, into a **protected method `sendRequest`**. With that we can easily provoke long running and failing requests within the test.
 
-- As part of the `src/test/java` source folder create a new class `GetUserCommandTest` in the package `com.sap.bulletinboard.ads.services` and copy the code from [here](https://github.com/SAP/cloud-bulletinboard-ads/blob/solution-18-Make-Communication-Resilient/src/test/java/com/sap/bulletinboard/ads/services/GetUserCommandTest.java).
+- As part of the `src/test/java` source folder create a new class `GetUserCommandTest` in the package `com.sap.bulletinboard.ads.services` and copy the code from [here](https://github.com/SAP/cloud-bulletinboard-ads/blob/exercise-18-Make-Communication-Resilient/src/test/java/com/sap/bulletinboard/ads/services/GetUserCommandTest.java).
 
 ## Step 2: Provide Fallback Implementation
 In this step we provide the required fallback implementation. This is necessary because our code relies on the response of the wrapped Hystrix command. Use the tests implemented in the `GetUserCommandTest` class to drive the implementation.
