@@ -114,7 +114,6 @@ For this course a preconfigured virtual machine image is provided and its use is
 * [Pivotal Cloud Foundry Glossary](http://docs.pivotal.io/pivotalcf/concepts/glossary.html)
 * [FAQ - Frequently Asked Questions regarding the Eclipse IDE](/Knowledge/EclipseIdeTips.md)
 * [JSON Conversion](/Knowledge/JSONConversion.md)
-* [The Way towards Spring Boot](/Knowledge/TheWayTowardsSpringBoot.md)
 
 ## Support
 
