@@ -34,7 +34,7 @@ It suffices to add the direct dependency on the SAP Java Container Security libr
 <dependency>
     <groupId>com.sap.xs2.security</groupId>
     <artifactId>java-container-security</artifactId>
-    <version>0.26.4</version> 
+    <version>0.27.2</version> 
 </dependency>
 ```
 - Note: After you've changed the Maven settings, don't forget to update your Eclipse project (`Alt+F5`)!
