@@ -23,7 +23,7 @@ Follow these steps to setup your Virtual Box [Click Here](VMImage_GettingStarted
 
 #### Configure Localization
 - You can configure the proxy settings, time zone, and keyboard layout using a dedicated script. For that, double-click the `Localization` link on the Desktop. If there is no `Localization` link, try to execute `source localization.sh` in the terminal.
-(Before configuring the proxy settings, make sure you enter your proxy details in the **`proxy_environment_template_on`** file which you will find in your home directory)
+(Before configuring the proxy settings, make sure you enter your proxy details in the **`.proxy_environment_template_on`** file which you will find in your home directory)
 
 <img src="images/VM_Execute_Localization.png " width="300" />
 
