@@ -124,7 +124,7 @@ public void shouldUseVersionForConflicts() {
 }
 ```
 
-To fulfill the test case you need to add a field `version` of type `long` that is annotated with `@Version`. JPA uses this to count up version numbers and in the context of [**Optimistic Locking**](https://en.wikipedia.org/wiki/Optimistic_concurrency_control) to detect parallel updates.
+To fulfill the test case you need to add a field `version` of type `long` that is annotated with `@Version`. JPA uses this to count up version numbers and in the context of [**Optimistic Locking**](https://en.wikipedia.org/wiki/Optimistic_concurrency_control) to detect parallel updates on the same entity (database record).
 
 **Explanation**: In this test, the version is set when saving the entity for the first time. After updating the object instance and persisting the changes to the database, JPA updates the version in the database to note this change. While the returned `updatedEntity` instance contains the updated version, the `entity` instance still contains the old version. The test provokes an optimistic locking exception by trying to persist `entity` again, JPA detects a mismatch of the `entity` version and the version noted in the database.
 
