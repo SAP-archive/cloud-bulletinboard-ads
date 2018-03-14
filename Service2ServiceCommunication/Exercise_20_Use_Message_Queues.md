@@ -116,10 +116,10 @@ Deploy your Advertisement Service and check in Kibana (via log messages) if the 
 
 ## Step 8: Deploy Statistics Service as Message Consumer
 In order to test whether the messages in the queue can be processed by a consumer, you can deploy the Statistics Service as consuming application into your CF space. It is bound to the `mq-bulletinboard` service and listens to it:
- - Import the `exercise-21-mq` branch from the [Statistics Git Project](https://github.wdf.sap.corp/cc-java/cc-bulletinboard-statistics/tree/exercise-21-mq)<sub><b>[to-do]</b></sub>
+ - Checkout the branch [Statistics Service](https://github.com/SAP/cloud-bulletinboard-ads/tree/statistic-service) branch
  - In order to deploy the statistics application enter on the command line:
 ```
-# Ensure that you are in the project root e.g. ~/git/cc-bulletinboard-statistics
+# Ensure that you are in the project root e.g. ~/git/cloud-bulletinboard-ads
 $ mvn clean verify
 $ cf push -n bulletinboard-statistics-<<your user id>>
 ```
