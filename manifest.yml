@@ -1,0 +1,13 @@
+---
+applications:
+- name: bulletinboard-statistics
+  path: target/bulletinboard-statistics.war
+  instances: 1
+  memory: 700MB
+services:
+ - mq-bulletinboard
+ - applogs-bulletinboard
+env:
+  JAVA_OPTS: -Djava.security.egd=file:///dev/./urandom
+  QUEUE_INCREMENT: 'statistics.adIsShown'
+  QUEUE_SEND_STATISTICS: 'statistics.periodicalStatistics'
