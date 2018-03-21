@@ -38,6 +38,9 @@ You can [register for your own free trail account for SAP Cloud Platform](https:
 
 For this course a preconfigured virtual machine image is provided and its use is recommended if you want to follow along with the hands-on exercises. The setup is provided and explained in Week 0: System Preparation.
 
+## Requirements
+- [The course prerequisites are menioned here](/CoursePrerequisites/README.md) which we cover in week 0 of the course
+
 # <img src="./Z_ReuseImages/images/281498_SwissArmyKnife_R_blue.png" height="80" alt="Exercise"/> Exercises
 
 ## Week 0: System Preparation
@@ -114,6 +117,10 @@ For this course a preconfigured virtual machine image is provided and its use is
 * [Pivotal Cloud Foundry Glossary](http://docs.pivotal.io/pivotalcf/concepts/glossary.html)
 * [FAQ - Frequently Asked Questions regarding the Eclipse IDE](/Knowledge/EclipseIdeTips.md)
 * [JSON Conversion](/Knowledge/JSONConversion.md)
+
+## Known issues
+
+Please look into GitHub issues for any issues reported.
 
 ## Support
 
