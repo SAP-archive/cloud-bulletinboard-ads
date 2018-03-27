@@ -94,7 +94,7 @@ Method      |  Endpoint   | Description
  GET        | env/{name}  | Displays the value for a specific environment or property variable
  GET        | metrics     | Lists metrics concerning the application 
 
-Note that the Actuator plugin is designed for Spring Boot applications, and therefore not all endpoints are accessible. Find a more detailed description [here](https://github.com/spring-projects/spring-boot/blob/master/spring-boot-docs/src/main/asciidoc/production-ready-features.adoc).
+Note that the Actuator plugin is designed for Spring Boot applications, and therefore not all endpoints are accessible. Find a more detailed description [here](https://github.com/spring-projects/spring-boot/blob/master/spring-boot-project/spring-boot-docs/src/main/asciidoc/production-ready-features.adoc).
 
 The next steps explains how to enable the Actuator.
 
