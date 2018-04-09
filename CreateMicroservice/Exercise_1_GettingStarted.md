@@ -4,7 +4,7 @@ Exercise 1: Getting Started - Setup Tomcat Web Server
 ## Learning Goal
 Get familiar with the provided code base and understand how to test your microservice in your local environment. In this exercise you will start the microservice on your locally installed Tomcat web server while making use of Spring Dependency Injection.
 
-## Prerequisite - Import Project Into Eclipse
+## Prerequisite - Import Project Into Eclipse (`master` branch)
 
 - Run `VirtualBox` and start your Virtual Machine (VM).
 - Run Eclipse inside the VM **Important: If you are asked for a workspace, make sure to use the default workspace at `/home/vagrant/workspace`**
