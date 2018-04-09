@@ -35,9 +35,9 @@ return restTemplate.exchange(url, HttpMethod.GET, request, User.class);
 Push your microservice using the command `cf push -n bulletinboard-ads-d012345` and make sure the execution is successful.
 
 ## Step 4: Analyze Logs
-- Create some logs, use `Postman` to create some advertisements
-- Open [`Kibana (https://logs.cf.sap.hana.ondemand.com)`](https://logs.cf.sap.hana.ondemand.com) in your browser
-- If necessary, change the time frame so that your recent logs are visible (top right)
+- Create some logs, use `Postman` to create some advertisements.
+- Go to `Kibana`: For Europe (Frankfurt) use [https://logs.cf.eu10.hana.ondemand.com/](https://logs.cf.eu10.hana.ondemand.com/) and for US East (VA) use [https://logs.cf.us10.hana.ondemand.com/](https://logs.cf.us10.hana.ondemand.com/) and login with your SAP Cloud Platform user, i.e. your email address and password.
+- If necessary, change the time frame so that your recent logs are visible (top right).
 - Switch to the "Request and Logs" perspective of the dashboard.
 - If necessary, limit the logs by specifying the space and organization you used for this exercise.
 - Find a request you would like to analyse in the "Requests" view, and select its `Correlation-ID` in the "Correlation Ids" view on the left.
