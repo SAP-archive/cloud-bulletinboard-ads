@@ -136,7 +136,7 @@ With that Spring beans gets automatically configured depending on the `@Configur
 Start the `Web Browser` and ensure that the following url `http://localhost:8080/health` shows the status `"UP"`. Note: The response type (media type) of this HTTP GET request is `JSON`. 
 In order to analyze JSON responses best you can install a Chrome extension like [`JSON  Viewer`](https://chrome.google.com/webstore/detail/json-viewer/gbmdgpbipfallnflgajpaliibnhdgobh?utm_source=chrome-app-launcher-info-dialog).
 
-#### Remarks on using the Actuator productive code
+#### Remarks on using the Actuator in productive code
 In the older versions of the Actuator (as used here), the endpoints are enabled for unauthenticated and unauthorized access.
 
 That's why you should make sure that **later, in your productive code** you:
