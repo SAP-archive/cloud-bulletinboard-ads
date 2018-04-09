@@ -34,8 +34,7 @@ private AdvertisementRepository repo;
 ## Step 2: Implement Your Entity Test-Driven
 That means, you will always start with the test case. Run the test case and watch the test fail. Then you would implement the production code necessary to pass the tests.
 
-**Explanation:** Basically you will introduce some technical fields documenting for example when entries are created / updated. Those are helpful to analyze or even avoid database inconsistencies. 
-Later you might want to extract those *technical attributes* in a base class as we did it [here](https://github.com/SAP/cloud-bulletinboard-ads/blob/master/src/main/java/com/sap/bulletinboard/ads/models/BaseEntity.java).
+**Explanation:** Basically you will introduce some technical fields documenting for example when entries are created / updated. Those are helpful to analyze or even avoid database inconsistencies.
 
 ### Test 1: Id should be generated for new advertisement
 Test Case:
