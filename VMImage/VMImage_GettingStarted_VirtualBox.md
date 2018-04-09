@@ -2,7 +2,7 @@
 
 ### Install Oracle VM Virtual Box version 5.1.x
  
-- Install the relevant [Oracle VM Virtual Box 5.1.x platform packages](https://www.virtualbox.org/wiki/Downloads) <b>for your OS, on your own computer</b> to be able to run the virtual machine.
+- Install the relevant [Oracle VM Virtual Box 5.1.x platform packages](https://www.virtualbox.org/wiki/Downloads) <b>for your OS, on your own computer</b> to be able to run the virtual machine (information for SAP-internal participants: Oracle VM Virtual Box 5.1.x is grey listed).
 - **Hint**: You can change the UI language in `File - Preferences - Interface Language`
 
 ### Load and Run the Virtual Machine (VM)
