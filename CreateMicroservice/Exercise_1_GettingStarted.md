@@ -78,10 +78,7 @@ With the Tomcat Maven Plugin the maven build (including the tests) is triggered 
   - Note: If you need to use another port, you can change the default Tomcat port in the `pom.xml` at the setting `maven.tomcat.port`.
 - You can terminate the web server in the command window with `CTRL+C`.
 
-## Step 4: Gain Application Insight With the Spring Boot Actuator
-Ensure that **in your productive code** you:
-- Use a version of `spring-boot-actuator` >= 1.5.4.RELEASE (and not 1.2.5.RELEASE as in this tutorial).
-- Test your productive application that all the Spring Boot Actuator endpoints behave as expected (enabled / disabled or secured in the way you expect them to be).
+## [Optional] Step 4: Gain Application Insight With the Spring Boot Actuator
 
 The main thing that the Spring Boot Actuator does is to add several helpful management endpoints to a Spring Web MVC-based application. Some of the endpoints are:
 
@@ -94,7 +91,7 @@ Method      |  Endpoint   | Description
  GET        | env/{name}  | Displays the value for a specific environment or property variable
  GET        | metrics     | Lists metrics concerning the application 
 
-Note that the Actuator plugin is designed for Spring Boot applications, and therefore not all endpoints are accessible. Find a more detailed description [here](https://github.com/spring-projects/spring-boot/blob/master/spring-boot-project/spring-boot-docs/src/main/asciidoc/production-ready-features.adoc).
+Note that the actuator plugin is designed for Spring Boot applications, and therefore not all endpoints are accessible. Find a more detailed description [here](https://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-endpoints.html).
 
 The next steps explains how to enable the Actuator.
 
@@ -118,7 +115,9 @@ Add the `spring-boot-actuator` dependency to your `pom.xml` using the XML view o
 	</exclusions>
 </dependency>
 ```
-Note: After you've changed the Maven settings, don't forget to update your Eclipse project (`ALT-F5`)! 
+> Note: In this exercise we intentionally **do NOT make use of the latest version of actuator** for simplicity reasons. Please be aware of the possible security implications of using this productively as documented [here](https://github.com/SAP/cloud-bulletinboard-ads/blob/Documentation/CreateMicroservice/Exercise_1_GettingStarted.md#remarks-on-using-the-actuator-productive-code).  
+
+> Note: After you've changed the Maven settings, don't forget to update your Eclipse project (`ALT-F5`)! 
 
 #### Enable Auto-configuration 
 To enable the Spring Boot Actuator plugin you need to pretend to be a Spring Boot application by enabling [auto-configuration](http://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-auto-configuration.html).
@@ -136,6 +135,14 @@ With that Spring beans gets automatically configured depending on the `@Configur
 #### Test
 Start the `Web Browser` and ensure that the following url `http://localhost:8080/health` shows the status `"UP"`. Note: The response type (media type) of this HTTP GET request is `JSON`. 
 In order to analyze JSON responses best you can install a Chrome extension like [`JSON  Viewer`](https://chrome.google.com/webstore/detail/json-viewer/gbmdgpbipfallnflgajpaliibnhdgobh?utm_source=chrome-app-launcher-info-dialog).
+
+#### Remarks on using the Actuator productive code
+In the older versions of the Actuator (as used here), the endpoints are enabled for unauthenticated and unauthorized access.
+
+That's why you should make sure that **later, in your productive code** you:
+- Use a version of `spring-boot-actuator` >= 1.5.4.RELEASE (and not 1.2.5.RELEASE as in this exercise).
+- Test your productive application that all the Spring Boot Actuator endpoints behave as expected (enabled / disabled or secured in the way you expect them to be).
+
 
 ## Used Frameworks and Tools
 - [Tomcat Web Server](http://tomcat.apache.org/)
