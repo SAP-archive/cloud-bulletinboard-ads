@@ -143,8 +143,11 @@ That's why you should make sure that **later, in your productive code** you:
 - Use a version of `spring-boot-actuator` >= 1.5.4.RELEASE (and not 1.2.5.RELEASE as in this exercise).
 - Test your productive application that all the Spring Boot Actuator endpoints behave as expected (enabled / disabled or secured in the way you expect them to be).
 
+## Troubleshoot
+- Common issues are documented [here](https://github.com/SAP/cloud-bulletinboard-ads/blob/Documentation/Knowledge/TroubleShooting.md).
 
 ## Used Frameworks and Tools
+- [Maven](https://maven.apache.org/), find further tutorials linked [here](https://github.com/SAP/cloud-bulletinboard-ads/tree/Documentation/CoursePrerequisites#test-your-knowledge---are-you-ready-for-the-training)
 - [Tomcat Web Server](http://tomcat.apache.org/)
 - [Spring - DI Framework](https://github.com/spring-projects/spring-framework)
 
