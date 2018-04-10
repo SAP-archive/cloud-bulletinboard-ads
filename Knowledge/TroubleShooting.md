@@ -38,7 +38,7 @@ The root cause could be that dependencies cannot be downloaded (possibly due to 
 ### Option 2: Purge your local maven repository
 You cannot make Maven re-download dependencies, but what you can do instead is to cleanup dependencies that were incorrectly downloaded using `mvn dependency:purge-local-repository`.
 
-Or alternatively delete the whole `/home/.m2/repository` directory.
+Or alternatively delete the whole `/home/.m2/repository` directory. **Never delete the `.m2` folder**, just delete the `repository` or one of its subfolders!
 
 And then run `mvn clean verify` in the command line and evaluate the log for possible issues.
 
