@@ -44,7 +44,6 @@ And then run `mvn clean verify` in the command line and evaluate the log for pos
 
 ## Issues with network
 - We've observed that sometimes, on the VirtualBox VM, colleagues could not reach SAP internal pages like e.g. https://github.wdf.sap.corp, although their laptop was connected with the corporate network. This issue can be resolved by simply restarting the VirtualBox VM.
-- This [documentation](/Knowledge/BasicNetworkKnowhow.md) describes some basic networking knowhow that may come in handy when you need to troubleshoot these situations.
 
 ## Other Eclipse/VM Issues
 It may happen that the files inside the VM become corrupted.
