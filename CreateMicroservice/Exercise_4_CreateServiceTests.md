@@ -65,7 +65,7 @@ To measure the code covered by the JUnit tests:
 > You can install the `Eclemma` plugin from the Eclipse Marketplace and finalize the installation by restarting your Eclipse IDE. 
 
 ## Step 5: Implement Tests
-Now we need to implement the three remaining test methods - **one at a time**.
+Now we need to implement the three remaining, test methods that are commented - **one at a time**.
 
 **Implementation Notes**
 - Run these tests regularly!
