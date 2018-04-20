@@ -107,7 +107,7 @@ For this course a preconfigured virtual machine image is provided and its use is
 # <img src="./Z_ReuseImages/images/281518_OpenBook_R_blue.png" height="80" alt="Further Resources"/> Further Resources
 
 * [Troubleshooting VM image installation](/VMImage/VMImage_GettingStarted.md#troubleshooting)
-* [Troubleshooting Eclipse and Cloud Foundry guide](/Knowledge/TroubleShooting.md)
+* [Troubleshooting Maven, Eclipse](/Knowledge/TroubleShooting.md)
 * [Eclipse IDE Tips](/Knowledge/EclipseIdeTips.md)
 * [Cloud Foundry CheatSheet](https://blog.anynines.com/cloud-foundry-command-line-cheat-sheetutm_sourcecf-summitutm_mediumprintutm_campaigncf-summit-cheat-sheet/)
 * [Hamcrest (matchers) CheatSheet](http://www.marcphilipp.de/downloads/posts/2013-01-02-hamcrest-quick-reference/Hamcrest-1.3.pdf)
