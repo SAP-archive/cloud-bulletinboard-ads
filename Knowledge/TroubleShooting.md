@@ -12,17 +12,6 @@ Let's assume you would like to create a `war`-file but the tests are currently f
 mvn clean verify -DskipTests
 ```
 
-## Issues on Cloud Foundry
-If this happens in the course you should definitively get in contact with the SAP Cloud Platform Cloud Foundry team. 
-Find here some options on where to find current issues and how to create a support ticket:
-https://github.infra.hana.ondemand.com/cloudfoundry/cf-docs/wiki/CF-EU10-CANARY 
-
-For the `Kibana`, `HANA` and `Security` demo the SAP Cloud Platform Cloud Foundry environment is mandatory! For the rest you can also get a trial account at any other cloud foundry provider.
-
-Examples:
-- anynines.com
-- pivotal.io
-
 ## Eclipse - Tomcat Integration
 Especially when switching branches very often, we faced issues in restarting the app on Tomcat within Eclipse. It seems that the `/target/m2e-wtp` folder gets messed up, which is specified as part of the `Deployment Assembly` properties.
 The deletion of the `target` folder should help in this case.
