@@ -33,7 +33,7 @@ public class AdvertisementController {
     private final Map<Long, Advertisement> ads = new HashMap<>(); //temporary data storage, key represents the ID
     
     @GetMapping
-    public Iterable<Advertisement> advertisements() {
+    public AdvertisementList advertisements() {
         return null; //TODO
     }
 
@@ -50,6 +50,15 @@ public class AdvertisementController {
     public ResponseEntity<Advertisement> add(@RequestBody Advertisement advertisement,
             UriComponentsBuilder uriComponentsBuilder) {
         return null; //TODO return ResponseEntity with advertisement in the body, location header and HttpStatus.CREATED status code
+    }
+
+    public static class AdvertisementList {
+        @JsonProperty("value")
+        public List<Advertisement> advertisements = new ArrayList<>();
+
+        public AdvertisementList(Iterable<Advertisement> ads) {
+            ads.forEach(advertisements::add);
+        }
     }
 }
 ```
