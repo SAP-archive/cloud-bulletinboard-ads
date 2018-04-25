@@ -38,7 +38,7 @@ public SimpleMessageListenerContainer pushMessageContainer(
     SimpleMessageListenerContainer container = new SimpleMessageListenerContainer(connectionFactory);
 
     container.setQueueNames();
-    container.setPrefetchCount(20);// avoid backpressure: limit number of unacknowledged messages for a particular channel
+    container.setPrefetchCount(20);// limit number of unacknowledged messages for a particular channel (creates backpressure to RabbitMQ)
     container.setDefaultRequeueRejected(false); // to prevent requeuing in case of exception
     container.setMessageListener(messageListener); // registers StatisticsListener
     container.setAutoStartup(true);
