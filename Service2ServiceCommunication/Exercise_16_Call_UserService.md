@@ -10,12 +10,14 @@ Technically we are going to use [`RestTemplate`](http://docs.spring.io/spring-fr
 ## Prerequisite
 Continue with your solution of the last exercise. If this does not work, you can checkout the branch [`origin/solution-13-Use-SLF4J-Features`](https://github.com/SAP/cloud-bulletinboard-ads/tree/solution-13-Use-SLF4J-Features).
 
+- Note: The <<region>> needs to be replaced with eu10 or us10 depending on the trial environment where you have registered.
+
 ## Step 1: Test User Service Using a REST Client
 Before we start with the implementation we want to get familiar with the User service. 
 
 You can test the following REST service endpoints manually in the browser using the `Postman` Chrome plugin:
-- `https://opensapcp5userservice.cfapps.eu10.hana.ondemand.com/api/v1.0/users` - returns all available users with their IDs.
-- `https://opensapcp5userservice.cfapps.eu10.hana.ondemand.com/api/v1.0/users/{ID}` - returns the information for a user where {ID} is a placeholder for a user id, e.g. "42".
+- `https://opensapcp5userservice.cfapps.<<region>>.hana.ondemand.com/api/v1.0/users` - returns all available users with their IDs.
+- `https://opensapcp5userservice.cfapps.<<region>>.hana.ondemand.com/api/v1.0/users/{ID}` - returns the information for a user where {ID} is a placeholder for a user id, e.g. "42".
 
 ## Step 2: Add Maven Dependency
 Add the dependency to the Apache http client to your `pom.xml` using the XML view of Eclipse:
@@ -63,11 +65,11 @@ Before you (re-)start your Tomcat webserver within Eclipse, you need to adapt th
 - Double-click the server instance and select the `Open launch configuration` link.
 - Open the `Edit configuration` dialog. 
 - switch to the `Environment` tab and add the following environment variables:
-  - `USER_ROUTE=https://opensapcp5userservice.cfapps.eu10.hana.ondemand.com`
+  - `USER_ROUTE=https://opensapcp5userservice.cfapps.<<region>>.hana.ondemand.com`
 - In case you're sitting behind a proxy, you need to configure the proxy of your `RestTemplate`. Therefore switch to the `Arguments` tab and add the proxy settings to the VM arguments:
   - ` -Dhttp.proxyHost=<<your proxy host>> -Dhttp.proxyPort=<<your proxy port>>`
 
-**When are proxy settings required?** If you run your service locally within a corporate network that has a proxy, the host `opensapcp5userservice.cfapps.eu10.hana.ondemand.com` cannot be resolved. If you apply the proxy settings to the Java process (via VM arguments) then the proxy is used which is able to resolve the host name. Settings in Eclipse are separate from the settings in the shell (bash). In case you run your application locally in the command line, you need to configure the proxy settings (`http.proxyHost` and `http.proxyPort`) as part of your `pom.xml` file.
+**When are proxy settings required?** If you run your service locally within a corporate network that has a proxy, the host `opensapcp5userservice.cfapps.<<region>>.hana.ondemand.com` cannot be resolved. If you apply the proxy settings to the Java process (via VM arguments) then the proxy is used which is able to resolve the host name. Settings in Eclipse are separate from the settings in the shell (bash). In case you run your application locally in the command line, you need to configure the proxy settings (`http.proxyHost` and `http.proxyPort`) as part of your `pom.xml` file.
 
 <sup>Note: In case you are getting a **null-pointer-exception** because `USER_ROUTE==null`, you probably created the `UserServiceClient` with `new` instead of `@Inject`. The latter is necessary since annotations in a class are not interpreted when you create the instance yourself with `new`.</sup>
 
@@ -116,7 +118,7 @@ public class TestAppContextConfig {
 When pushing the application to Cloud Foundry, the `USER_ROUTE` needs to be configured as a system environment variable. This can easily be done in the `manifest.yml` file by adding another entry under `env`:
 ```
 env:
-    USER_ROUTE: 'https://opensapcp5userservice.cfapps.eu10.hana.ondemand.com'
+    USER_ROUTE: 'https://opensapcp5userservice.cfapps.<<region>>.hana.ondemand.com'
 ``` 
 
 ## Used Frameworks and Tools
