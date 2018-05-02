@@ -16,7 +16,7 @@ Eclipse freezes (e.g. after including the approuter source files [Node modules])
 ### Solution:
 In order to prevent that behaviour you have to exclude the corresponding `Node modules` from the validation. In other words you have to specify a resource filter.
 ### How to:
-See [exercise 22](https://github.wdf.sap.corp/cc-java-dev/cc-coursematerial/blob/master/Security/Exercise_22_DeployApplicationRouter.md)<sub><b>[to-do]</b></sub> for further details.
+See [exercise 22](/Security/Exercise_22_DeployApplicationRouter.md) for further details.
 
 ## 3. Auto-Completion of Static Imports
 ### Problem:
@@ -24,7 +24,7 @@ Auto-Completion of static imports (e.g. `Hamcrest` matchers) does not work.
 ### Solution:
 You have to add a new `Type Favorite` in Eclipse.
 ### How to:
-See [exercise 4](https://github.wdf.sap.corp/cc-java-dev/cc-coursematerial/blob/master/CreateMicroservice/Exercise_4_CreateServiceTests.md)<sub><b>[to-do]</b></sub> for further details.
+See [exercise 4](/CreateMicroservice/Exercise_4_CreateServiceTests.md) for further details.
 
 ***
 <dl>
