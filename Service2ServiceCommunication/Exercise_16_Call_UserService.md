@@ -10,7 +10,7 @@ Technically we are going to use [`RestTemplate`](http://docs.spring.io/spring-fr
 ## Prerequisite
 Continue with your solution of the last exercise. If this does not work, you can checkout the branch [`origin/solution-13-Use-SLF4J-Features`](https://github.com/SAP/cloud-bulletinboard-ads/tree/solution-13-Use-SLF4J-Features).
 
-- Note: The <<region>> needs to be replaced with eu10 or us10 depending on the trial environment where you have registered.
+- Note: The `<<region>>` needs to be replaced with eu10 or us10 depending on the trial environment where you have registered.
 
 ## Step 1: Test User Service Using a REST Client
 Before we start with the implementation we want to get familiar with the User service. 
