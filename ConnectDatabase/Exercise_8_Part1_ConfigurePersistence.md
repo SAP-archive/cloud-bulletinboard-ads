@@ -126,7 +126,7 @@ Finally the CRUD repository, which uses the `EntityManager` and `TransactionMana
 
 
 ## Step 5: Build and Run Microservice Locally
-- In Eclipse, in the "Servers" view, open the Tomcat server. In the opened detail view (`Overview` tab), click on "Open launch configuration". Change to the "Environment" tab, and inspect the `VCAP_SERVICES` environment variable. You should see that this allows your application to connect to a local database.
+- In Eclipse, in the "Servers" view, open the Tomcat server. In the opened detail view (`Overview` tab), click on "Open launch configuration". Change to the "Environment" tab, and inspect the `VCAP_SERVICES` environment variable. **Ensure that the environment variables are specified like in the `localEnvironmentSetup.sh` script.**
 - Build and run the microservice.
 - Ensure that the `advertisement` table is created with columns `id` and `title`. You can use the `DBeaver` Eclipse Perspective, where the table should be visible within the `Database Navigator` view under `Schemas - public - Tables`.
 - Also note that a `sequence` table is created. This table is used by EclipseLink to determine which (unused) ID should be used for a created entity.
