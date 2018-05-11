@@ -23,7 +23,7 @@ XS_JAVA_1-70001362.ZIP. The version/filename may change in the future).
 - Navigate into unzipped directory.
 - Run the following command 
 
-    `mvn install:install-file -Dfile=./XS_JAVA_1-70001362/java-container-security-0.27.2.jar -DgroupId=com.sap.xs2.security -DartifactId=java-container-security -Dversion=0.27.2`
+    `mvn install:install-file -Dfile=./xs2_security/java-container-security-0.27.2.jar -DgroupId=com.sap.xs2.security -DartifactId=java-container-security -Dversion=0.27.2`
     
 Add the following dependencies to your `pom.xml` using the XML view of Eclipse:
 
