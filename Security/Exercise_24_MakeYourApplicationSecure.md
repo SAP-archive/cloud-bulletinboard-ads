@@ -23,8 +23,8 @@ XS_JAVAP_2-70001362.ZIP. The version/filename may change in the future).
 - Navigate into unzipped directory.
 - Run the following command 
 
-    `mvn install:install-file -Dfile=./xs2_security/java-container-security-0.26.13.jar -DgroupId=com.sap.xs2.security -              DartifactId=java-container-security -Dversion=0.26.13`
-
+    `mvn install:install-file -Dfile=./xs2_security/java-container-security-0.28.6.jar -DgroupId=com.sap.xs2.security -              DartifactId=java-container-security -Dversion=0.28.6`
+    
 Add the following dependencies to your `pom.xml` using the XML view of Eclipse:
 
 It suffices to add the direct dependency on the SAP Java Container Security library, because the library itself depends on the Spring Security libraries and the indirect dependency on the Spring Security framework will be resolved automatically.
@@ -35,7 +35,7 @@ It suffices to add the direct dependency on the SAP Java Container Security libr
 <dependency>
     <groupId>com.sap.xs2.security</groupId>
     <artifactId>java-container-security</artifactId>
-    <version>0.27.2</version> 
+    <version>0.28.6</version> 
 </dependency>
 ```
 - Note: After you've changed the Maven settings, don't forget to update your Eclipse project (`Alt+F5`)!
