@@ -16,14 +16,14 @@ Continue with your solution of the last exercise. If this does not work, you can
 ## Step 1: Integrate SAP Java Container Security library
 
 - Get the current version of the SAP Java Container Security library from [SAP Service Marketplace](https://launchpad.support.sap.com/#/softwarecenter/template/products/%20_APP=00200682500000001943&_EVENT=DISPHIER&HEADER=Y&FUNCTIONBAR=N&EVENT=TREE&NE=NAVIGATE&ENR=73555000100200004333&V=MAINT&TA=ACTUAL&PAGE=SEARCH/XS%20JAVA%201) (the filename currently is 	
-XS_JAVAP_2-70001362.ZIP. The version/filename may change in the future).
+XS_JAVA_1-70001362.ZIP. The version/filename may change in the future).
     > Please note that *only SAP customers will be able to download the library from SAP Service Marketplace*.
 
 - Extract the downloaded Zip file.
 - Navigate into unzipped directory.
 - Run the following command 
 
-    `mvn install:install-file -Dfile=./xs2_security/java-container-security-0.28.6.jar -DgroupId=com.sap.xs2.security -              DartifactId=java-container-security -Dversion=0.28.6`
+    `mvn install:install-file -Dfile=./xs2_security/java-container-security-0.27.2.jar -DgroupId=com.sap.xs2.security -              DartifactId=java-container-security -Dversion=0.27.2`
     
 Add the following dependencies to your `pom.xml` using the XML view of Eclipse:
 
