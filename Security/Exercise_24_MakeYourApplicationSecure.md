@@ -34,8 +34,69 @@ Add the following dependency to your `pom.xml` using the XML view of Eclipse:
     <version>0.27.2</version> 
 </dependency>
 ```
+- **UPDATE(!):** when using `mvn-install` of version > `3.0.0` you need in addition to add the following dependencies:
+```
+<!-- we need to add addtional dependencies because mvn install-file does not install bundled pom.xml from artifacts -->
+<!-- see here https://issues.apache.org/jira/browse/MINSTALL-110 -->
+<!-- BEGIN additional dependencies -->
+<dependency>
+    <groupId>com.sap.xs2.security</groupId>
+    <artifactId>security-commons</artifactId>
+    <version>0.27.2</version>
+</dependency>
+<dependency>
+    <groupId>com.sap.xs2.security</groupId>
+    <artifactId>java-container-security-api</artifactId>
+    <version>0.27.2</version> 
+</dependency>
+<dependency>
+    <groupId>com.sap.security.nw.sso.linuxx86_64.opt</groupId>
+    <artifactId>sapjwt.linuxx86_64</artifactId>
+    <version>1.0.19</version>
+</dependency> 
+<dependency> <!-- windows -->
+    <groupId>com.sap.security.nw.sso.ntamd64.opt</groupId>
+    <artifactId>sapjwt.ntamd64</artifactId>
+    <version>1.0.19</version>
+</dependency>
+
+<!-- Spring Security and other related libraries-->
+<dependency>
+    <groupId>org.springframework.security</groupId>
+    <artifactId>spring-security-jwt</artifactId>
+    <version>1.0.8.RELEASE</version>
+    <exclusions>
+        <exclusion>
+            <artifactId>bcpkix-jdk15on</artifactId>
+            <groupId>org.bouncycastle</groupId>
+        </exclusion>
+    </exclusions>
+</dependency>
+<dependency>
+    <groupId>org.springframework.security.oauth</groupId>
+    <artifactId>spring-security-oauth2</artifactId>
+    <version>2.0.11.RELEASE</version>
+</dependency>
+
+<dependency>
+    <groupId>commons-io</groupId>
+    <artifactId>commons-io</artifactId>
+    <version>2.4</version>
+</dependency>
+<dependency>
+    <groupId>com.unboundid.components</groupId>
+    <artifactId>json</artifactId>
+    <version>1.0.0</version>
+</dependency>
+<dependency>
+    <groupId>org.cloudfoundry.identity</groupId>
+    <artifactId>cloudfoundry-identity-client-lib</artifactId>
+    <version>4.7.4</version>
+</dependency>
+<!-- END additional dependencies -->
+```
+
 - Note: After you've changed the Maven settings, don't forget to update your Eclipse project (`Alt+F5`)!
-- Note: It suffices to add the direct dependency on the SAP Java Container Security library, because the library itself depends on the Spring Security libraries and the indirect dependency on the Spring Security framework will be resolved automatically.
 
 ## Step 2: Configure Spring Security
 
