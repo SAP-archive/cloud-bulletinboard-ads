@@ -70,7 +70,7 @@ As Hystrix provides some default configuration such as timeout after 1000ms you 
 ## Used Frameworks and Tools
 - [Hystrix](https://github.com/Netflix/Hystrix)
 
-## Further References:
+## Further References
 - [sap.help.com: Guideline "Developing Resilient Apps on SAP Cloud Platform"](https://help.sap.com/viewer/eadaa45871804b4a974be865f627e791/Cloud/en-US/d1fe5fd8ecfb46c193221ebb991af3d7.html)
 - [Reference Application on Github.com](https://github.com/SAP/cloud-espm-cloud-native) that showcases some of the resilience patterns
 
