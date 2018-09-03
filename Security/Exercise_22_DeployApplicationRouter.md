@@ -3,7 +3,7 @@
 ## Learning Goal
 You need your own application router that connects your service to the centrally provided "user account and authentication (UAA) service". Technically this means that you need to deploy an approuter as part of your application that manages the user authentication for you.
 
-The approuter has these main functions:
+The [approuter](https://help.sap.com/viewer/65de2977205c403bbc107264b8eccf4b/Cloud/en-US/01c5f9ba7d6847aaaf069d153b981b51.html) has these main functions:
 * Handles authentication for all apps of the application 
 * Serves static resources
 * Performs route mapping (URL mapping)
@@ -149,6 +149,9 @@ So, what have you achieved right now? You have made your application accessible 
 - Application router can be configured to initiate a central logout after a specified time of inactivity (no requests have been sent to the application router). Assign the time of inactivity in minutes to the environment variable `SESSION_TIMEOUT` in your `manifest.yml` file. Ensure that the timeout configuration for application router and XSUAA are identical for all routes with authentication type `xsuaa`
 
 - Each instance of application router holds it´s own mappings of JWT-Tokens to jSessionIDs. The mappings are neither shared across multiple instances of application router nor are the mappings persisted in a common persistency. Application router uses Cloud Foundry session stickiness (VCAP_ID) to ensure that requests belonging to the same session are routed via the same application router instance - this means that the user will need to re-authenticate if an application router instance of a particular session goes down and is recovered by a new application router instance.
+
+## Further Resources
+- [sap.help.com: Configure Application Router](https://help.sap.com/viewer/65de2977205c403bbc107264b8eccf4b/Cloud/en-US/01c5f9ba7d6847aaaf069d153b981b51.html)
 
 ***
 <dl>
