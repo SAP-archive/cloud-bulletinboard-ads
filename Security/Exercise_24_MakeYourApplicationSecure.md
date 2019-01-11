@@ -1,5 +1,8 @@
 # Exercise 24: Make your Application Secure
 
+# >>> OUTDATED <<< 
+This exercise will be updated soon: https://github.com/SAP/cloud-bulletinboard-ads/issues/11
+
 ## Learning Goal
 In the previous exercise you learned how you can protect your application with the application router. But unauthenticated and/or unauthorized requests could be sent directly to your app - bypassing the application router. Hence, the application itself must also ensure that only those requests are served which are sent from an authenticated and authorized user.
 
