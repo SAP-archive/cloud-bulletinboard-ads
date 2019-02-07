@@ -7,7 +7,7 @@
 
 ### Load and Run the Virtual Machine (VM)
 - Make sure you have at least 15 GB of free disk space
-- Download the [Virtual Box VM Image](https://sap-my.sharepoint.com/:f:/p/sven_kohlhaas/EjwDmYwrdcRAio35jRYnTi8BGmd1sIkO1K5_uecz69GGUQ?e=ZBrC9E) (about <b>4.77</b> GB).
+- Download the [Virtual Box VM Image](https://sap-my.sharepoint.com/:f:/p/sven_kohlhaas/EjwDmYwrdcRAio35jRYnTi8BGmd1sIkO1K5_uecz69GGUQ?e=CFD9Ku) (about <b>4.77</b> GB).
 - Start Oracle VM Virtual Box and import the downloaded Virtual Box VM Image: Menu: `File - Import Appliance`
 - After a successful import you can delete the downloaded image (<VM image name>.ova) file since Virtual Box converts it and stores it under `~/VirtualBox VMs`
 - (Optional) If your computer has **more** than 8 GB of RAM, you might want to increase the VMs memory from 3 GB to e.g. 4 GB. For that, right-click on the VM in Virtual Box and change the memory settings in the "System" tab on the left (4 GB is 4096 MB).
