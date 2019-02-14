@@ -64,7 +64,7 @@ As the approuter is a Node.JS application, it needs to be added into the `manife
 - name: approuter
   host: approuter-<<your user id>>
   path: src/main/approuter
-  buildpack: https://github.com/cloudfoundry/nodejs-buildpack.git#v1.6.10
+  buildpack: https://github.com/cloudfoundry/nodejs-buildpack.git#v1.6.38
   memory: 128M
   env:
     XSAPPNAME: bulletinboard-<<your user id>>
@@ -79,6 +79,8 @@ As the approuter is a Node.JS application, it needs to be added into the `manife
     - applogs-bulletinboard
     - uaa-bulletinboard
 ```
+> **Note**: In case you make use of the Community node.js Buildpack it is recommended to specify the **version of the buildpack** e.g. `buildpack: https://github.com/cloudfoundry/nodejs-buildpack.git#v1.6.38`, you can get the current version using `cf buildpacks` and on Github there must be a so-called `release` for every released buildpack version.
+
 **Furthermore you need to specify the `host` of your `bulletinboard-ads` application as well**. For example: `host: bulletinboard-ads-<<your user id>>`. Reason: As the `manifest.yml` contains now multiple applications you are not longer able to specify the host using the command line flag `-n`. The references to `<<region>>` needs to be replaced with eu10 or us10 depending on the trial environment where you have registered. For more details, please refer the [documentation](https://help.sap.com/viewer/65de2977205c403bbc107264b8eccf4b/Cloud/en-US/350356d1dc314d3199dca15bd2ab9b0e.html)
 
 > **Note**: Even though the `approuter` is not "stateless" (as it maps the `SessionID` to the `JWT token`) the amount of `approuter` instances depends on the load on the business application. This is possible as Session stickiness is implemented by Cloud Foundry with the `VCAPID` header. Using the same header value in the following requests causes the Cloud Foundry router to route those requests to the same (`approuter`) application instance. BUT: applications MUST NOT rely on being called by the same `approuter` instance during a session. The `approuter` instance could change if the old instance dies and a new instance is created during the recovery procedure.

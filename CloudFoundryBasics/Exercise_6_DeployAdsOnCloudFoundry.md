@@ -27,13 +27,13 @@ applications:
 - name: bulletinboard-ads
   memory: 1G
   path: target/bulletinboard-ads.war
-  buildpack: https://github.com/cloudfoundry/java-buildpack.git#v4.6
+  buildpack: https://github.com/cloudfoundry/java-buildpack.git#v4.16.1
   env:
       # Use the non-blocking /dev/urandom instead of the default to generate random numbers.
       # This may help with slow startup times, especially when using Spring Boot.
       JAVA_OPTS: -Djava.security.egd=file:///dev/./urandom
 ```
-Note: In case you make use of the Community Java Buildpack it is recommended to specify the **version of the buildpack** e.g. `buildpack: https://github.com/cloudfoundry/java-buildpack.git#v4.6`, you can get the current version using `cf buildpacks` and on Github there must be a so-called `release` for every released buildpack version.
+Note: In case you make use of the Community Java Buildpack it is recommended to specify the **version of the buildpack** e.g. `buildpack: https://github.com/cloudfoundry/java-buildpack.git#v4.16.1`, you can get the current version using `cf buildpacks` and on Github there must be a so-called `release` for every released buildpack version.
 
 ## Step 3: Push Your Service
 - Before you push your service into the cloud, make sure to build the WAR file (`mvn clean verify`). 
