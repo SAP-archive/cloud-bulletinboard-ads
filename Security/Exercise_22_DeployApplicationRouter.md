@@ -64,7 +64,7 @@ As the approuter is a Node.JS application, it needs to be added into the `manife
 - name: approuter
   host: approuter-<<your user id>>
   path: src/main/approuter
-  buildpack: https://github.com/cloudfoundry/nodejs-buildpack.git#v1.6.38
+  buildpack: https://github.com/cloudfoundry/nodejs-buildpack.git
   memory: 128M
   env:
     XSAPPNAME: bulletinboard-<<your user id>>
