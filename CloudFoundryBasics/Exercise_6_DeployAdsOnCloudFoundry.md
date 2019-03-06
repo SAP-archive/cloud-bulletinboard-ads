@@ -27,7 +27,7 @@ applications:
 - name: bulletinboard-ads
   memory: 1G
   path: target/bulletinboard-ads.war
-  buildpack: https://github.com/cloudfoundry/java-buildpack.git#v4.16.1
+  buildpack: https://github.com/cloudfoundry/java-buildpack.git
   env:
       # Use the non-blocking /dev/urandom instead of the default to generate random numbers.
       # This may help with slow startup times, especially when using Spring Boot.
