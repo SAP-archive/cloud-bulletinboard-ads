@@ -107,6 +107,22 @@
 			<version>2.2.0</version>
 			<scope>test</scope>
 		</dependency>
+		<!-- Actuator for adding management endpoints -->
+<dependency>
+	<groupId> org.springframework.boot</groupId>
+	<artifactId>spring-boot-actuator</artifactId>
+	<version>1.2.5.RELEASE</version>
+	<exclusions>
+		<exclusion>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+		</exclusion>
+		<exclusion>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+		</exclusion>
+	</exclusions>
+</dependency>
 	</dependencies>
 	<build>
 		<finalName>bulletinboard-ads</finalName>
