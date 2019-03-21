@@ -26,6 +26,7 @@ In the root directory of your project, create a new file named `manifest.yml` an
 applications:
 - name: bulletinboard-ads
   memory: 1G
+  timeout: 360
   path: target/bulletinboard-ads.war
   buildpack: https://github.com/cloudfoundry/java-buildpack.git
   env:
