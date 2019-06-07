@@ -3,7 +3,7 @@
 # >>> OUTDATED <<<
 Starting from end of 2018 as of which the new [SAP Container Security Library (Java)](https://github.com/SAP/cloud-security-xsuaa-integration) was released on [maven central](https://search.maven.org/search?q=com.sap.cloud.security) this exercise is kind of outdated. The library requirements can not be fulfilled with this Spring project.
 
-Additionally to the Library documentation there exists a [sample](https://github.com/SAP/cloud-application-security-sample/tree/master/spring-security-basis), that contains a full example that explains how to basically secure the resources that are exposed by your Spring Boot based cloud foundry application. The sample is a Spring boot version of the code developed here in the openSAP course and runs locally as well as in the Cloud Foundry environment within SAP Cloud Platform.
+Additionally to the Library documentation there exists a [samples project](https://github.com/SAP/cloud-application-security-sample), that contains a basis example explaining how to basically secure the resources that are exposed by your Spring Boot based cloud foundry application. The sample is a Spring boot version of the code developed here in the openSAP course and runs locally as well as in the Cloud Foundry environment within SAP Cloud Platform.
 
 ## Learning Goal
 In the previous exercise you learned how you can protect your application with the application router. But unauthenticated and/or unauthorized requests could be sent directly to your app - bypassing the application router. Hence, the application itself must also ensure that only those requests are served which are sent from an authenticated and authorized user.
