@@ -18,6 +18,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.sap.bulletinboard.ads.config.EmbeddedDatabaseConfig;
 import com.sap.bulletinboard.ads.controllers.AdvertisementDto;
 
+import java.util.Optional;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = EmbeddedDatabaseConfig.class)
 public class AdvertisementRepositoryTest {
@@ -56,8 +58,9 @@ public class AdvertisementRepositoryTest {
         entityUpdated.setCreatedAt(Advertisement.now());
         repo.save(entityUpdated);
 
-        Advertisement entityAfterUpdate = repo.findOne(entity.getId());
-        assertThat(entityAfterUpdate.getCreatedAt(), is(timestampAfterCreation));
+        Optional<Advertisement> entityAfterUpdate = repo.findById(entity.getId());
+        assertThat(entityAfterUpdate.isPresent(), is(true));
+        assertThat(entityAfterUpdate.get().getCreatedAt(), is(timestampAfterCreation));
     }
 
     @Test
