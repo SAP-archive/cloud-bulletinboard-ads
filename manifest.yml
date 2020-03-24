@@ -4,7 +4,7 @@ applications:
   host: bulletinboard-ads-<<your user id>>
   memory: 800M
   path: target/bulletinboard-ads.war
-  buildpack: https://github.com/cloudfoundry/java-buildpack.git#v4.26
+  buildpack: https://github.com/cloudfoundry/java-buildpack.git
   # buildpack: sap_java_buildpack
   # health-check-type: http
   # health-check-http-endpoint: /health
@@ -18,11 +18,12 @@ applications:
   services:
   - postgres-bulletinboard-ads
   - applogs-bulletinboard
+  - uaa-bulletinboard
 
 - name: approuter
   host: approuter-<<your user id>>
   path: src/main/approuter
-  buildpack: https://github.com/cloudfoundry/nodejs-buildpack.git#v1.7.9
+  buildpack: https://github.com/cloudfoundry/nodejs-buildpack.git
   memory: 128M
   env:
     XSAPPNAME: bulletinboard-<<your user id>>
