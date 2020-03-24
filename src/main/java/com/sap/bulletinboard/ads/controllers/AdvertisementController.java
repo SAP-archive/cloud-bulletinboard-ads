@@ -77,7 +77,7 @@ public class AdvertisementController {
     @GetMapping("/pages/{pageId}") // not "public"
     public ResponseEntity<AdvertisementListDto> advertisementsForPage(@PathVariable("pageId") int pageId) {
 
-        Page<Advertisement> page = adRepository.findAll(new PageRequest(pageId, DEFAULT_PAGE_SIZE));
+        Page<Advertisement> page = adRepository.findAll(PageRequest.of(pageId, DEFAULT_PAGE_SIZE));
 
         return new ResponseEntity<AdvertisementListDto>(new AdvertisementListDto(page.getContent()),
                 buildLinkHeader(page, PATH_PAGES), HttpStatus.OK);
@@ -93,7 +93,7 @@ public class AdvertisementController {
         logger.info("demonstration of custom fields, part of message: {}",
                 CustomField.customField("example-key", "example-value"));
         throwIfNonexisting(id);
-        AdvertisementDto ad = new AdvertisementDto(adRepository.findOne(id));
+        AdvertisementDto ad = new AdvertisementDto(adRepository.findById(id).get());
         logger.info("returning: {}", ad);
         return ad;
     }
@@ -131,7 +131,7 @@ public class AdvertisementController {
     @ResponseStatus(NO_CONTENT)
     public void deleteById(@PathVariable("id") Long id) {
         throwIfNonexisting(id);
-        adRepository.delete(id);
+        adRepository.deleteById(id);
     }
 
     @PutMapping("/{id}")
@@ -140,7 +140,7 @@ public class AdvertisementController {
         throwIfNonexisting(id);
         adRepository.save(updatedAd.toEntity());
         logger.trace(TECHNICAL, "updated ad with version {}", updatedAd.metadata.version);
-        return new AdvertisementDto(adRepository.findOne(id)); // Note that EntityManager.merge might not update all
+        return new AdvertisementDto(adRepository.findById(id).get()); // Note that EntityManager.merge might not update all
                                                                // fields such as createdAt
     }
 
@@ -170,7 +170,7 @@ public class AdvertisementController {
     }
 
     private void throwIfNonexisting(long id) {
-        if (!adRepository.exists(id)) {
+        if (!adRepository.existsById(id)) {
             NotFoundException notFoundException = new NotFoundException(id + " not found");
             logger.warn("request failed", notFoundException);
             throw notFoundException;
