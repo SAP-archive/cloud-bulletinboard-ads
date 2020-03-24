@@ -2,7 +2,7 @@ package com.sap.bulletinboard.ads.controllers;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
-import static org.springframework.http.HttpHeaders.*;
+import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.MediaType.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -16,12 +16,16 @@ import java.util.regex.Pattern;
 import javax.inject.Inject;
 import javax.servlet.Filter;
 
+import com.sap.cloud.security.config.Service;
+import com.sap.cloud.security.test.SecurityTestRule;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.http.HttpHeaders;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
@@ -33,11 +37,14 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sap.bulletinboard.ads.config.WebAppContextConfig;
 import com.sap.bulletinboard.ads.config.WebSecurityConfig;
-import com.sap.bulletinboard.ads.testutils.JwtGenerator;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { WebAppContextConfig.class })
 @WebAppConfiguration
+@TestPropertySource(properties = {
+        "xsuaa.uaadomain=localhost",
+        "xsuaa.xsappname=" + SecurityTestRule.DEFAULT_APP_ID,
+        "xsuaa.clientid=" + SecurityTestRule.DEFAULT_CLIENT_ID })
 //@formatter:off
 public class AdvertisementControllerTest {
     
@@ -45,23 +52,30 @@ public class AdvertisementControllerTest {
     private static final String SOME_TITLE = "MyNewAdvertisement";
     private static final String SOME_OTHER_TITLE = "MyOldAdvertisement";
 
+    @ClassRule
+    public static SecurityTestRule securityTestRule = SecurityTestRule.getInstance(Service.XSUAA)
+                    .setKeys("/publicKey.txt", "/privateKey.txt");
+
     @Inject
     WebApplicationContext context;
 
     private MockMvc mockMvc;
-    
+
     @Inject
     private Filter springSecurityFilterChain;
-    
+
     private String jwt;
-    
+
     @Before
     public void setUp() throws Exception {
         mockMvc = MockMvcBuilders.webAppContextSetup(context).addFilter(springSecurityFilterChain).build();
-        
+
         // compute valid token with Display and Update scopes
-        jwt = new JwtGenerator().getTokenForAuthorizationHeader(WebSecurityConfig.DISPLAY_SCOPE,
-                WebSecurityConfig.UPDATE_SCOPE);
+        jwt = "Bearer " + securityTestRule.getPreconfiguredJwtGenerator()
+                .withLocalScopes(WebSecurityConfig.DISPLAY_SCOPE_LOCAL, WebSecurityConfig.UPDATE_SCOPE_LOCAL)
+                .createToken()
+                .getTokenValue();
+
     }
 
     @Test
@@ -69,7 +83,7 @@ public class AdvertisementControllerTest {
         mockMvc.perform(buildPostRequest(SOME_TITLE))
                 .andExpect(status().isCreated())
                 .andExpect(header().string(LOCATION, is(not(""))))
-                .andExpect(content().contentType(APPLICATION_JSON_UTF8))
+                .andExpect(content().contentType(APPLICATION_JSON))
                 .andExpect(jsonPath("$.title", is(SOME_TITLE))); // requires com.jayway.jsonpath:json-path
     }
 
@@ -98,7 +112,7 @@ public class AdvertisementControllerTest {
 
         mockMvc.perform(buildGetRequest(""))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(APPLICATION_JSON_UTF8))
+            .andExpect(content().contentType(APPLICATION_JSON))
             .andExpect(jsonPath("$.length()", is(both(greaterThan(0)).and(lessThan(10)))));
     }
 
@@ -128,8 +142,7 @@ public class AdvertisementControllerTest {
     
     @Test
     public void createWithNoContent() throws Exception {
-        mockMvc.perform(post(AdvertisementController.PATH)
-            .contentType(APPLICATION_JSON_UTF8)
+        mockMvc.perform(post(AdvertisementController.PATH).contentType(APPLICATION_JSON)
             .header(AUTHORIZATION, jwt))
             .andExpect(status().isBadRequest());
     }
@@ -140,7 +153,7 @@ public class AdvertisementControllerTest {
         advertisement.setId(4L);
         
         mockMvc.perform(post(AdvertisementController.PATH).content(toJson(advertisement))
-                .contentType(APPLICATION_JSON_UTF8)
+                .contentType(APPLICATION_JSON)
                 .header(AUTHORIZATION, jwt))
             .andExpect(status().isBadRequest());
     }
@@ -151,7 +164,7 @@ public class AdvertisementControllerTest {
 
         mockMvc.perform(buildGetRequest(id))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(APPLICATION_JSON_UTF8))
+                .andExpect(content().contentType(APPLICATION_JSON))
                 .andExpect(jsonPath("$.title", is(SOME_TITLE)));
     }
     
@@ -175,7 +188,7 @@ public class AdvertisementControllerTest {
 
         mockMvc.perform(buildPutRequest(id, advertisement))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(APPLICATION_JSON_UTF8))
+                .andExpect(content().contentType(APPLICATION_JSON))
                 .andExpect(jsonPath("$.title", is(SOME_OTHER_TITLE)));
     }
     
@@ -246,12 +259,12 @@ public class AdvertisementControllerTest {
         
         mockMvc.perform(buildGetByPageRequest(0))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(APPLICATION_JSON_UTF8))
+            .andExpect(content().contentType(APPLICATION_JSON))
             .andExpect(jsonPath("$.value.length()", is(AdvertisementController.DEFAULT_PAGE_SIZE)));
         
         mockMvc.perform(buildGetByPageRequest(1))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(APPLICATION_JSON_UTF8))
+            .andExpect(content().contentType(APPLICATION_JSON))
             .andExpect(jsonPath("$.value.length()", is(1)));
     }
     
@@ -266,7 +279,7 @@ public class AdvertisementControllerTest {
             mockMvc.perform(buildPostRequest(SOME_TITLE))
                 .andExpect(status().isCreated());
         }
-            
+        
         // get query
         String linkHeader = performGetRequest(AdvertisementController.PATH).getHeader(HttpHeaders.LINK);
         assertThat(linkHeader, is("</api/v1/ads/pages/1>; rel=\"next\""));
@@ -288,17 +301,19 @@ public class AdvertisementControllerTest {
     
     @Test
     public void createForbiddenWithoutUpdateScope() throws Exception {
-        String jwtReadOnly = new JwtGenerator().getTokenForAuthorizationHeader(WebSecurityConfig.DISPLAY_SCOPE);
+        String jwtReadOnly = "Bearer " + securityTestRule.getPreconfiguredJwtGenerator()
+                .withScopes(WebSecurityConfig.DISPLAY_SCOPE_LOCAL)
+                .createToken().getTokenValue();
         mockMvc.perform(buildPostRequest(SOME_TITLE, jwtReadOnly))
                 .andExpect(status().isForbidden());
-    }   
-    
+    }
+
     @Test
     public void readFailsWhenUnauthenticated() throws Exception {
         mockMvc.perform(get(AdvertisementController.PATH))
                 .andExpect(status().isUnauthorized());
     }
-    
+
     private static List<String> extractLinks(final String linkHeader) {
         final List<String> links = new ArrayList<String>();
         Pattern pattern = Pattern.compile("<(?<link>\\S+)>");
@@ -310,24 +325,23 @@ public class AdvertisementControllerTest {
     }
     
     private MockHttpServletResponse performGetRequest(String path) throws Exception {
-            return mockMvc.perform(get(path).header(AUTHORIZATION, jwt))
+            return mockMvc.perform(get(path)
+                    .header(AUTHORIZATION, jwt))
                     .andExpect(status().isOk())
-                    .andExpect(content().contentType(APPLICATION_JSON_UTF8))
+                    .andExpect(content().contentType(APPLICATION_JSON))
                     .andReturn().getResponse();        
     }
 
     private MockHttpServletRequestBuilder buildPostRequest(String adsTitle) throws Exception {
         return buildPostRequest(adsTitle, jwt);
     }
-    
+
     private MockHttpServletRequestBuilder buildPostRequest(String adsTitle, String jwt) throws Exception {
         AdvertisementDto advertisement = new AdvertisementDto();
-        
         advertisement.setTitle(adsTitle);
 
         // post the advertisement as a JSON entity in the request body
-        return post(AdvertisementController.PATH).content(toJson(advertisement))
-                .contentType(APPLICATION_JSON_UTF8)
+        return post(AdvertisementController.PATH).content(toJson(advertisement)).contentType(APPLICATION_JSON)
                 .header(AUTHORIZATION, jwt);
     }
 
@@ -348,12 +362,12 @@ public class AdvertisementControllerTest {
     private MockHttpServletRequestBuilder buildGetByPageRequest(int pageId) throws Exception {
         return get(AdvertisementController.PATH_PAGES + pageId)
                 .header(AUTHORIZATION, jwt);
-        
+
     }
     
     private MockHttpServletRequestBuilder buildPutRequest(String id, AdvertisementDto advertisement) throws Exception {
         return put(AdvertisementController.PATH + "/" + id).content(toJson(advertisement))
-                .contentType(APPLICATION_JSON_UTF8)
+                .contentType(APPLICATION_JSON)
                 .header(AUTHORIZATION, jwt);
     }
 
