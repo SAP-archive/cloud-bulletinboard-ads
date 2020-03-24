@@ -22,6 +22,8 @@
 		<sap.logging.version>2.1.1</sap.logging.version>
 		<spring.version>5.2.4.RELEASE</spring.version>
 		<httpclient.version>4.5.2</httpclient.version>
+		<spring-security.version>5.2.2.RELEASE</spring-security.version>
+		<sap.cloud.security.version>2.6.0</sap.cloud.security.version>
 	</properties>
 
 	<dependencies>
@@ -161,6 +163,28 @@
 			<version>1.5.10</version>
 		</dependency>
 
+		<!-- Security -->
+		<dependency> <!-- includes spring-security-oauth2 -->
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-oauth2-jose</artifactId>
+			<version>${spring-security.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>${spring-security.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-oauth2-resource-server</artifactId>
+			<version>${spring-security.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sap.cloud.security.xsuaa</groupId>
+			<artifactId>spring-xsuaa</artifactId>
+			<version>${sap.cloud.security.version}</version>
+		</dependency>
+
 		<!-- Testing -->
 		<dependency>
 			<groupId>org.hamcrest</groupId>
@@ -198,6 +222,12 @@
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 			<version>1.4.184</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.sap.cloud.security</groupId>
+			<artifactId>java-security-test</artifactId>
+			<version>${sap.cloud.security.version}</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
