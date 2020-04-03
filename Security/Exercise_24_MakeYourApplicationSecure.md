@@ -1,10 +1,5 @@
 # Exercise 24: Make your Application Secure
 
-# >>> OUTDATED <<<
-Starting from end of 2018 as of which the new [SAP Container Security Library (Java)](https://github.com/SAP/cloud-security-xsuaa-integration) was released on [maven central](https://search.maven.org/search?q=com.sap.cloud.security) this exercise is kind of outdated. The library requirements can not be fulfilled with this Spring project.
-
-Additionally to the Library documentation there exists a [samples project](https://github.com/SAP/cloud-application-security-sample), that contains a basis example explaining how to basically secure the resources that are exposed by your Spring Boot based cloud foundry application. The sample is a Spring boot version of the code developed here in the openSAP course and runs locally as well as in the Cloud Foundry environment within SAP Cloud Platform.
-
 ## Learning Goal
 In the previous exercise you learned how you can protect your application with the application router. But unauthenticated and/or unauthorized requests could be sent directly to your app - bypassing the application router. Hence, the application itself must also ensure that only those requests are served which are sent from an authenticated and authorized user.
 
@@ -18,85 +13,46 @@ Note: There is currently no easy way to make a subset of apps 'unreachable' via 
 
 Continue with your solution of the last exercise. If this does not work, you can checkout the branch [`solution-23-Setup-Generic-Authorization`](https://github.com/SAP/cloud-bulletinboard-ads/tree/solution-23-Setup-Generic-Authorization).
 
-## Step 1: Integrate SAP Java Container Security library
+## Step 1: Integrate SAP Java Cloud Security library
 
-- Get the current version of the SAP Java Container Security library from [SAP Service Marketplace](https://launchpad.support.sap.com/#/softwarecenter/template/products/%20_APP=00200682500000001943&_EVENT=DISPHIER&HEADER=Y&FUNCTIONBAR=N&EVENT=TREE&NE=NAVIGATE&ENR=73555000100200004333&V=MAINT&TA=ACTUAL&PAGE=SEARCH/XS%20JAVA%201) (the filename currently is 	
-XS_JAVA_1-70001362.ZIP. The version/filename may change in the future).
-    > Please note that *only SAP customers will be able to download the library from SAP Service Marketplace*.
+The SAP Java Cloud Security library is available [here](https://github.com/SAP/cloud-security-xsuaa-integration) 
+To use it add the following dependency to your `pom.xml` using the XML view of Eclipse:
 
-- Extract the downloaded Zip file.
-- Navigate into unzipped directory.
-- Run the command `mvn install`.
-    
-Add the following dependency to your `pom.xml` using the XML view of Eclipse:
-
-- Add the `java-container-security` dependency. Make sure that the version matches to the one downloaded from the SAP Service Marketplace:
-```
+```xml
 <!-- Security -->
-<dependency>
-    <groupId>com.sap.xs2.security</groupId>
-    <artifactId>java-container-security</artifactId>
-    <version>0.27.2</version> 
-</dependency>
+  <dependency>
+    <groupId>com.sap.cloud.security.xsuaa</groupId>
+    <artifactId>spring-xsuaa</artifactId>
+    <version>2.6.0</version>
+  </dependency>
+  <dependency>
+    <groupId>com.sap.cloud.security</groupId>
+    <artifactId>java-security-test</artifactId>
+    <version>2.6.0/version>
+    <scope>test</scope>
+  </dependency>
 ```
-- **UPDATE(!):** when using `mvn-install` of version > `3.0.0` you need in addition to add the following dependencies:
-```
-<!-- we need to add addtional dependencies because mvn install-file does not install bundled pom.xml from artifacts -->
-<!-- see here https://issues.apache.org/jira/browse/MINSTALL-110 -->
-<!-- BEGIN additional dependencies -->
-<dependency>
-    <groupId>com.sap.xs2.security</groupId>
-    <artifactId>security-commons</artifactId>
-    <version>0.27.2</version>
-</dependency>
-<dependency>
-    <groupId>com.sap.xs2.security</groupId>
-    <artifactId>java-container-security-api</artifactId>
-    <version>0.27.2</version> 
-</dependency>
-<dependency>
-    <groupId>com.sap.security.nw.sso.linuxx86_64.opt</groupId>
-    <artifactId>sapjwt.linuxx86_64</artifactId>
-    <version>1.0.19</version>
-</dependency> 
-<dependency> <!-- windows -->
-    <groupId>com.sap.security.nw.sso.ntamd64.opt</groupId>
-    <artifactId>sapjwt.ntamd64</artifactId>
-    <version>1.0.19</version>
-</dependency>
 
+The second dependency adds functionality that we later use for testing security features.
+
+You also need these additional spring dependencies:
+
+```xml
 <!-- Spring Security and other related libraries-->
+<dependency> <!-- includes spring-security-oauth2 -->
+    <groupId>org.springframework.security</groupId>
+	<artifactId>spring-security-oauth2-jose</artifactId>
+	<version>5.2.4.RELEASE</version>
+</dependency>
+<dependency>
+	<groupId>org.springframework.security</groupId>
+	<artifactId>spring-security-config</artifactId>
+	<version>5.2.4.RELEASE</version>
+</dependency>
 <dependency>
     <groupId>org.springframework.security</groupId>
-    <artifactId>spring-security-jwt</artifactId>
-    <version>1.0.8.RELEASE</version>
-    <exclusions>
-        <exclusion>
-            <artifactId>bcpkix-jdk15on</artifactId>
-            <groupId>org.bouncycastle</groupId>
-        </exclusion>
-    </exclusions>
-</dependency>
-<dependency>
-    <groupId>org.springframework.security.oauth</groupId>
-    <artifactId>spring-security-oauth2</artifactId>
-    <version>2.0.11.RELEASE</version>
-</dependency>
-
-<dependency>
-    <groupId>commons-io</groupId>
-    <artifactId>commons-io</artifactId>
-    <version>2.4</version>
-</dependency>
-<dependency>
-    <groupId>com.unboundid.components</groupId>
-    <artifactId>json</artifactId>
-    <version>1.0.0</version>
-</dependency>
-<dependency>
-    <groupId>org.cloudfoundry.identity</groupId>
-    <artifactId>cloudfoundry-identity-client-lib</artifactId>
-    <version>4.7.4</version>
+	<artifactId>spring-security-oauth2-resource-server</artifactId>
+	<version>5.2.4.RELEASE</version>
 </dependency>
 <!-- END additional dependencies -->
 ```
@@ -106,13 +62,9 @@ Add the following dependency to your `pom.xml` using the XML view of Eclipse:
 ## Step 2: Configure Spring Security
 
 ### Add and modify `WebSecurityConfig` class
-- Create a `WebSecurityConfig` class in the package `com.sap.bulletinboard.ads.config` and copy the code from [here](https://github.com/SAP/cloud-bulletinboard-ads/blob/solution-24-Make-App-Secure/src/main/java/com/sap/bulletinboard/ads/config/WebSecurityConfig.java).
-- Change the value of field `XSAPPNAME` from `"bulletinboard-d012345"` to `"bulletinboard-<Your user id>"`.  
-**Note:** The value of `private static final String XSAPPNAME` must be equal to the value of `xsappname`, that is defined in your `xs-security.json` file. 
+Create a `WebSecurityConfig` class in the package `com.sap.bulletinboard.ads.config` and copy the code from [here](https://github.com/SAP/cloud-bulletinboard-ads/blob/solution-24-Make-App-Secure/src/main/java/com/sap/bulletinboard/ads/config/WebSecurityConfig.java).
 
-> Technically - under the hood - the default [`AffirmativeBased`](https://docs.spring.io/spring-security/site/docs/4.2.1.RELEASE/apidocs/org/springframework/security/access/vote/AffirmativeBased.html) `AccessDecisionManager` is used. This holds the `WebExpressionVoter`, which in turn makes use of the `OAuth2WebSecurityExpressionHandler` that handles Spring EL expressions like `hasRole` or `isAuthenticated` ([read more](https://docs.spring.io/spring-security/site/docs/3.0.x/reference/el-access.html)). If you require more than one Voter you can specify a "custom" `AccessDecisionManager` such as [`UnanimousBased`](https://docs.spring.io/spring-security/site/docs/4.2.1.RELEASE/apidocs/org/springframework/security/access/vote/UnanimousBased.html).
-
-> You have now enabled security centrally on the web level. Besides that you have the option to do the authorization checks on method level using [Method Security](http://docs.spring.io/autorepo/docs/spring-security/current/reference/htmlsingle/#jc-method).
+> You have now enabled security centrally on the web level. Besides that you have the option to do the authorization checks on method level using [Method Security](https://docs.spring.io/spring-security/site/docs/current/reference/html5/#method-security-expressions).
 
 ### Activate Security by registering `springSecurityFilterChain` Servlet Filter
 - In order to **activate** the Spring Security framework you need to add a servlet filter in the `AppInitializer.onStartup()` method.
@@ -144,37 +96,62 @@ public void setUp() throws Exception {
 - Now run your JUnit tests and see them failing because of unexpected `401` ("unauthenticated") status code.
 
 ### Fake Test Security Infrastructure
-- Create folder `cc-bulletinboard-ads/src/test/resources` and copy the files [privateKey.txt](https://github.com/SAP/cloud-bulletinboard-ads/blob/solution-24-Make-App-Secure/src/test/resources/privateKey.txt), [publicKey.txt](https://github.com/SAP/cloud-bulletinboard-ads/blob/solution-24-Make-App-Secure/src/test/resources/publicKey.txt) into the new folder.
-
-- Copy the implementation of the `TestSecurityConfig` class from [here](https://github.com/SAP/cloud-bulletinboard-ads/blob/solution-24-Make-App-Secure/src/test/java/com/sap/bulletinboard/ads/config/TestSecurityConfig.java) into the **test package** named `com.sap.bulletinboard.ads.config`.  
-In productive environments, `SAPOfflineTokenServicesCloud` reads the public key value from the environment variable `VCAP_SERVICES`. For unit tests, you explicitly set the public key of your test key pair with the `JwtGenerator`. The `JwtGenerator` takes the public key from the `publicKey.txt` file.
-
-- Copy the implementation of the `JwtGenerator` class from [here](https://github.com/SAP/cloud-bulletinboard-ads/blob/solution-24-Make-App-Secure/src/test/java/com/sap/bulletinboard/ads/testutils/JwtGenerator.java) into a new test package named `com.sap.bulletinboard.ads.testutils`.
-
+In productive environments, the security library reads the public key value from the environment variable `VCAP_SERVICES`. For unit tests, you can explicitly set the
+public key of your test key pair using the `SecurityTestRule` from [java-security-test](https://github.com/SAP/cloud-security-xsuaa-integration/tree/master/java-security-test).
+The `SecurityTestRule` takes the public key file from the resources. Since you included
+the java security test library, a public/private key pair is already put into the resources and accessible from the resources path `/publicKey.txt` and `/privateKey.txt`.
 
 ## Step 4: Fix and Run Component Tests
 ### Generate a valid JWT Token
-- Update the setup of the `AdvertisementControllerTest` test class according to the below code snippet:
-```java
-private String jwt;
+- Add the `SecurityTestRule` and a `jwt` field to the test class:
 
+```java
+@ClassRule
+public static SecurityTestRule securityTestRule = SecurityTestRule.getInstance(Service.XSUAA)
+                 .setKeys("/publicKey.txt", "/privateKey.txt");
+
+private String jwt;
+```
+
+- Update the setup of the `AdvertisementControllerTest` test class according to the below code snippet:
+
+```java
 @Before
 public void setUp() throws Exception {
     ...
-    // compute valid token with Display and Update scopes
-    // tenant specific XSAPPNAME (appid) looks like <xsappname>!t<tenant specific index> 
-    jwt = new JwtGenerator().getTokenForAuthorizationHeader("bulletinboard-<<your user id>>!t27.Display", "bulletinboard-<<your user id>>!t27.Update"); 
+  jwt = "Bearer " + securityTestRule.getPreconfiguredJwtGenerator()
+          .withLocalScopes(WebSecurityConfig.DISPLAY_SCOPE_LOCAL, WebSecurityConfig.UPDATE_SCOPE_LOCAL)
+          .createToken()
+          .getTokenValue();
 }
 ```
-> Note: The class `JwtGenerator` has the responsibility to generate a JWT Token for those scopes which are passed to the `getTokenForAuthorizationHeader()` method as a String array. It returns the token in a format that is suitable for the HTTP `Authorization` header. The generator signs the JWT Token with its private key (taken from file `privateKey.txt`).
+
+> Note: The class `JwtGenerator` has the responsibility to generate a JWT Token for those scopes which are passed to the `withLocalScopes()` method. It returns the token in a format that is suitable for the HTTP `Authorization` header. The generator signs the JWT Token with the private key that was set on the `SecurityTestRule`.
 
 ### Add `Authorization` header to each HTTP request
-The class `AdvertisementControllerTest` must further be updated in those locations where the test performs a HTTP method call. All HTTP method calls must be updated with an HTTP header field of name `Authorization` and value `jwt`. For example:  
+The class `AdvertisementControllerTest` must further be updated in those locations where the test performs a HTTP method call. All HTTP method calls must be updated with an HTTP header field of name `Authorization` and value `jwt`. For example:
 
-Before... ```get(AdvertisementController.PATH + "/" + id)```  
+Before... ```get(AdvertisementController.PATH + "/" + id)```
 
-After...  ```get(AdvertisementController.PATH + "/" + id).header(HttpHeaders.AUTHORIZATION, jwt)```  
+After...  ```get(AdvertisementController.PATH + "/" + id).header(HttpHeaders.AUTHORIZATION, jwt)```
 
+
+### Add `TestPropertySource` to the test class
+
+The security library creates a configuration object that fits the environment it is run in by parsing the `VCAP_SERVICES` environment variable. For the test we want to
+override that parsing with test settings. This can be done by adding the `@TestPropertySource` annotation right before the test class declaration.
+Here the required properties can be overriden so that they match the inforamtion that is contained in the `jwt` token that is generated for the test.
+To simplify the setup we use the defaults from the `SecurityTestRule`
+
+```java
+@TestPropertySource(properties = {
+        "xsuaa.uaadomain=" + SecurityTestRule.DEFAULT_DOMAIN,
+        "xsuaa.xsappname=" + SecurityTestRule.DEFAULT_APP_ID,
+        "xsuaa.clientid=" + SecurityTestRule.DEFAULT_CLIENT_ID })
+//@formatter:off
+public class AdvertisementControllerTest {
+...
+```
 
 ### Run JUnit tests
 Now you can run the JUnit tests as described [in Exercise 4](../CreateMicroservice/Exercise_4_CreateServiceTests.md). They should succeed now.
@@ -189,19 +166,18 @@ Based on the `VCAP_SERVICES` environment variable the `spring-security` module i
 
 - In Eclipse, open the Tomcat server settings (by double-clicking on the server) and then open the launch configuration. In the Environment tab edit the `VCAP_SERVICES` variable and replace the value with the following:
 ```javascript
-{"postgresql-9.3":[{"name":"postgresql-lite","label":"postgresql-9.3","credentials":{"dbname":"test","hostname":"127.0.0.1","password":"test123!","port":"5432","uri":"postgres://testuser:test123!@localhost:5432/test","username":"testuser"},"tags":["relational","postgresql"],"plan":"free"}],"rabbitmq-lite":[{"credentials":{"hostname":"127.0.0.1","password":"guest","uri":"amqp://guest:guest@127.0.0.1:5672","username":"guest"},"label":"rabbitmq-lite","tags":["rabbitmq33","rabbitmq","amqp"]}],"xsuaa":[{"credentials":{"clientid":"testClient!t27","clientsecret":"dummy-clientsecret","identityzone":"d012345trial","identityzoneid":"a09a3440-1da8-4082-a89c-3cce186a9b6c","tenantid":"d012345trial","tenantmode":"shared","url":"dummy-url","verificationkey":"-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAn5dYHyD/nn/Pl+/W8jNGWHDaNItXqPuEk/hiozcPF+9l3qEgpRZrMx5ya7UjGdvihidGFQ9+efgaaqCLbk+bBsbU5L4WoJK+/t1mgWCiKI0koaAGDsztZsd3Anz4LEi2+NVNdupRq0ScHzweEKzqaa/LgtBi5WwyA5DaD33gbytG9hdFJvggzIN9+DSverHSAtqGUHhwHSU4/mL36xSReyqiKDiVyhf/y6V6eiE0USubTEGaWVUANIteiC+8Ags5UF22QoqMo3ttKnEyFTHpGCXSn+AEO0WMLK1pPavAjPaOyf4cVX8b/PzHsfBPDMK/kNKNEaU5lAXo8dLUbRYquQIDAQAB-----END PUBLIC KEY-----","xsappname":"bulletinboard-d012345"},"label":"xsuaa","name":"uaa-bulletinboard","plan":"application","tags":["xsuaa"]}]}
+{"postgresql-9.3":[{"name":"postgresql-lite","label":"postgresql-9.3","credentials":{"dbname":"test","hostname":"127.0.0.1","password":"test123!","port":"5432","uri":"postgres://testuser:test123!@localhost:5432/test","username":"testuser"},"tags":["relational","postgresql"],"plan":"free"}],"xsuaa":[{"credentials":{"clientid":"sb-clientId!t0815","clientsecret":"dummy-clientsecret","identityzone":"<<your tenant>>","identityzoneid":"a09a3440-1da8-4082-a89c-3cce186a9b6c","tenantid":"a09a3440-1da8-4082-a89c-3cce186a9b6c","uaadomain":"localhost","tenantmode":"shared","url":"dummy-url","verificationkey":"-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAm1QaZzMjtEfHdimrHP3/2Yr+1z685eiOUlwybRVG9i8wsgOUh+PUGuQL8hgulLZWXU5MbwBLTECAEMQbcRTNVTolkq4i67EP6JesHJIFADbK1Ni0KuMcPuiyOLvDKiDEMnYG1XP3X3WCNfsCVT9YoU+lWIrZr/ZsIvQri8jczr4RkynbTBsPaAOygPUlipqDrpadMO1momNCbea/o6GPn38LxEw609ItfgDGhL6f/yVid5pFzZQWb+9l6mCuJww0hnhO6gt6Rv98OWDty9G0frWAPyEfuIW9B+mR/2vGhyU9IbbWpvFXiy9RVbbsM538TCjd5JF2dJvxy24addC4oQIDAQAB-----END PUBLIC KEY-----","xsappname":"xsapp!t0815"},"label":"xsuaa","name":"uaa-bulletinboard","plan":"application","tags":["xsuaa"]}]}
 ```
 - If you run the application from the command line, update your `localEnvironmentSetup` script accordingly to  [`localEnvironmentSetup.sh`](https://github.com/SAP/cloud-bulletinboard-ads/blob/solution-24-Make-App-Secure/localEnvironmentSetup.sh) ([`localEnvironmentSetup.bat`](https://github.com/SAP/cloud-bulletinboard-ads/blob/solution-24-Make-App-Secure/localEnvironmentSetup.bat))
-- In both cases make sure that you've changed the value of field `xsappname` from "bulletinboard-d012345" to "bulletinboard-`<<Your user id>>`".
 
 > Note: With this configuration we can mock the XSUAA backing service as we make use of so-called "offlineToken verification". Having that we can simulate a valid JWT Token to test our service as described below.
 
 ### Generate JWT Token
 Before calling the service you need to provide a digitally signed JWT token to simulate that you are an authenticated user. 
-- Therefore simply set a breakpoint in `JWTGenerator.getTokenForAuthorizationHeader()` in package `com.sap.bulletinboard.ads.testutils` and run the `JUnit` tests again to fetch the value of `jwt` from there. 
+- Therefore simply set a breakpoint in the `setUp` method of the `AdvertisementControllerTest` and run the `JUnit` tests again to fetch the value of `jwt` from there. 
 
 > Explanation: The generated JWT Token is an "individual one" as it
->  - contains specific scope(s) e.g. `bulletinboard-<<your user id>>.Display` (as defined in your `WebSecurityConfig` class). Furthermore note that the scope is composed of **xsappname** e.g. `bulletinboard-<<your user id>>` which also needs to be the same as provided as part of the `VCAP_SERVICES`--`xsuaa`--`xsappname`
+>  - contains specific scope(s) e.g. `xsapp!t0815.Display`. Furthermore note that the scope is composed of **xsappname** e.g. `xsapp!t0815` which also needs to be the same as provided as part of the `VCAP_SERVICES`--`xsuaa`--`xsappname`
 >  - it is signed with a private key that fits to the public key that is provided as part of the `VCAP_SERVICES`--`xsuaa`--`verificationkey`
 
 ### Call local Service 
