@@ -11,7 +11,7 @@ Note: There is currently no easy way to make a subset of apps 'unreachable' via 
 
 ## Prerequisite
 
-Continue with your solution of the last exercise. If this does not work, you can checkout the branch [`solution-23-Setup-Generic-Authorization`](https://github.com/SAP/cloud-bulletinboard-ads/tree/solution-23-Setup-Generic-Authorization).
+Continue with your solution of the last exercise. If this does not work, you can checkout the branch [`solution-23-Setup-Generic-Authorization-Spring5`](https://github.com/SAP-samples/cloud-bulletinboard-ads/commits/solution-23-Setup-Generic-Authorization-Spring5).
 
 ## Step 1: Integrate SAP Java Cloud Security library
 
