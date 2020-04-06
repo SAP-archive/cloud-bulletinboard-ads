@@ -62,7 +62,7 @@ You also need these additional spring dependencies:
 ## Step 2: Configure Spring Security
 
 ### Add and modify `WebSecurityConfig` class
-Create a `WebSecurityConfig` class in the package `com.sap.bulletinboard.ads.config` and copy the code from [here](https://github.com/SAP/cloud-bulletinboard-ads/blob/solution-24-Make-App-Secure/src/main/java/com/sap/bulletinboard/ads/config/WebSecurityConfig.java).
+Create a `WebSecurityConfig` class in the package `com.sap.bulletinboard.ads.config` and copy the code from [here](https://github.com/SAP/cloud-bulletinboard-ads/blob/solution-24-Make-App-Secure-Spring5/src/main/java/com/sap/bulletinboard/ads/config/WebSecurityConfig.java).
 
 > You have now enabled security centrally on the web level. Besides that you have the option to do the authorization checks on method level using [Method Security](https://docs.spring.io/spring-security/site/docs/current/reference/html5/#method-security-expressions).
 
@@ -168,7 +168,7 @@ Based on the `VCAP_SERVICES` environment variable the `spring-security` module i
 ```javascript
 {"postgresql-9.3":[{"name":"postgresql-lite","label":"postgresql-9.3","credentials":{"dbname":"test","hostname":"127.0.0.1","password":"test123!","port":"5432","uri":"postgres://testuser:test123!@localhost:5432/test","username":"testuser"},"tags":["relational","postgresql"],"plan":"free"}],"xsuaa":[{"credentials":{"clientid":"sb-clientId!t0815","clientsecret":"dummy-clientsecret","identityzone":"<<your tenant>>","identityzoneid":"a09a3440-1da8-4082-a89c-3cce186a9b6c","tenantid":"a09a3440-1da8-4082-a89c-3cce186a9b6c","uaadomain":"localhost","tenantmode":"shared","url":"dummy-url","verificationkey":"-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAm1QaZzMjtEfHdimrHP3/2Yr+1z685eiOUlwybRVG9i8wsgOUh+PUGuQL8hgulLZWXU5MbwBLTECAEMQbcRTNVTolkq4i67EP6JesHJIFADbK1Ni0KuMcPuiyOLvDKiDEMnYG1XP3X3WCNfsCVT9YoU+lWIrZr/ZsIvQri8jczr4RkynbTBsPaAOygPUlipqDrpadMO1momNCbea/o6GPn38LxEw609ItfgDGhL6f/yVid5pFzZQWb+9l6mCuJww0hnhO6gt6Rv98OWDty9G0frWAPyEfuIW9B+mR/2vGhyU9IbbWpvFXiy9RVbbsM538TCjd5JF2dJvxy24addC4oQIDAQAB-----END PUBLIC KEY-----","xsappname":"xsapp!t0815"},"label":"xsuaa","name":"uaa-bulletinboard","plan":"application","tags":["xsuaa"]}]}
 ```
-- If you run the application from the command line, update your `localEnvironmentSetup` script accordingly to  [`localEnvironmentSetup.sh`](https://github.com/SAP/cloud-bulletinboard-ads/blob/solution-24-Make-App-Secure/localEnvironmentSetup.sh) ([`localEnvironmentSetup.bat`](https://github.com/SAP/cloud-bulletinboard-ads/blob/solution-24-Make-App-Secure/localEnvironmentSetup.bat))
+- If you run the application from the command line, update your `localEnvironmentSetup` script accordingly to  [`localEnvironmentSetup.sh`](https://github.com/SAP/cloud-bulletinboard-ads/blob/solution-24-Make-App-Secure-Spring5/localEnvironmentSetup.sh) ([`localEnvironmentSetup.bat`](https://github.com/SAP/cloud-bulletinboard-ads/blob/solution-24-Make-App-Secure-Spring5/localEnvironmentSetup.bat))
 
 > Note: With this configuration we can mock the XSUAA backing service as we make use of so-called "offlineToken verification". Having that we can simulate a valid JWT Token to test our service as described below.
 
