@@ -140,7 +140,7 @@ After...  ```get(AdvertisementController.PATH + "/" + id).header(HttpHeaders.AUT
 
 The security library creates a configuration object that fits the environment it is run in by parsing the `VCAP_SERVICES` environment variable. For the test we want to
 override that parsing with test settings. This can be done by adding the `@TestPropertySource` annotation right before the test class declaration.
-Here the required properties can be overriden so that they match the inforamtion that is contained in the `jwt` token that is generated for the test.
+Here the required properties can be overridden so that they match the information contained in the `jwt` token that is generated for the test.
 To simplify the setup we use the defaults from the `SecurityTestRule`
 
 ```java
