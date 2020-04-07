@@ -219,7 +219,9 @@ Before deploying your application to Cloud Foundry you need to bind your applica
 ## Further Reading
 - [Spring Security Reference](http://docs.spring.io/spring-security/site/docs/current/reference/htmlsingle/#abstractsecuritywebapplicationinitializer)
 - [Expression-Based Access Control](https://docs.spring.io/spring-security/site/docs/3.0.x/reference/el-access.html)
-- [Cloud Application Security Samples](https://github.com/SAP/cloud-application-security-sample/)
+- [Java Security library](https://github.com/SAP/cloud-security-xsuaa-integration/tree/master/java-security)
+- [Java Security Test library](https://github.com/SAP/cloud-security-xsuaa-integration/tree/master/java-security-test)
+- [Migration Guide for Applications that use Spring Security and java-container-security](https://github.com/SAP/cloud-security-xsuaa-integration/blob/master/spring-xsuaa/Migration_JavaContainerSecurityProjects.md)
 
 
 ***
