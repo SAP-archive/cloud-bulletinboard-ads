@@ -13,11 +13,6 @@ Continue with your solution of the last exercise. If this does not work, you can
 To administrate authorizations for your business application, perform the following steps:
 
 - Navigate to your Subaccount
-- Select menu item **Roles** from the **Security** menu on the left side of the screen and perform the procedure visualized in the screenshots:  
-<img src="/Security/images/CockpitRoleCollectionCreate.jpg" width="700">  
-<img src="/Security/images/CockpitRoleCollectionAddRole.png" width="700">  
-
-- Navigate back to your Subaccount  
 - Select menu item **Trust Configuration** from the **Security** menu on the left side of the screen and select the standard IdP SAP ID Service. Now perform the procedure visualized in the screenshot:    
 <img src="/Security/images/CockpitRoleCollectionAssignToUser.png" width="700">  
 
