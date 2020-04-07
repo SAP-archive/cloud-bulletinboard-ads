@@ -49,6 +49,22 @@ To declare the **Role Templates**, create the security descriptor file `xs-secur
                                                         "$XSAPPNAME.Update"             
                                                    ]                                            
                         }
+    ],
+    "role-collections": [
+                        {
+                          "name": "RC_<<your user id>>_Viewer",
+                          "description": "Viewer (read)",
+                          "role-template-references": [
+                                                        "$XSAPPNAME.Viewer"
+                                                      ]
+                        },
+                        {
+                          "name": "RC_<<your user id>>_Advertiser",
+                          "description": "Advertiser (read, update)",
+                          "role-template-references": [
+                                                        "$XSAPPNAME.Advertiser"
+                                                      ]
+                        }
     ]
 }
 ```
