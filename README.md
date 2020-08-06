@@ -34,7 +34,7 @@ The registration, learning content, and final exam are free of charge. You’ll 
 **Development Systems**
 If your primary interest in taking this course is getting a technical overview of the development-related capabilities of SAP Cloud Platform, you do not need access to a development system. However, we realize that many of you will be interested in experimenting with the platform and developing your own code, based on the instructions in the course.
 
-You can [register for your own free trail account for SAP Cloud Platform](https://accounts.sap.com/ui/public/showRegisterForm?spName=https%3A%2F%2Fnwtrial.ondemand.com%2Fservices&targetUrl=https%3A%2F%2Faccount.hanatrial.ondemand.com%2Fcockpit&sourceUrl=https%3A%2F%2Fcloudplatform.sap.com%2Findex.html). We’ll also explain how to do this at the start of the course. There are a few restrictions for the free trial account, but you’ll be able to follow the course without any problems, as the instructor will use the same system as you.
+You can [register for your own free trial account for SAP Cloud Platform](https://accounts.sap.com/ui/public/showRegisterForm?spName=https%3A%2F%2Fnwtrial.ondemand.com%2Fservices&targetUrl=https%3A%2F%2Faccount.hanatrial.ondemand.com%2Fcockpit&sourceUrl=https%3A%2F%2Fcloudplatform.sap.com%2Findex.html). We’ll also explain how to do this at the start of the course. There are a few restrictions for the free trial account, but you’ll be able to follow the course without any problems, as the instructor will use the same system as you.
 
 For this course a preconfigured virtual machine image is provided and its use is recommended if you want to follow along with the hands-on exercises. The setup is provided and explained in Week 0: System Preparation.
 
