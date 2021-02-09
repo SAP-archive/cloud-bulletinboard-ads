@@ -3,7 +3,6 @@ applications:
 - name: bulletinboard-ads
   memory: 800M
   path: target/bulletinboard-ads.war
-  buildpack: https://github.com/cloudfoundry/java-buildpack.git#v4.6
   # buildpack: sap_java_buildpack
   # health-check-type: http
   # health-check-http-endpoint: /health
