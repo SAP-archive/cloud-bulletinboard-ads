@@ -118,11 +118,11 @@ For this course a preconfigured virtual machine image is provided and its use is
 * [FAQ - Frequently Asked Questions regarding the Eclipse IDE](/Knowledge/EclipseIdeTips.md)
 * [JSON Conversion](/Knowledge/JSONConversion.md)
 
-## Known issues
+## Known Issues
 
 Please look into GitHub issues for any issues reported.
 
-## Support
+## How to obtain support
 
 Please use GitHub issues for any bugs to be reported.
 
