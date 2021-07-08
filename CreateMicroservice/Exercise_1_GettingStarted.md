@@ -8,7 +8,7 @@ Get familiar with the provided code base and understand how to test your microse
 
 - Run `VirtualBox` and start your Virtual Machine (VM).
 - Run Eclipse inside the VM **Important: If you are asked for a workspace, make sure to use the default workspace at `/home/vagrant/workspace`**
-- Import the `master` branch of this [Git Project](https://github.com/SAP/cloud-bulletinboard-ads/tree/master) as described below:
+- Import the `master` branch of this [Git Project](https://github.com/SAP-samples/cloud-bulletinboard-ads/tree/master) as described below:
 
 #### Initial Import
 - Select `File - Import - Git - Projects from Git`. 
