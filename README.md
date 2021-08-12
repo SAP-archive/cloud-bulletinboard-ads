@@ -1,6 +1,5 @@
-<!-- REUSE badge [![REUSE status](https://api.reuse.software/badge/github.com/SAP-samples/cloud-bulletinboard-ads)](https://api.reuse.software/info/github.com/SAP-samples/cloud-bulletinboard-ads) -->
-
 # openSAP course: [Cloud-Native Development with SAP Cloud Platform](https://open.sap.com/courses/cp5)
+[![REUSE status](https://api.reuse.software/badge/github.com/SAP-samples/cloud-bulletinboard-ads)](https://api.reuse.software/info/github.com/SAP-samples/cloud-bulletinboard-ads)
 
 ## Description
 
