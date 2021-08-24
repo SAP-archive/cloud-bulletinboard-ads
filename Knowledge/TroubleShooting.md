@@ -4,7 +4,7 @@
 If you want to checkout the branch within **Eclipse**, you need to open the `Git Repositories` View:
 -	To avoid merging conflicts [stash](https://git-scm.com/docs/git-stash) your uncommitted changes: `Right click on your repository` - `Stashes` - `Stash Changes...`
 -	Then checkout the remote branch: `Double Click on the branch node` - `Checkout...` - `Checkout as New Local Branch`.
-- **Note** that `git reset --hard` might not be sufficient for avoiding conflicts with upcoming branches, as it undo's only changes from files already tracked by git. Let's assume you're currently working on the `master` branch and you have created a bunch of classes in context of the exercises, those classes created by yourself are not considered by git and not reverted by git.
+- **Note** that `git reset --hard` might not be sufficient for avoiding conflicts with upcoming branches, as it undo's only changes from files already tracked by git. Let's assume you're currently working on the `main` branch and you have created a bunch of classes in context of the exercises, those classes created by yourself are not considered by git and not reverted by git.
 
 ## Run Maven Build without tests
 Let's assume you would like to create a `war`-file but the tests are currently failing. You can skip the tests for now by executing:

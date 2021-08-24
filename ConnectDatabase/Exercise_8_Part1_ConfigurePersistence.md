@@ -9,7 +9,7 @@ The task of this exercise is to setup the persistence layer in such a way that i
 
 **Used dependencies**:
 
-In this exercise we provide the `CloudDatabaseConfig` class which sets up a CRUD repository based on the information provided in the `VCAP_SERVICES` environment variable. For this exercise it suffices to regard this class as a "black box". 
+In this exercise we provide the `CloudDatabaseConfig` class which sets up a CRUD repository based on the information provided in the `VCAP_SERVICES` environment variable. For this exercise it suffices to take this class as given. 
 
 <img src="../Z_ReuseImages/images/DBConnectionSetup_blackbox.png" height="300" />
 

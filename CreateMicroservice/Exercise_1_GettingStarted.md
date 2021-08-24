@@ -4,22 +4,22 @@ Exercise 1: Getting Started - Setup Tomcat Web Server
 ## Learning Goal
 Get familiar with the provided code base and understand how to test your microservice in your local environment. In this exercise you will start the microservice on your locally installed Tomcat web server while making use of Spring Dependency Injection.
 
-## Prerequisite - Import Project Into Eclipse (`master` branch)
+## Prerequisite - Import Project Into Eclipse (`main` branch)
 
 - Run `VirtualBox` and start your Virtual Machine (VM).
 - Run Eclipse inside the VM **Important: If you are asked for a workspace, make sure to use the default workspace at `/home/vagrant/workspace`**
-- Import the `master` branch of this [Git Project](https://github.com/SAP/cloud-bulletinboard-ads/tree/master) as described below:
+- Import the `main` branch of this [Git Project](https://github.com/SAP/cloud-bulletinboard-ads/tree/master) as described below:
 
 #### Initial Import
 - Select `File - Import - Git - Projects from Git`. 
 - In the next dialog, select `Clone URI` and enter the URI `https://github.com/SAP/cloud-bulletinboard-ads.git`.
-- **Important**: Choose **`master`** as `Initial branch`
+- **Important**: Choose **`main`** as `Initial branch`
     - Use `Next` and `Finish` to go through the following dialogs (the default settings should be OK).
 - Modify the proxy setttings by updating the below mentioned fields in pom.xml with your own proxy details if your are behind any proxy.
     - Fields to be updated are: `<http.proxyHost>` and `<http.proxyPort>`.
 	
 - **Then update the Maven Settings: `ALT+F5`, `OK`**
-- Make sure that you have checked out the **`master`** branch.
+- Make sure that you have checked out the **`main`** branch.
 
 ## Step 1: Get to Know the Code
 Take some time to familiarize yourself with the given `bulletinboard-ads` microservice. Concentrate on the `src/main/java` source folder and there in particular the following classes are now of interest: `AppInitializer`, the `WebAppContextConfig` and `DefaultController`.
