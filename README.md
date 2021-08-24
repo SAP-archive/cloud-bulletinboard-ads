@@ -1,21 +1,21 @@
-# openSAP course: [Cloud-Native Development with SAP Cloud Platform](https://open.sap.com/courses/cp5)
+# openSAP course: [Cloud-Native Development with SAP Business Technology Platform](https://open.sap.com/courses/cp5)
 [![REUSE status](https://api.reuse.software/badge/github.com/SAP-samples/cloud-bulletinboard-ads)](https://api.reuse.software/info/github.com/SAP-samples/cloud-bulletinboard-ads)
 
 ## Description
 
-Join this free online course, [Cloud-Native Development with SAP Cloud Platform](https://open.sap.com/courses/cp5), to learn and experience how microservice-based cloud native development with SAP Cloud Platform works. This is an advanced course aimed primarily at developers and application and technology consultants, teaching hands-on the important concepts of developing innovative cloud applications.
+Join this free online course, [Cloud-Native Development with SAP Cloud Platform](https://open.sap.com/courses/cp5), to learn and experience how microservice-based cloud native development with SAP Business Technology Platform works. This is an advanced course aimed primarily at developers and application and technology consultants, teaching hands-on the important concepts of developing innovative cloud applications.
 
 # <img src="./Z_ReuseImages/images/281495_SpiralboundNotebook_R_blue.png" height="80" alt="Course Information"/> Course Information
 
 <img src="/Z_ReuseImages/images/openSAP_CP5_Course_Outline.png" height="250" alt="Course Outline"/>
 
-SAP Cloud Platform is the enterprise platform-as-a-service, with comprehensive application development services and capabilities. It enables customers to achieve business agility, create a truly integrated and optimized enterprise, and accelerate digital transformation across the business – all without the requirement of maintaining or investing in on-premise infrastructure.
+SAP Business Technology Platform is the enterprise platform-as-a-service, with comprehensive application development services and capabilities. It enables customers to achieve business agility, create a truly integrated and optimized enterprise, and accelerate digital transformation across the business – all without the requirement of maintaining or investing in on-premise infrastructure.
 
-In this new advanced course, you’ll learn how to develop microservice-based cloud-native applications with [SAP Cloud Platform](https://cloudplatform.sap.com/) through hands-on exercises. You’ll be working primarily with the Cloud Foundry environment within SAP Cloud Platform and many of its open-source services to develop step-by-step a Java-based application that is made for the cloud.
+In this new advanced course, you’ll learn how to develop microservice-based cloud-native applications with [SAP Business Technology Platform](https://cloudplatform.sap.com/) through hands-on exercises. You’ll be working primarily with the Cloud Foundry environment within SAP Business Technology Platform and many of its open-source services to develop step-by-step a Java-based application that is made for the cloud.
 
-We’ll start with a theoretical introduction to SAP Cloud Platform and microservice architectures. We will also cover Spring basics and introduce the sample application with which we will be working throughout the course for the hands-on exercises. In the following weeks, we’ll go deeper into creating microservices, connecting databases, handling logging and tracing, as well as service-to-service communication, ensuring security, and additional topics like multitenancy, Spring Boot, continuous integration and delivery, and advanced microservice design. In between we will also cover topics like REST services, stateless apps, Cloud Foundry as a platform, unit and component testing, and much more. In the hands-on exercises we will start based on an empty shell application and build a full real-world cloud application. The optional system preparation with instructions on setting up the development environment and some information to get started will open two weeks before the actual course starts.
+We’ll start with a theoretical introduction to SAP Business Technology Platform and microservice architectures. We will also cover Spring basics and introduce the sample application with which we will be working throughout the course for the hands-on exercises. In the following weeks, we’ll go deeper into creating microservices, connecting databases, handling logging and tracing, as well as service-to-service communication, ensuring security, and additional topics like multitenancy, Spring Boot, continuous integration and delivery, and advanced microservice design. In between we will also cover topics like REST services, stateless apps, Cloud Foundry as a platform, unit and component testing, and much more. In the hands-on exercises we will start based on an empty shell application and build a full real-world cloud application. The optional system preparation with instructions on setting up the development environment and some information to get started will open two weeks before the actual course starts.
 
-This advanced course is primarily aimed at developers and application and technology consultants who have already finished the openSAP course [SAP Cloud Platform Essentials (Update Q3/2017)](https://open.sap.com/courses/cp1-2) and want to learn more. For the first time, we’ll cover in-depth microservice architectures and the open-source services of the Cloud Foundry environment within SAP Cloud Platform, and how to leverage them to build cloud-native applications.
+This advanced course is primarily aimed at developers and application and technology consultants who have already finished the openSAP course [SAP Cloud Platform Essentials (Update Q3/2017)](https://open.sap.com/courses/cp1-2) and want to learn more. For the first time, we’ll cover in-depth microservice architectures and the open-source services of the Cloud Foundry environment within SAP Business Technology Platform, and how to leverage them to build cloud-native applications.
 
 As this course focuses in detail on the app level, the backend and how to offer REST services, topics like building SAP Fiori UIs with SAPUI5 are not covered. To learn about those topics please have a look at the great openSAP courses [Developing Web Apps with SAPUI5](https://open.sap.com/courses/ui51) and [SAP Fiori for iOS - Build Your First Native Mobile App](https://open.sap.com/courses/ios2). Also, database development for SAP HANA is not covered in this course, please refer to the openSAP course [Software Development on SAP HANA (Update Q4/2017)](https://open.sap.com/courses/hana6) to learn more about that.
 
@@ -33,9 +33,9 @@ The registration, learning content, and final exam are free of charge. You’ll 
 * Familiarity with the topics covered in the openSAP course: [SAP Cloud Platform Essentials (Update Q3/2017)](https://open.sap.com/courses/cp1-2)
 
 **Development Systems**
-If your primary interest in taking this course is getting a technical overview of the development-related capabilities of SAP Cloud Platform, you do not need access to a development system. However, we realize that many of you will be interested in experimenting with the platform and developing your own code, based on the instructions in the course.
+If your primary interest in taking this course is getting a technical overview of the development-related capabilities of SAP Business Technology Platform, you do not need access to a development system. However, we realize that many of you will be interested in experimenting with the platform and developing your own code, based on the instructions in the course.
 
-You can [register for your own free trial account for SAP Cloud Platform](https://accounts.sap.com/ui/public/showRegisterForm?spName=https%3A%2F%2Fnwtrial.ondemand.com%2Fservices&targetUrl=https%3A%2F%2Faccount.hanatrial.ondemand.com%2Fcockpit&sourceUrl=https%3A%2F%2Fcloudplatform.sap.com%2Findex.html). We’ll also explain how to do this at the start of the course. There are a few restrictions for the free trial account, but you’ll be able to follow the course without any problems, as the instructor will use the same system as you.
+You can [register for your own free trial account for SAP Business Technology Platform](https://accounts.sap.com/ui/public/showRegisterForm?spName=https%3A%2F%2Fnwtrial.ondemand.com%2Fservices&targetUrl=https%3A%2F%2Faccount.hanatrial.ondemand.com%2Fcockpit&sourceUrl=https%3A%2F%2Fcloudplatform.sap.com%2Findex.html). We’ll also explain how to do this at the start of the course. There are a few restrictions for the free trial account, but you’ll be able to follow the course without any problems, as the instructor will use the same system as you.
 
 For this course a preconfigured virtual machine image is provided and its use is recommended if you want to follow along with the hands-on exercises. The setup is provided and explained in Week 0: System Preparation.
 
@@ -106,7 +106,7 @@ For this course a preconfigured virtual machine image is provided and its use is
 **No Exercises**
 
 # <img src="./Z_ReuseImages/images/281518_OpenBook_R_blue.png" height="80" alt="Further Resources"/> Further Resources
-
+* [About SAP Cloud Platform, Rebranding](https://www.sap.com/products/cloud-platform.html)
 * [Troubleshooting VM image installation](/VMImage/VMImage_GettingStarted.md#troubleshooting)
 * [Troubleshooting Maven, Eclipse](/Knowledge/TroubleShooting.md)
 * [Eclipse IDE Tips](/Knowledge/EclipseIdeTips.md)

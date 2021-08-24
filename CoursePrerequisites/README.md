@@ -1,4 +1,4 @@
-Environment Setup and Prerequisites for the openSAP course "Cloud-Native Development with SAP Cloud Platform"
+Environment Setup and Prerequisites for the openSAP course "Cloud-Native Development with SAP Business Technology Platform"
 =====================================================
 This files explains the general prerequisites for the openSAP course "Cloud-Native Development with SAP Cloud Platform". To be able to install software on your computer, please make sure you have administrative rights. For a reliable and easy to setup development environment we provide a virtual machine (VM). 
 
@@ -9,8 +9,8 @@ The VM runs an **Ubuntu Linux** system and offers basically all tools and config
 ## 1. Prepare your Development Environment
 * **VM Setup**: Please follow the [installations steps](../VMImage/VMImage_GettingStarted.md) to prepare your VM image that provides the whole development environment.
 
-## 2. Prepare your Trial Account, Organization, and Space in the Cloud Foundry Environment within SAP Cloud Platform
-* Create your own **Trial Account, Organization, and Space** in the **Cloud Foundry Environment within SAP Cloud Platform** by registering [**here**](https://account.hanatrial.ondemand.com) for a Trial Account (or logging in if you already have one) and then starting your **Cloud Foundry Trial**.
+## 2. Prepare your Trial Account, Organization, and Space in the Cloud Foundry Environment within SAP Business Technology Platform
+* Create your own **Trial Account, Organization, and Space** in the **Cloud Foundry Environment within SAP Business Technology Platform** by registering [**here**](https://account.hanatrial.ondemand.com) for a Trial Account (or logging in if you already have one) and then starting your **Cloud Foundry Trial**.
 
 # Test your Knowledge - Are you Ready for the Training?
 * You should have a **working knowledge of Java and be familiar with Eclipse and Maven basics before taking this course!**

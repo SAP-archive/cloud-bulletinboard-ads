@@ -111,7 +111,7 @@ $    cf push
 ```
 
 Then enter the approuter URL e.g.  
-`https://<<your tenant>>-approuter-<<your user id>>.cfapps.<<region>>.hana.ondemand.com/ads/api/v1/ads` in the browser. Make sure that it responds with message "Forbidden" (HTTP Status code `403`). As explained in the previous [Exercise 22](Exercise_22_DeployApplicationRouter.md) your tenant matches the value of the **`subdomain`** name of your SAP CP subaccount, e.g. `p20001234trial`. 
+`https://<<your tenant>>-approuter-<<your user id>>.cfapps.<<region>>.hana.ondemand.com/ads/api/v1/ads` in the browser. Make sure that it responds with message "Forbidden" (HTTP Status code `403`). As explained in the previous [Exercise 22](Exercise_22_DeployApplicationRouter.md) your tenant matches the value of the **`subdomain`** name of your SAP BTP subaccount, e.g. `p20001234trial`. 
 
 
  

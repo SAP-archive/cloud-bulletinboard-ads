@@ -3,7 +3,7 @@ Exercise 10: Deploy Ads on Cloud Foundry
 ## Learning Goal
 Get familiar with the service related commands of the Cloud Foundry CLI, learn how to bind your application to a service in the Cloud Foundry environment.
 
-The task is to get the Advertisement service including the persistency running on SAP Cloud Platform, Cloud Foundry environment. Therefore the deployed application must be bound to a PostgreSQL service, offered by the Cloud Foundry environment.
+The task is to get the Advertisement service including the persistency running on SAP Business Technology Platform, Cloud Foundry environment. Therefore the deployed application must be bound to a PostgreSQL service, offered by the Cloud Foundry environment.
 
 ## Prerequisite
 Continue with your solution of the last exercise. If this does not work, you can checkout the branch [`origin/solution-9-Implement-JPA-Entity`](https://github.com/SAP/cloud-bulletinboard-ads/tree/solution-9-Implement-JPA-Entity).
@@ -14,7 +14,7 @@ Create a service instance with name `postgres-bulletinboard-ads` on the Cloud Fo
 cf create-service postgresql v9.4-dev postgres-bulletinboard-ads
 ```
 
-Note: You can get the exact names of the available services and its plans in the service marketplace (`cf marketplace`). Here we have selected the service plan `v9.4-dev` for the `postgresql` service as this is a *less expensive* offering as you can also analyze in the [**SAP Cloud Platform Cockpit**](https://account.hanatrial.ondemand.com/cockpit#/home/overview).
+Note: You can get the exact names of the available services and its plans in the service marketplace (`cf marketplace`). Here we have selected the service plan `v9.4-dev` for the `postgresql` service as this is a *less expensive* offering as you can also analyze in the [**SAP Business Technology Platform Cockpit**](https://account.hanatrial.ondemand.com/cockpit#/home/overview).
 
 Furthermore note, the created backing service is only *available* within the current targeted space and can be bound only to the applications within the same space.
 

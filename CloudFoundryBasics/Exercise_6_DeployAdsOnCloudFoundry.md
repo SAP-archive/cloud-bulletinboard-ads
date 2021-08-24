@@ -6,8 +6,8 @@ Get familiar with the basic commands of the Cloud Foundry CLI, learn how to depl
 ## Prerequisite
 Continue with your solution of the last exercise. If this does not work, you can checkout the branch [origin/solution-5-ValidationExceptions](https://github.com/SAP/cloud-bulletinboard-ads/tree/solution-5-ValidationExceptions).
 
-Prepare a Trial Account and Space on the SAP Cloud Platform Cloud Foundry environment
-- Create your own **Trial Account and Space** on the **Cloud Foundry environment** using the [**self-service on SAP Cloud Platform Cockpit**](https://account.hanatrial.ondemand.com). 
+Prepare a Trial Account and Space on the SAP Business Technology Platform Cloud Foundry environment
+- Create your own **Trial Account and Space** on the **Cloud Foundry environment** using the [**self-service on SAP Business Technology Platform Cockpit**](https://account.hanatrial.ondemand.com). 
 
 ## Step 1: Login
 The following commands will setup your environment to use the provided Cloud Foundry instance.
@@ -56,12 +56,12 @@ Run `cf scale bulletinboard-ads -i 2` to scale your microservice to two instance
 Manually create and retrieve advertisements and observe the responses. You might recognize that you get different responses depending on the service instance you are talking to. Each service instance runs in a fully separated process. In our current example, the hash maps are not in sync.
 
 > Note:
-> When you deploy your application into your Cloud Foundry `trial` subaccount then you're limited to **2GB memory**. In  order to monitor the quota you need to open the [SAP CP Cockpit](https://account.hanatrial.ondemand.com/cockpit#/home/overview)
+> When you deploy your application into your Cloud Foundry `trial` subaccount then you're limited to **2GB memory**. In  order to monitor the quota you need to open the [SAP BTP Cockpit](https://account.hanatrial.ondemand.com/cockpit#/home/overview)
 , navigate into your `trial` subaccount e.g. by using the `Go to Cloud Foundry trial` button.
 
-## [Optional] Step 5: Explore the SAP Cloud Platform Cockpit 
+## [Optional] Step 5: Explore the SAP Business Technology Platform Cockpit 
 
-Open the [SAP Cloud Platform Cockpit](https://account.hanatrial.ondemand.com/cockpit#/home/overview)
+Open the [SAP Business Technology Platform Cockpit](https://account.hanatrial.ondemand.com/cockpit#/home/overview)
 - Navigate first into your **Trial Global Account** and find out how much memory (in GByte) is assigned to it and which kind of services you are allowed use.
 - Then navigate into your `trial` **Subbaccount** and find out how much of the memory you have already consumed by the applications deployed  in all of your Cloud Foundry spaces.
 - Now navigate into your `dev` Cloud Foundry **Space** and make sure that only one single application instance is running. 
