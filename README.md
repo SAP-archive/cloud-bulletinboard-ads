@@ -1,3 +1,5 @@
+![](https://img.shields.io/badge/STATUS-NOT%20CURRENTLY%20MAINTAINED-red.svg?longCache=true&style=flat)
+
 # openSAP course: [Cloud-Native Development with SAP Business Technology Platform](https://open.sap.com/courses/cp5)
 [![REUSE status](https://api.reuse.software/badge/github.com/SAP-samples/cloud-bulletinboard-ads)](https://api.reuse.software/info/github.com/SAP-samples/cloud-bulletinboard-ads)
 
